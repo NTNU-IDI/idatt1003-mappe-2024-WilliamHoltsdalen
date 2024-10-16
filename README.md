@@ -1,5 +1,5 @@
-
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/INcAwgxk)
+
 # Mappevurdering IDATT1003
 
 STUDENT NAME = "William L. Holtsdalen"  
@@ -7,7 +7,7 @@ STUDENT ID = "137407"
 
 ## Project description
 
-[//]: # (TODO: Write a short description of your project/product here.)
+[//]: # (TODO: Write a short description of the project/product here.)
 
 ## Project structure
 
