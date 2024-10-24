@@ -17,6 +17,9 @@ import java.util.Date;
  *   <li>currency - String: A currency is represented textually, and String is the best datatype for storing text.</li>
  * </ul>
  *
+ * <p>Each property has an accessor method to get the value of the property.</p>
+ *
+ *
  */
 public class Grocery {
   private final String name;
@@ -78,6 +81,69 @@ public class Grocery {
     this.expirationDate = expirationDate;
     this.price = price;
     this.currency = currency;
+  }
+
+  /**
+   * Returns the name of the grocery item.
+   *
+   * @return The name of the grocery item.
+   */
+  public String getName() {
+    return name;
+  }
+
+  /**
+   * Returns the category of the grocery item.
+   *
+   * @return The category of the grocery item.
+   */
+  public String getCategory() {
+    return category;
+  }
+
+  /**
+   * Returns the amount of the grocery item.
+   *
+   * @return The amount of the grocery item.
+   */
+  public double getAmount() {
+    return amount;
+  }
+
+  /**
+   * Returns the unit of the grocery item.
+   *
+   * @return The unit of the grocery item.
+   */
+  public String getUnit() {
+    return unit;
+  }
+
+  /**
+   * Returns the expiration date of the grocery item.
+   *
+   * @return The expiration date of the grocery item.
+   */
+  public Date getExpirationDate() {
+    return expirationDate;
+  }
+
+  /**
+   * Returns the price of the grocery item.
+   *
+   * @return The price of the grocery item.
+   */
+  public double getPrice() {
+    return price;
+  }
+
+  /**
+   * Returns the currency of the grocery item.
+   *
+   * @return The currency of the grocery item.
+   */
+  public String getCurrency() {
+    return currency;
   }
 
 }
