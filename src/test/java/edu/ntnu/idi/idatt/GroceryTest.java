@@ -1,7 +1,7 @@
+package edu.ntnu.idi.idatt;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import edu.ntnu.idi.idatt.Grocery;
 
 import org.junit.jupiter.api.Test;
 import java.util.Date;
@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * Test class for the Grocery class
  * <p>
- * The following is tested:
+ * Performs the following tests:
  * <p>
  * Positive tests:
  * <ul>
@@ -47,7 +47,6 @@ class GroceryTest {
 
   /**
    * Test creating a grocery item instance with valid values.
-   *
    */
   @Test
   void testCreateGroceryItemWithValidParameters() {
@@ -77,28 +76,189 @@ class GroceryTest {
   // ------------------------------ Negative tests ------------------------------
 
   /**
-   * Test creating a grocery item instance with parameter name set to null.
+   * Test creating a grocery item instance with the parameter {@code name} set to {@code null} or
+   * an empty string. Check for thrown {@code IllegalArgumentException} in the cases specified.
    */
   @Test
-  void testCreateGroceryItemWithNullName() {
+  void testCreateGroceryItemWithNullOrEmptyName() {
     Date expirationDate = new Date();
-    assertThrows(IllegalArgumentException.class, () -> {
-      new Grocery(null, "Dairy", 1, "liters", expirationDate, 20,
-          "NOK");
-    });
+    assertThrows(IllegalArgumentException.class, () -> new Grocery(
+        null, // Name set to null
+        "Dairy",
+        1,
+        "liters",
+        expirationDate,
+        20,
+        "NOK")
+    );
+
+    assertThrows(IllegalArgumentException.class, () ->
+        new Grocery(
+            "", // Name set to an empty string
+            "Dairy",
+            1,
+            "liters",
+            expirationDate,
+            20,
+            "NOK")
+    );
   }
 
   /**
-   * Test creating a grocery item instance with parameter name set to an empty string.
-   *
+   * Test creating a grocery item instance with the parameter {@code category} set to {@code null}
+   * or an empty string. Check for thrown {@code IllegalArgumentException} in the cases specified.
    */
   @Test
-  void testCreateGroceryItemWithEmptyName() {
+  void testCreateGroceryItemWithNullOrEmptyCategory() {
     Date expirationDate = new Date();
-    assertThrows(IllegalArgumentException.class, () -> {
-      new Grocery("", "Dairy", 1, "liters", expirationDate, 20,
-          "NOK");
-    });
+    assertThrows(IllegalArgumentException.class, () -> new Grocery(
+        "Milk",
+        null, // Category set to null
+        1,
+        "liters",
+        expirationDate,
+        20,
+        "NOK")
+    );
+
+    assertThrows(IllegalArgumentException.class, () -> new Grocery(
+        "Milk",
+        "", // Category set to an empty string
+        1,
+        "liters",
+        expirationDate,
+        20,
+        "NOK")
+    );
+  }
+
+  /**
+   * Test creating a grocery item instance with the parameter {@code amount} set to a negative
+   * value or zero. Check for thrown {@code IllegalArgumentException} in the cases specified.
+   */
+  @Test
+  void testCreateGroceryItemWithNegativeOrZeroAmount() {
+    Date expirationDate = new Date();
+    assertThrows(IllegalArgumentException.class, () -> new Grocery(
+        "Milk",
+        "Dairy",
+        -1, // Amount set to a negative value
+        "liters",
+        expirationDate,
+        20,
+        "NOK")
+    );
+
+    assertThrows(IllegalArgumentException.class, () -> new Grocery(
+        "Milk",
+        "Dairy",
+        0, // Amount set to 0
+        "liters",
+        expirationDate,
+        20,
+        "NOK")
+    );
+  }
+
+  /**
+   * Test creating a grocery item instance with the parameter {@code unit} set to {@code null} or
+   * an empty string. Check for thrown {@code IllegalArgumentException} in the cases specified.
+   */
+  @Test
+  void testCreateGroceryItemWithNullOrEmptyUnit() {
+    Date expirationDate = new Date();
+    assertThrows(IllegalArgumentException.class, () -> new Grocery(
+        "Milk",
+        "Dairy",
+        1,
+        null, // Unit set to null
+        expirationDate,
+        20,
+        "NOK")
+    );
+
+    assertThrows(IllegalArgumentException.class, () -> new Grocery(
+        "Milk",
+        "Dairy",
+        1,
+        "", // Unit set to an empty string
+        expirationDate,
+        20,
+        "NOK")
+    );
+  }
+
+  /**
+   * Test creating a grocery item instance with the parameter {@code expirationDate} set to
+   * {@code null}. Check for thrown {@code IllegalArgumentException} in the case specified.
+   */
+  @Test
+  void testCreateGroceryItemWithNullExpirationDate() {
+    assertThrows(IllegalArgumentException.class, () -> new Grocery(
+        "Milk",
+        "Dairy",
+        1,
+        "liters",
+        null, // Expiration date set to null
+        20,
+        "NOK")
+    );
+  }
+
+  /**
+   * Test creating a grocery item instance with the parameter {@code price} set to a negative
+   * value or zero. Check for thrown {@code IllegalArgumentException} in the cases specified.
+   */
+  @Test
+  void testCreateGroceryItemWithNegativeOrZeroPrice() {
+    Date expirationDate = new Date();
+    assertThrows(IllegalArgumentException.class, () -> new Grocery(
+        "Milk",
+        "Dairy",
+        1,
+        "liters",
+        expirationDate,
+        -1, // Price set to a negative value
+        "NOK")
+    );
+
+    assertThrows(IllegalArgumentException.class, () -> new Grocery(
+        "Milk",
+        "Dairy",
+        1,
+        "liters",
+        expirationDate,
+        0, // Price set to 0
+        "NOK")
+    );
+  }
+
+  /**
+   * Test creating a grocery item instance with the parameter {@code currency} set to {@code null}
+   * or an empty string. Check for thrown {@code IllegalArgumentException} in the cases specified.
+   */
+  @Test
+  void testCreateGroceryItemWithNullOrEmptyCurrency() {
+    Date expirationDate = new Date();
+    assertThrows(IllegalArgumentException.class, () -> new Grocery(
+        "Milk",
+        "Dairy",
+        1,
+        "liters",
+        expirationDate,
+        20,
+        null) // Currency set to null
+    );
+
+    assertThrows(IllegalArgumentException.class, () -> new Grocery(
+        "Milk",
+        "Dairy",
+        1,
+        "liters",
+        expirationDate,
+        20,
+        "") // Currency set to an empty string
+    );
   }
 
 }
