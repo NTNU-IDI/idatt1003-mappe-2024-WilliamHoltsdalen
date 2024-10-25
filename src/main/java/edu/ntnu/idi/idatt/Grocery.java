@@ -4,6 +4,7 @@ import java.util.Date;
 
 /**
  * The class {@code Grocery} represents a grocery item.
+ *
  * <p>
  * A grocery object has the following fields:
  * <ul>
@@ -22,6 +23,7 @@ import java.util.Date;
  * <li>currency - String: A currency is represented textually, and String is the best datatype
  * for storing text.
  * </ul>
+ *
  * <p>
  * The following fields are immutable, and remain unchanged after creating a Grocery object:
  * <ul>
@@ -32,19 +34,22 @@ import java.util.Date;
  * <li>price: The price of a product is set at the time of purchase and doesn't change.
  * <li>currency: The currency is set at the time of purchase and doesn't change.
  * </ul>
+ *
  * <p>
  * The following property is mutable, and remains modifiable after creating a Grocery object:
  * <ul>
  * <li>amount: The quantity of the product can change during its lifecycle.
  * </ul>
+ *
  * <p>
  * Each field has an accessor method to get the value of the field.
+ *
  * <p>
  * The property <i>amount</i> has a mutator method to set the value of the field.
+ *
  * <p>
- * A validation mechanism is used in the class constructor to ensure that
- * invalid data (such as negative amounts or invalid price values) is not accepted.
- * An IllegalArgumentException is thrown if the provided values are deemed invalid.
+ * The constructor validates input data to avoid invalid data (such as negative amounts or
+ * invalid price values). Throws an IllegalArgumentException if provided with invalid values.
  *
  */
 public class Grocery {
@@ -176,7 +181,8 @@ public class Grocery {
   /**
    * Sets the amount of the grocery item.
    *
-   * @param amount specifies the new amount of the grocery item. Amount must equal a positive number.
+   * @param amount specifies the new amount of the grocery item. Amount must equal a positive
+   *               number.
    *
    * @throws IllegalArgumentException if the amount violates the constraints specified.
    */
