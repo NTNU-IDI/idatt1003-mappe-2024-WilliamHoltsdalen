@@ -7,46 +7,41 @@ import org.junit.jupiter.api.Test;
 import java.util.Date;
 
 /**
+ * <p>
  * Test class for the Grocery class
  * <p>
  * Performs the following tests:
  * <p>
  * Positive tests:
  * <ul>
- *   <li>that a grocery item can be created with valid values.
- *   <li>that the accessor-method returning name returns the correct name.
- *   <li>that the accessor-method returning category returns the correct category.
- *   <li>that the accessor-method returning amount returns the correct amount.
- *   <li>that the accessor-method returning unit returns the correct unit.
- *   <li>that the accessor-method returning expiration date returns the correct expiration date.
- *   <li>that the accessor-method returning price returns the correct price.
- *   <li>that the accessor-method returning currency returns the correct currency.
+ * <li>that a grocery item can be created with valid values.
+ * <li>that the accessor-methods for the fields {@code name}, {@code category}, {@code amount},
+ * {@code unit}, {@code expiration}, {@code price}, and {@code currency} return the correct
+ * values.
  * </ul>
  * <p>
  * Negative tests:
  * <ul>
- *   <li>that an exception is thrown when creating a grocery item with a name that is empty
- *   or {@code null}
- *   <li>that an exception is thrown when creating a grocery item with a category that is empty
- *   or {@code null}
- *   <li>that an exception is thrown when creating a grocery item with an amount that is negative
- *   or equal to 0.
- *   <li>that an exception is thrown when creating a grocery item with a unit that is empty
- *   or {@code null}
- *   <li>that an exception is thrown when creating a grocery item with an expiration date that
- *   is {@code null}.
- *   <li>that an exception is thrown when creating a grocery item with a price that is negative
- *   or equal to 0.
- *   <li>that an exception is thrown when creating a grocery item with a currency that is empty
- *   or {@code null}
+ * <li>that an exception is thrown when creating a grocery item with:
+ * <ul>
+ * <li>{@code name} that equals {@code null} or an empty string
+ * <li>{@code category} that equals {@code null} or an empty string
+ * <li>{@code amount} that equals zero or a negative value
+ * <li>{@code unit} that equals {@code null} or an empty string
+ * <li>{@code expirationDate} that equals {@code null}
+ * <li>{@code price} that equals zero or a negative value
+ * <li>{@code currency} that equals {@code null} or an empty string
+ * </ul>
  * </ul>
  */
 class GroceryTest {
-
   // ------------------------------ Positive tests ------------------------------
 
   /**
+   * <p>
    * Test creating a grocery item instance with valid values.
+   * <p>
+   * Test that the accessor-methods for all fields return the correct values.
    */
   @Test
   void testCreateGroceryItemWithValidParameters() {
