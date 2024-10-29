@@ -7,20 +7,18 @@ import org.junit.jupiter.api.Test;
 import java.util.Date;
 
 /**
- * <p>
  * Test class for the Grocery class
  * <p>
  * Performs the following tests:
- * <p>
- * Positive tests:
+ * <ul>
+ * <li>Positive tests:
  * <ul>
  * <li>that a grocery item can be created with valid values.
  * <li>that the accessor-methods for the fields {@code name}, {@code category}, {@code amount},
  * {@code unit}, {@code expiration}, {@code price}, and {@code currency} return the correct
  * values.
  * </ul>
- * <p>
- * Negative tests:
+ * <li>Negative tests:
  * <ul>
  * <li>that an exception is thrown when creating a grocery item with:
  * <ul>
@@ -32,16 +30,17 @@ import java.util.Date;
  * <li>{@code price} that equals zero or a negative value
  * <li>{@code currency} that equals {@code null} or an empty string
  * </ul>
+ * <li>that an exception is thrown when setting the amount to zero or a negative value.
+ * </ul>
  * </ul>
  */
 class GroceryTest {
   // ------------------------------ Positive tests ------------------------------
 
   /**
-   * <p>
    * Test creating a grocery item instance with valid values.
    * <p>
-   * Test that the accessor-methods for all fields return the correct values.
+   * Ensure accessor-methods for all fields return the correct values.
    */
   @Test
   void testCreateGroceryItemWithValidParameters() {
@@ -68,8 +67,7 @@ class GroceryTest {
   }
 
   /**
-   * <p>
-   * Test that the method {@code setAmount} sets the correct amount of the grocery item.
+   * Ensure the method {@code setAmount} sets the correct amount of the grocery item.
    */
   @Test
   void testSetAmount() {
@@ -269,8 +267,7 @@ class GroceryTest {
   }
 
   /**
-   * <p>
-   * Test that the method {@code setAmount} throws an {@code IllegalArgumentException} when setting
+   * Ensure the method {@code setAmount} throws an {@code IllegalArgumentException} when setting
    * the amount to zero or a negative value.
    */
   @Test

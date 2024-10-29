@@ -4,7 +4,6 @@ import java.util.Date;
 
 /**
  * The class {@code Grocery} represents a grocery item.
- *
  * <p>
  * A grocery object has the following fields:
  * <ul>
@@ -23,9 +22,8 @@ import java.util.Date;
  * <li>currency - String: A currency is represented textually, and String is the best datatype
  * for storing text.
  * </ul>
- *
  * <p>
- * The following fields are immutable, and remain unchanged after creating a Grocery object:
+ * Immutable fields (fields that don't change after creating a Grocery object):
  * <ul>
  * <li>name: A product's name is intrinsic to the object and doesn't change after creation.
  * <li>category: Similarly, the product's category remains fixed.
@@ -34,23 +32,18 @@ import java.util.Date;
  * <li>price: The price of a product is set at the time of purchase and doesn't change.
  * <li>currency: The currency is set at the time of purchase and doesn't change.
  * </ul>
- *
  * <p>
- * The following property is mutable, and remains modifiable after creating a Grocery object:
+ * Mutable fields (fields that can change after creating a Grocery object):
  * <ul>
  * <li>amount: The quantity of the product can change during its lifecycle.
  * </ul>
- *
  * <p>
  * Each field has an accessor method to get the value of the field.
- *
+ * The field {@code amount} has a mutator method to set the value of the field.
  * <p>
- * The property <i>amount</i> has a mutator method to set the value of the field.
- *
- * <p>
- * The constructor validates input data to avoid invalid data (such as negative amounts or
- * invalid price values). Throws an IllegalArgumentException if provided with invalid values.
- *
+ * The class constructor validates and initializes all fields. When given an invalid value
+ * (such as a negative amount or price, a null or empty string, or a null expiration date), the
+ * constructor will throw an IllegalArgumentException.
  */
 public class Grocery {
   private final String name;
