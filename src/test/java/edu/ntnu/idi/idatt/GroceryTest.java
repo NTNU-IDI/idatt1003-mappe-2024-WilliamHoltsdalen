@@ -67,6 +67,18 @@ class GroceryTest {
     assertEquals(currency, grocery.getCurrency());
   }
 
+  /**
+   * <p>
+   * Test that the method {@code setAmount} sets the correct amount of the grocery item.
+   */
+  @Test
+  void testSetAmount() {
+    Grocery grocery = new Grocery("Milk", "Dairy", 1, "liters",
+                                  new Date(), 20, "NOK");
+    grocery.setAmount(2);
+    assertEquals(2, grocery.getAmount());
+  }
+
 
   // ------------------------------ Negative tests ------------------------------
 
@@ -254,6 +266,19 @@ class GroceryTest {
         20,
         "") // Currency set to an empty string
     );
+  }
+
+  /**
+   * <p>
+   * Test that the method {@code setAmount} throws an {@code IllegalArgumentException} when setting
+   * the amount to zero or a negative value.
+   */
+  @Test
+  void testSetAmountToZeroOrNegativeValue() {
+    Grocery grocery = new Grocery("Milk", "Dairy", 1, "liters",
+                                  new Date(), 20, "NOK");
+    assertThrows(IllegalArgumentException.class, () -> grocery.setAmount(0));
+    assertThrows(IllegalArgumentException.class, () -> grocery.setAmount(-1));
   }
 
 }
