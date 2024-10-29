@@ -192,4 +192,11 @@ public class Grocery {
     }
     this.amount = amount;
   }
+
+  @Override
+  public String toString() {
+    return "Name: " + name + ", Category: " + category + ", Amount: "
+        + amount + " " + unit + ", Expiration date: "
+        + expirationDate;
+  }
 }
