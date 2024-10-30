@@ -17,6 +17,7 @@ import java.util.Date;
  * <li>that the accessor-methods for the fields {@code name}, {@code category}, {@code amount},
  * {@code unit}, {@code expiration}, {@code price}, and {@code currency} return the correct
  * values.
+ * <li>that the method {@code setAmount} sets the correct amount of the grocery item.
  * </ul>
  * <li>Negative tests:
  * <ul>
@@ -67,7 +68,7 @@ class GroceryTest {
   }
 
   /**
-   * Ensure the method {@code setAmount} sets the correct amount of the grocery item.
+   * Ensure that the method {@code setAmount} sets the correct amount of the grocery item.
    */
   @Test
   void testSetAmount() {
