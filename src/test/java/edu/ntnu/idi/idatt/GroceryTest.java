@@ -78,6 +78,17 @@ class GroceryTest {
     assertEquals(2, grocery.getAmount());
   }
 
+  /**
+   * Ensure that the method {@code toString} returns the correct string representation.
+   */
+  @Test
+  void testToString() {
+    Grocery grocery = new Grocery("Milk", "Dairy", 1, "liters",
+                                  new Date(), 20, "NOK");
+
+    assertEquals("Name: Milk, Category: Dairy, Amount: 1.0 liters, Expiration date: "
+                 + grocery.getExpirationDate() + ", Price: 20.0 NOK", grocery.toString());
+  }
 
   // ------------------------------ Negative tests ------------------------------
 
