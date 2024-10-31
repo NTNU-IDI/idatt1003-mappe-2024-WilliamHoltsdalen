@@ -86,8 +86,8 @@ class GroceryTest {
     Grocery grocery = new Grocery("Milk", "Dairy", 1, "liters",
                                   new Date(), 20, "NOK");
 
-    assertEquals("Name: Milk, Category: Dairy, Amount: 1.0 liters, Expiration date: "
-                 + grocery.getExpirationDate() + ", Price: 20.0 NOK", grocery.toString());
+    assertEquals("Name: Milk, Category: Dairy, Amount: 1.0 liters, Price: 20.0 NOK, Expiration date: "
+                 + grocery.getExpirationDate(), grocery.toString());
   }
 
   // ------------------------------ Negative tests ------------------------------
