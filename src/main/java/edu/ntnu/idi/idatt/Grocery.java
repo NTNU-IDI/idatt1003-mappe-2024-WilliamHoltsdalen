@@ -7,35 +7,38 @@ import java.util.Date;
  * <p>
  * A grocery object has the following fields:
  * <ul>
- * <li>name - String: A product name is textual, and String is the best datatype for storing
+ * <li>{@code name} - String: A product name is textual, and String is the best datatype for storing
  * text.
- * <li>category - String: A product category is textual, and String is the best datatype for
+ * <li>{@code category} - String: A product category is textual, and String is the best datatype for
  * storing text.
- * <li>amount - double - The amount of a product is numerical, often with decimals, so double is
- * sufficient int this case.
- * <li>unit - String: A product unit is textual, and String is the best datatype for storing
+ * <li>{@code amount} - double - The amount of a product is numerical, often with decimals, so
+ * double is sufficient int this case.
+ * <li>{@code unit} - String: A product unit is textual, and String is the best datatype for storing
  * text.
- * <li>expirationDate - Date: An expiration date represents a point in time, and the Date class
+ * <li>{@code expirationDate} - Date: An expiration date represents a point in time, and the Date
+ * class
  * is appropriate for this.
- * <li>price - double: A product price is numerical, often with decimals, so double is sufficient
+ * <li>{@code price} - double: A product price is numerical, often with decimals, so double is
+ * sufficient
  * in this case.
- * <li>currency - String: A currency is represented textually, and String is the best datatype
+ * <li>{@code currency} - String: A currency is represented textually, and String is the best
+ * datatype
  * for storing text.
  * </ul>
  * <p>
  * Immutable fields (fields that don't change after creating a Grocery object):
  * <ul>
- * <li>name: A product's name is intrinsic to the object and doesn't change after creation.
- * <li>category: Similarly, the product's category remains fixed.
- * <li>unit: The unit of a product is a constant property of a product.
- * <li>expirationDate: The expiration date is a property of the product at the time of purchase.
- * <li>price: The price of a product is set at the time of purchase and doesn't change.
- * <li>currency: The currency is set at the time of purchase and doesn't change.
+ * <li>{@code name}: A product's name is intrinsic to the object and doesn't change after creation.
+ * <li>{@code category}: Similarly, the product's category remains fixed.
+ * <li>{@code unit}: The unit of a product is a constant property of a product.
+ * <li>{@code expirationDate}: The expiration date is a property of the product at the time of purchase.
+ * <li>{@code price}: The price of a product is set at the time of purchase and doesn't change.
+ * <li>{@code currency}: The currency is set at the time of purchase and doesn't change.
  * </ul>
  * <p>
  * Mutable fields (fields that can change after creating a Grocery object):
  * <ul>
- * <li>amount: The quantity of the product can change during its lifecycle.
+ * <li>{@code amount}: The quantity of the product can change during its lifecycle.
  * </ul>
  * <p>
  * Each field has an accessor method to get the value of the field.
@@ -43,7 +46,7 @@ import java.util.Date;
  * <p>
  * The class constructor validates and initializes all fields. When given an invalid value
  * (such as a negative amount or price, a null or empty string, or a null expiration date), the
- * constructor will throw an IllegalArgumentException.
+ * constructor will throw an {@code IllegalArgumentException}.
  */
 public class Grocery {
   private final String name;
@@ -74,7 +77,7 @@ public class Grocery {
    * @throws IllegalArgumentException if any parameters violate the constraints specified.
    */
   public Grocery(String name, String category, double amount, String unit, Date expirationDate,
-                 double price, String currency) {
+                 double price, String currency) throws IllegalArgumentException {
     // Guard clauses
     if (name == null || name.isBlank()) {
       throw new IllegalArgumentException("Name cannot be null or blank");
@@ -109,8 +112,6 @@ public class Grocery {
   }
 
   /**
-   * Returns the name of the grocery item.
-   *
    * @return The name of the grocery item.
    */
   public String getName() {
@@ -118,8 +119,6 @@ public class Grocery {
   }
 
   /**
-   * Returns the category of the grocery item.
-   *
    * @return The category of the grocery item.
    */
   public String getCategory() {
@@ -127,8 +126,6 @@ public class Grocery {
   }
 
   /**
-   * Returns the amount of the grocery item.
-   *
    * @return The amount of the grocery item.
    */
   public double getAmount() {
@@ -136,8 +133,6 @@ public class Grocery {
   }
 
   /**
-   * Returns the unit of the grocery item.
-   *
    * @return The unit of the grocery item.
    */
   public String getUnit() {
@@ -145,8 +140,6 @@ public class Grocery {
   }
 
   /**
-   * Returns the expiration date of the grocery item.
-   *
    * @return The expiration date of the grocery item.
    */
   public Date getExpirationDate() {
@@ -154,8 +147,6 @@ public class Grocery {
   }
 
   /**
-   * Returns the price of the grocery item.
-   *
    * @return The price of the grocery item.
    */
   public double getPrice() {
@@ -163,8 +154,6 @@ public class Grocery {
   }
 
   /**
-   * Returns the currency of the grocery item.
-   *
    * @return The currency of the grocery item.
    */
   public String getCurrency() {
@@ -186,10 +175,14 @@ public class Grocery {
     this.amount = amount;
   }
 
+  /**
+   * @return A string representation of the grocery item. Including {@code name}, {@code category},
+   *         {@code amount}, {@code unit}, {@code expirationDate}, {@code price}, and {@code currency}.
+   */
   @Override
   public String toString() {
     return "Name: " + name + ", Category: " + category + ", Amount: "
-        + amount + " " + unit + ", Expiration date: "
-        + expirationDate;
+        + amount + " " + unit + "Price: " + price + ", Expiration date: "
+        + expirationDate ;
   }
 }
