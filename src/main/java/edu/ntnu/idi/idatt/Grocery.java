@@ -182,7 +182,7 @@ public class Grocery {
   @Override
   public String toString() {
     return "Name: " + name + ", Category: " + category + ", Amount: "
-        + amount + " " + unit + "Price: " + price + ", Expiration date: "
+        + amount + " " + unit + ", Price: " + price + " " + currency + ", Expiration date: "
         + expirationDate ;
   }
 }
