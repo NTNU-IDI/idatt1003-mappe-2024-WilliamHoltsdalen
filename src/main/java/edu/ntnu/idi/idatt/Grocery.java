@@ -49,7 +49,7 @@ public class Grocery {
    *             empty string.
    * @throws IllegalArgumentException if any parameters violate the constraints specified.
    */
-  public Grocery(String name, String category, String unit) throws IllegalArgumentException {
+  public Grocery(String name, String category, String unit, GroceryBatch batch) throws IllegalArgumentException {
     // Guard clauses
     if (name == null || name.isBlank()) {
       throw new IllegalArgumentException("Name cannot be null or blank");
@@ -60,13 +60,16 @@ public class Grocery {
     if (unit == null || unit.isBlank()) {
       throw new IllegalArgumentException("Unit cannot be null or blank");
     }
+    if (batch == null) {
+      throw new IllegalArgumentException("Batch cannot be null");
+    }
 
     // Assigning valid values
     this.name = name;
     this.category = category;
     this.unit = unit;
-
     this.batches = new ArrayList<>();
+    addBatch(batch);
   }
 
   /**
