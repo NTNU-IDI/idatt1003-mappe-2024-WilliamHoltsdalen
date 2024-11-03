@@ -3,36 +3,38 @@ package edu.ntnu.idi.idatt;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.time.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.Test;
-import java.util.Date;
 
 /**
- * Test class for the Grocery class
+ * Test class for the Grocery class.
  * <p>
  * Performs the following tests:
  * <ul>
  * <li>Positive tests:
  * <ul>
  * <li>that a grocery item can be created with valid values.
- * <li>that the accessor-methods for the fields {@code name}, {@code category}, {@code amount},
- * {@code unit}, {@code expiration}, {@code price}, and {@code currency} return the correct
- * values.
- * <li>that the method {@code setAmount} sets the correct amount of the grocery item.
+ * <li>that the accessor methods for all fields return the correct values.
+ * <li>that the method {@code addBatch} adds a batch to the grocery item.
+ * <li>that the method {@code consume} updates the amount of the grocery item correctly.
+ * <li>that the method {@code toString} returns the correct string representation.
  * </ul>
  * <li>Negative tests:
  * <ul>
  * <li>that an exception is thrown when creating a grocery item with:
  * <ul>
- * <li>{@code name} that equals {@code null} or an empty string
- * <li>{@code category} that equals {@code null} or an empty string
- * <li>{@code amount} that equals zero or a negative value
- * <li>{@code unit} that equals {@code null} or an empty string
- * <li>{@code expirationDate} that equals {@code null}
- * <li>{@code price} that equals zero or a negative value
- * <li>{@code currency} that equals {@code null} or an empty string
+ * <li>{@code name} that equals {@code null} or an empty string.
+ * <li>{@code category} that equals {@code null} or an empty string.
+ * <li>{@code unit} that equals {@code null} or an empty string.
+ * <li>{@code batch} that equals {@code null}.
  * </ul>
- * <li>that an exception is thrown when setting the amount to zero or a negative value.
+ * <li>that an exception is thrown when adding a GroceryBatch object that equals {@code null}.
+ * <li>that an exception is thrown when trying to consume an amount of the grocery item that equals
+ *     zero or a negative number.
+ * <li>that an exception is thrown when trying to consume an amount greater than the total amount
+ *     of the grocery item.
  * </ul>
  * </ul>
  */
@@ -40,43 +42,33 @@ class GroceryTest {
   // ------------------------------ Positive tests ------------------------------
 
   /**
-   * Test creating a grocery item instance with valid values.
-   * <p>
-   * Ensure accessor-methods for all fields return the correct values.
+   * Test creating a grocery object with valid parameters, and ensure accessor methods for all
+   * fields return the correct values.
    */
   @Test
-  void testCreateGroceryItemWithValidParameters() {
-    // Arrange
-    String name = "Milk";
-    String category = "Dairy";
-    int amount = 1;
-    String unit = "liters";
-    LocalDate expirationDate = LocalDate.now();
-    int price = 20;
-    String currency = "NOK";
+  void testCreateGrocery() {
+    GroceryBatch batch = new GroceryBatch(1.0, 20.0, LocalDate.now());
+    Grocery grocery = new Grocery("Milk", "Dairy", "liters", batch);
 
-    // Act
-    Grocery grocery = new Grocery(name, category, amount, unit, expirationDate, price, currency);
-
+    List<GroceryBatch> batches = new ArrayList<>();
+    batches.add(batch);
     // Assert
-    assertEquals(name, grocery.getName());
-    assertEquals(category, grocery.getCategory());
-    assertEquals(amount, grocery.getAmount());
-    assertEquals(unit, grocery.getUnit());
-    assertEquals(expirationDate, grocery.getExpDate());
-    assertEquals(price, grocery.getPrice());
-    assertEquals(currency, grocery.getCurrency());
+    assertEquals("Milk", grocery.getName());
+    assertEquals("Dairy", grocery.getCategory());
+    assertEquals(1.0, grocery.getTotalAmount());
+    assertEquals("liters", grocery.getUnit());
+    assertEquals(batches, grocery.getBatches());
+
   }
 
   /**
-   * Ensure that the method {@code setAmount} sets the correct amount of the grocery item.
+   * Ensure that the method {@code consume} sets the correct amount of the grocery item.
    */
   @Test
-  void testSetAmount() {
-    Grocery grocery = new Grocery("Milk", "Dairy", 1, "liters",
-                                  LocalDate.now(), 20, "NOK");
-    grocery.setAmount(2);
-    assertEquals(2, grocery.getAmount());
+  void testConsume() {
+    Grocery grocery = new Grocery("Milk", "Dairy", "liters", new GroceryBatch(3, 20, LocalDate.now()));
+    grocery.consume(2);
+    assertEquals(1, grocery.getTotalAmount());
   }
 
   /**
@@ -84,11 +76,12 @@ class GroceryTest {
    */
   @Test
   void testToString() {
-    Grocery grocery = new Grocery("Milk", "Dairy", 1, "liters",
-                                  LocalDate.now(), 20, "NOK");
+    Grocery grocery = new Grocery("Milk", "Dairy", "liters", new GroceryBatch(3, 20, LocalDate.now()));
 
-    assertEquals("Name: Milk, Category: Dairy, Amount: 1.0 liters, Price: 20.0 NOK, Expiration date: "
-                 + grocery.getExpDate(), grocery.toString());
+
+    assertEquals("Name: Milk, Category: Dairy, Unit: liters, totalAmount: 3.0 liters" +
+                  "\nAmount: 3.0, Price per unit: 20.0, Expiration date: " + LocalDate.now()
+                 , grocery.toString());
   }
 
   // ------------------------------ Negative tests ------------------------------
@@ -98,28 +91,17 @@ class GroceryTest {
    * an empty string. Check for thrown {@code IllegalArgumentException} in the cases specified.
    */
   @Test
-  void testCreateGroceryItemWithNullOrEmptyName() {
+  void nullOrEmptyName() {
     LocalDate expirationDate = LocalDate.now();
-    assertThrows(IllegalArgumentException.class, () -> new Grocery(
-        null, // Name set to null
-        "Dairy",
-        1,
-        "liters",
-        expirationDate,
-        20,
-        "NOK")
-    );
+    GroceryBatch batch = new GroceryBatch(3, 20, expirationDate);
 
-    assertThrows(IllegalArgumentException.class, () ->
-        new Grocery(
-            "", // Name set to an empty string
-            "Dairy",
-            1,
-            "liters",
-            expirationDate,
-            20,
-            "NOK")
-    );
+    assertThrows(IllegalArgumentException.class, () -> new Grocery(
+        null, "Dairy", "liters",
+        batch));
+
+    assertThrows(IllegalArgumentException.class, () -> new Grocery(
+        "", "Dairy", "liters",
+        batch));
   }
 
   /**
@@ -127,169 +109,75 @@ class GroceryTest {
    * or an empty string. Check for thrown {@code IllegalArgumentException} in the cases specified.
    */
   @Test
-  void testCreateGroceryItemWithNullOrEmptyCategory() {
+  void nullOrEmptyCategory() {
     LocalDate expirationDate = LocalDate.now();
-    assertThrows(IllegalArgumentException.class, () -> new Grocery(
-        "Milk",
-        null, // Category set to null
-        1,
-        "liters",
-        expirationDate,
-        20,
-        "NOK")
-    );
+    GroceryBatch batch = new GroceryBatch(3, 20, expirationDate);
 
     assertThrows(IllegalArgumentException.class, () -> new Grocery(
-        "Milk",
-        "", // Category set to an empty string
-        1,
-        "liters",
-        expirationDate,
-        20,
-        "NOK")
-    );
+        "Milk", null, "liters",
+        batch));
+
+    assertThrows(IllegalArgumentException.class, () -> new Grocery(
+        "Milk", "", "liters",
+        batch));
+
   }
 
   /**
-   * Test creating a grocery item instance with the parameter {@code amount} set to a negative
-   * value or zero. Check for thrown {@code IllegalArgumentException} in the cases specified.
-   */
-  @Test
-  void testCreateGroceryItemWithNegativeOrZeroAmount() {
-    LocalDate expirationDate = LocalDate.now();
-    assertThrows(IllegalArgumentException.class, () -> new Grocery(
-        "Milk",
-        "Dairy",
-        -1, // Amount set to a negative value
-        "liters",
-        expirationDate,
-        20,
-        "NOK")
-    );
-
-    assertThrows(IllegalArgumentException.class, () -> new Grocery(
-        "Milk",
-        "Dairy",
-        0, // Amount set to 0
-        "liters",
-        expirationDate,
-        20,
-        "NOK")
-    );
-  }
-
-  /**
-   * Test creating a grocery item instance with the parameter {@code unit} set to {@code null} or
-   * an empty string. Check for thrown {@code IllegalArgumentException} in the cases specified.
-   */
-  @Test
-  void testCreateGroceryItemWithNullOrEmptyUnit() {
-    LocalDate expirationDate = LocalDate.now();
-    assertThrows(IllegalArgumentException.class, () -> new Grocery(
-        "Milk",
-        "Dairy",
-        1,
-        null, // Unit set to null
-        expirationDate,
-        20,
-        "NOK")
-    );
-
-    assertThrows(IllegalArgumentException.class, () -> new Grocery(
-        "Milk",
-        "Dairy",
-        1,
-        "", // Unit set to an empty string
-        expirationDate,
-        20,
-        "NOK")
-    );
-  }
-
-  /**
-   * Test creating a grocery item instance with the parameter {@code expirationDate} set to
-   * {@code null}. Check for thrown {@code IllegalArgumentException} in the case specified.
-   */
-  @Test
-  void testCreateGroceryItemWithNullExpirationDate() {
-    assertThrows(IllegalArgumentException.class, () -> new Grocery(
-        "Milk",
-        "Dairy",
-        1,
-        "liters",
-        null, // Expiration date set to null
-        20,
-        "NOK")
-    );
-  }
-
-  /**
-   * Test creating a grocery item instance with the parameter {@code price} set to a negative
-   * value or zero. Check for thrown {@code IllegalArgumentException} in the cases specified.
-   */
-  @Test
-  void testCreateGroceryItemWithNegativeOrZeroPrice() {
-    LocalDate expirationDate = LocalDate.now();
-    assertThrows(IllegalArgumentException.class, () -> new Grocery(
-        "Milk",
-        "Dairy",
-        1,
-        "liters",
-        expirationDate,
-        -1, // Price set to a negative value
-        "NOK")
-    );
-
-    assertThrows(IllegalArgumentException.class, () -> new Grocery(
-        "Milk",
-        "Dairy",
-        1,
-        "liters",
-        expirationDate,
-        0, // Price set to 0
-        "NOK")
-    );
-  }
-
-  /**
-   * Test creating a grocery item instance with the parameter {@code currency} set to {@code null}
+   * Test creating a grocery item instance with the parameter {@code unit} set to {@code null}
    * or an empty string. Check for thrown {@code IllegalArgumentException} in the cases specified.
    */
   @Test
-  void testCreateGroceryItemWithNullOrEmptyCurrency() {
+  void nullOrEmptyUnit() {
     LocalDate expirationDate = LocalDate.now();
-    assertThrows(IllegalArgumentException.class, () -> new Grocery(
-        "Milk",
-        "Dairy",
-        1,
-        "liters",
-        expirationDate,
-        20,
-        null) // Currency set to null
-    );
+    GroceryBatch batch = new GroceryBatch(3, 20, expirationDate);
 
     assertThrows(IllegalArgumentException.class, () -> new Grocery(
-        "Milk",
-        "Dairy",
-        1,
-        "liters",
-        expirationDate,
-        20,
-        "") // Currency set to an empty string
-    );
+        "Milk", "Dairy", null,
+        batch));
+
+    assertThrows(IllegalArgumentException.class, () -> new Grocery(
+        "Milk", "Dairy", "",
+        batch));
+
   }
 
   /**
-   * Ensure the method {@code setAmount} throws an {@code IllegalArgumentException} when setting
-   * the amount to zero or a negative value.
+   * Test creating a grocery item instance with the parameter {@code batch} set to {@code null}.
+   * Check for thrown {@code IllegalArgumentException} in the case specified.
    */
   @Test
-  void testSetAmountToZeroOrNegativeValue() {
-    Grocery grocery = new Grocery("Milk", "Dairy", 1, "liters",
-                                  LocalDate.now(), 20, "NOK");
-    assertThrows(IllegalArgumentException.class, () -> grocery.setAmount(0));
-    assertThrows(IllegalArgumentException.class, () -> grocery.setAmount(-1));
+  void nullBatch() {
+    assertThrows(IllegalArgumentException.class, () -> new Grocery(
+        "Milk", "Dairy", "liters",
+        null));
+
+    assertThrows(IllegalArgumentException.class, () -> new Grocery(
+        "Milk", "Dairy", "liters",
+        null));
+
   }
 
+  /**
+   * Ensure the method {@code addBatch} throws an {@code IllegalArgumentException} when adding a
+   * {@code null} batch.
+   */
+  @Test
+  void addNullBatch() {
+    Grocery grocery = new Grocery("Milk", "Dairy", "liters",
+        new GroceryBatch(3, 20, LocalDate.now()));
+    assertThrows(IllegalArgumentException.class, () -> grocery.addBatch(null));
+  }
 
+  /**
+   * Ensure the method {@code consume} throws an {@code IllegalArgumentException} when consuming an
+   * amount that equals zero or a negative number.
+   */
+  @Test
+  void consumeZeroOrNegativeAmount() {
+    Grocery grocery = new Grocery("Milk", "Dairy", "liters",
+        new GroceryBatch(3, 20, LocalDate.now()));
+    assertThrows(IllegalArgumentException.class, () -> grocery.consume(0));
+    assertThrows(IllegalArgumentException.class, () -> grocery.consume(-1));
+  }
 }
