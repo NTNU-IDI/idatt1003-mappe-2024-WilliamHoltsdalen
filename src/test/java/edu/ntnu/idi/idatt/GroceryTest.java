@@ -3,6 +3,7 @@ package edu.ntnu.idi.idatt;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.time.*;
 import org.junit.jupiter.api.Test;
 import java.util.Date;
 
@@ -50,7 +51,7 @@ class GroceryTest {
     String category = "Dairy";
     int amount = 1;
     String unit = "liters";
-    Date expirationDate = new Date();
+    LocalDate expirationDate = LocalDate.now();
     int price = 20;
     String currency = "NOK";
 
@@ -62,7 +63,7 @@ class GroceryTest {
     assertEquals(category, grocery.getCategory());
     assertEquals(amount, grocery.getAmount());
     assertEquals(unit, grocery.getUnit());
-    assertEquals(expirationDate, grocery.getExpirationDate());
+    assertEquals(expirationDate, grocery.getExpDate());
     assertEquals(price, grocery.getPrice());
     assertEquals(currency, grocery.getCurrency());
   }
@@ -73,7 +74,7 @@ class GroceryTest {
   @Test
   void testSetAmount() {
     Grocery grocery = new Grocery("Milk", "Dairy", 1, "liters",
-                                  new Date(), 20, "NOK");
+                                  LocalDate.now(), 20, "NOK");
     grocery.setAmount(2);
     assertEquals(2, grocery.getAmount());
   }
@@ -84,10 +85,10 @@ class GroceryTest {
   @Test
   void testToString() {
     Grocery grocery = new Grocery("Milk", "Dairy", 1, "liters",
-                                  new Date(), 20, "NOK");
+                                  LocalDate.now(), 20, "NOK");
 
     assertEquals("Name: Milk, Category: Dairy, Amount: 1.0 liters, Price: 20.0 NOK, Expiration date: "
-                 + grocery.getExpirationDate(), grocery.toString());
+                 + grocery.getExpDate(), grocery.toString());
   }
 
   // ------------------------------ Negative tests ------------------------------
@@ -98,7 +99,7 @@ class GroceryTest {
    */
   @Test
   void testCreateGroceryItemWithNullOrEmptyName() {
-    Date expirationDate = new Date();
+    LocalDate expirationDate = LocalDate.now();
     assertThrows(IllegalArgumentException.class, () -> new Grocery(
         null, // Name set to null
         "Dairy",
@@ -127,7 +128,7 @@ class GroceryTest {
    */
   @Test
   void testCreateGroceryItemWithNullOrEmptyCategory() {
-    Date expirationDate = new Date();
+    LocalDate expirationDate = LocalDate.now();
     assertThrows(IllegalArgumentException.class, () -> new Grocery(
         "Milk",
         null, // Category set to null
@@ -155,7 +156,7 @@ class GroceryTest {
    */
   @Test
   void testCreateGroceryItemWithNegativeOrZeroAmount() {
-    Date expirationDate = new Date();
+    LocalDate expirationDate = LocalDate.now();
     assertThrows(IllegalArgumentException.class, () -> new Grocery(
         "Milk",
         "Dairy",
@@ -183,7 +184,7 @@ class GroceryTest {
    */
   @Test
   void testCreateGroceryItemWithNullOrEmptyUnit() {
-    Date expirationDate = new Date();
+    LocalDate expirationDate = LocalDate.now();
     assertThrows(IllegalArgumentException.class, () -> new Grocery(
         "Milk",
         "Dairy",
@@ -228,7 +229,7 @@ class GroceryTest {
    */
   @Test
   void testCreateGroceryItemWithNegativeOrZeroPrice() {
-    Date expirationDate = new Date();
+    LocalDate expirationDate = LocalDate.now();
     assertThrows(IllegalArgumentException.class, () -> new Grocery(
         "Milk",
         "Dairy",
@@ -256,7 +257,7 @@ class GroceryTest {
    */
   @Test
   void testCreateGroceryItemWithNullOrEmptyCurrency() {
-    Date expirationDate = new Date();
+    LocalDate expirationDate = LocalDate.now();
     assertThrows(IllegalArgumentException.class, () -> new Grocery(
         "Milk",
         "Dairy",
@@ -285,9 +286,10 @@ class GroceryTest {
   @Test
   void testSetAmountToZeroOrNegativeValue() {
     Grocery grocery = new Grocery("Milk", "Dairy", 1, "liters",
-                                  new Date(), 20, "NOK");
+                                  LocalDate.now(), 20, "NOK");
     assertThrows(IllegalArgumentException.class, () -> grocery.setAmount(0));
     assertThrows(IllegalArgumentException.class, () -> grocery.setAmount(-1));
   }
+
 
 }
