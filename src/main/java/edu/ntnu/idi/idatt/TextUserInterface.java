@@ -1,6 +1,6 @@
 package edu.ntnu.idi.idatt;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  *
@@ -20,24 +20,39 @@ public class TextUserInterface {
   public void start() {
     // Start the application
 
-    // Simple testing of the Grocery class with some examples
-    Grocery milk = new Grocery("Milk", "Dairy", 1, "liters",
-                                  new Date(), 20, "NOK");
+    // Simple testing
 
-    Grocery apple = new Grocery("Apple", "Fruit", 2, "pieces",
-                                  new Date(), 10, "NOK");
+    FoodStorage foodStorage = new FoodStorage();
 
-    Grocery banana = new Grocery("Banana", "Fruit", 3, "pieces",
-                                  new Date(), 15, "NOK");
+    Grocery milk = new Grocery("Milk", "Dairy", "liters");
+    Grocery apple = new Grocery("Apple", "Fruit", "pieces");
+    Grocery banana = new Grocery("Banana", "Fruit", "pieces");
+    Grocery grapes = new Grocery("Grapes", "Fruit", "pieces");
+    Grocery salt = new Grocery("Salt", "Spices", "grams");
 
-    Grocery grapes = new Grocery("Grapes", "Fruit", 1.5, "kilograms",
-                                  new Date(), 50, "NOK");
+    milk.addBatch(new GroceryBatch(1, 5, LocalDate.now()));
+    milk.addBatch(new GroceryBatch(2, 10, LocalDate.now()));
+    apple.addBatch(new GroceryBatch(3, 2, LocalDate.now()));
+    banana.addBatch(new GroceryBatch(10, 1, LocalDate.now()));
+    grapes.addBatch(new GroceryBatch(20, 0.5, LocalDate.now()));
+    salt.addBatch(new GroceryBatch(500, 0.1, LocalDate.now()));
+
+    foodStorage.addGrocery(milk);
+    foodStorage.addGrocery(apple);
+    foodStorage.addGrocery(banana);
+    foodStorage.addGrocery(grapes);
+    foodStorage.addGrocery(salt);
+
+
+    foodStorage.addGrocery(new Grocery("Milk", "Dairy", "liters"));
+    foodStorage.addGroceryBatch("Apple", new GroceryBatch(4, 2, LocalDate.of(2021, 10, 10)));
+
+    foodStorage.addGrocery(new Grocery("Salt", "Spices", "grams"));
 
 
     System.out.println("Grocery items:");
-    System.out.println(milk);
-    System.out.println(apple);
-    System.out.println(banana);
-    System.out.println(grapes);
+    for (Grocery grocery : foodStorage.getGroceries()) {
+      System.out.println(grocery+"\n");
+    }
   }
 }
