@@ -1,44 +1,26 @@
 package edu.ntnu.idi.idatt;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
- * The class {@code Grocery} represents a grocery item.
+ * A {@code Grocery} object represents a grocery item.
  * <p>
  * A grocery object has the following fields:
  * <ul>
- * <li>{@code name} - String: A product name is textual, and String is the best datatype for storing
- * text.
- * <li>{@code category} - String: A product category is textual, and String is the best datatype for
- * storing text.
- * <li>{@code amount} - double - The amount of a product is numerical, often with decimals, so
- * double is sufficient int this case.
- * <li>{@code unit} - String: A product unit is textual, and String is the best datatype for storing
- * text.
- * <li>{@code expirationDate} - Date: An expiration date represents a point in time, and the Date
- * class
- * is appropriate for this.
- * <li>{@code price} - double: A product price is numerical, often with decimals, so double is
- * sufficient
- * in this case.
- * <li>{@code currency} - String: A currency is represented textually, and String is the best
- * datatype
- * for storing text.
- * </ul>
- * <p>
- * Immutable fields (fields that don't change after creating a Grocery object):
- * <ul>
- * <li>{@code name}: A product's name is intrinsic to the object and doesn't change after creation.
- * <li>{@code category}: Similarly, the product's category remains fixed.
- * <li>{@code unit}: The unit of a product is a constant property of a product.
- * <li>{@code expirationDate}: The expiration date is a property of the product at the time of purchase.
- * <li>{@code price}: The price of a product is set at the time of purchase and doesn't change.
- * <li>{@code currency}: The currency is set at the time of purchase and doesn't change.
- * </ul>
- * <p>
- * Mutable fields (fields that can change after creating a Grocery object):
- * <ul>
- * <li>{@code amount}: The quantity of the product can change during its lifecycle.
+ * <li>{@code name} A String representing the name of the grocery item. This field is immutable,
+ *      set at object creation and cannot be changed afterward.
+ * <li>{@code category} A String representing the category of the grocery item. This field is
+ *      immutable and assigned at object creation.
+ * <li>{@code amount} A double representing the quantity of the grocery item. This field is mutable
+ *      and can be updated throughout the grocery item's lifecycle.
+ * <li>{@code unit} A String representing the unit of measurement for the grocery item's amount.
+ *      This field is immutable, set at object creation, and unmodifiable thereafter.
+ * <li>{@code expirationDate} A LocalDate representing the expiration date of the grocery item.
+ *      This field is immutable and does not change after object creation.
+ * <li>{@code price} A double representing the price of the grocery item. This field is immutable
+ *      and remains constant after creation.
+ * <li>{@code currency} A String representing the currency associated with the price. This field
+ *      is immutable, linked to the fixed price of the item.
  * </ul>
  * <p>
  * Each field has an accessor method to get the value of the field.
@@ -53,7 +35,7 @@ public class Grocery {
   private final String category;
   private double amount;
   private final String unit;
-  private final Date expirationDate;
+  private final LocalDate expirationDate;
   private final double price;
   private final String currency;
 
@@ -76,7 +58,7 @@ public class Grocery {
    *
    * @throws IllegalArgumentException if any parameters violate the constraints specified.
    */
-  public Grocery(String name, String category, double amount, String unit, Date expirationDate,
+  public Grocery(String name, String category, double amount, String unit, LocalDate expirationDate,
                  double price, String currency) throws IllegalArgumentException {
     // Guard clauses
     if (name == null || name.isBlank()) {
@@ -142,7 +124,7 @@ public class Grocery {
   /**
    * @return The expiration date of the grocery item.
    */
-  public Date getExpirationDate() {
+  public LocalDate getExpDate() {
     return expirationDate;
   }
 
