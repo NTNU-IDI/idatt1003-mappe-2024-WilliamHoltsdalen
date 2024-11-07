@@ -38,15 +38,16 @@ public class Grocery {
   private final List<GroceryBatch> batches;
 
   /**
-   * Creates a new grocery item.
+   * Constructs a new grocery object.
    *
    * @param name specifies the name of the grocery item. Name must not equal {@code null} or an
    *             empty string.
-   *
    * @param category specifies the category of the grocery item. Category must not equal
    *                 {@code null} or an empty string.
    * @param unit specifies the unit of the grocery item. Unit must not equal {@code null} or an
    *             empty string.
+   * @param batch specifies the {@code GroceryBatch} object of the grocery item. Must not
+   *              equal {@code null}.
    * @throws IllegalArgumentException if any parameters violate the constraints specified.
    */
   public Grocery(String name, String category, String unit, GroceryBatch batch) throws IllegalArgumentException {
@@ -112,7 +113,6 @@ public class Grocery {
    *
    * @param newAmount specifies the new amount of the grocery item. Amount must equal a positive
    *               number.
-   *
    * @throws IllegalArgumentException if the amount equals zero or a negative number.
    */
   private void setTotalAmount(double newAmount) {
@@ -125,8 +125,8 @@ public class Grocery {
   /**
    * Adds a new batch to the grocery item.
    * <p>
-   * The batch is added to the batches list and the total amount of the grocery item is updated.
-   * The batches list is sorted by expiration when updated.
+   * The batch is added to the list of batches, and the total amount of the grocery item is updated.
+   * The list of batches is sorted by expiration when updated.
    *
    * @param batch specifies the batch to add. Batch must not equal {@code null}.
    * @throws IllegalArgumentException if the batch is {@code null}.
