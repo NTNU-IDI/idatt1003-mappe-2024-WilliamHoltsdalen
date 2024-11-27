@@ -1,5 +1,8 @@
-package edu.ntnu.idi.idatt;
+package edu.ntnu.idi.idatt.views;
 
+import edu.ntnu.idi.idatt.models.FoodStorage;
+import edu.ntnu.idi.idatt.models.Grocery;
+import edu.ntnu.idi.idatt.models.GroceryBatch;
 import java.time.LocalDate;
 
 /**
@@ -30,11 +33,16 @@ public class TextUserInterface {
   public void start() {
 
     // Create some grocery items
-    Grocery milk = new Grocery("Milk", "Dairy", "liters", new GroceryBatch(1, 5, LocalDate.now()));
-    Grocery apple = new Grocery("Apple", "Fruit", "pieces", new GroceryBatch(3, 2, LocalDate.now()));
-    Grocery banana = new Grocery("Banana", "Fruit", "pieces", new GroceryBatch(10, 1, LocalDate.now()));
-    Grocery grapes = new Grocery("Grapes", "Fruit", "pieces", new GroceryBatch(20, 0.5, LocalDate.now()));
-    Grocery salt = new Grocery("Salt", "Spices", "grams", new GroceryBatch(500, 0.1, LocalDate.now()));
+    Grocery milk = new Grocery("Milk", "Dairy", "liters",
+        new GroceryBatch(1, 5, LocalDate.now()));
+    Grocery apple = new Grocery("Apple", "Fruit", "pieces",
+        new GroceryBatch(3, 2, LocalDate.now()));
+    Grocery banana = new Grocery("Banana", "Fruit", "pieces",
+        new GroceryBatch(10, 1, LocalDate.now()));
+    Grocery grapes = new Grocery("Grapes", "Fruit", "pieces",
+        new GroceryBatch(20, 0.5, LocalDate.now()));
+    Grocery salt = new Grocery("Salt", "Spices", "grams",
+        new GroceryBatch(500, 0.1, LocalDate.now()));
 
     // Add more grocery batches to the grocery items
     milk.addBatch(new GroceryBatch(5, 5, LocalDate.now()));
@@ -53,7 +61,7 @@ public class TextUserInterface {
     // Print the grocery items
     System.out.println("Grocery items:");
     for (Grocery grocery : foodStorage.getGroceries()) {
-      System.out.println(grocery+"\n");
+      System.out.println(grocery + "\n");
     }
   }
 }

@@ -1,5 +1,7 @@
 package edu.ntnu.idi.idatt;
 
+import edu.ntnu.idi.idatt.views.TextUserInterface;
+
 public class App {
     public static void main(String[] args) {
 

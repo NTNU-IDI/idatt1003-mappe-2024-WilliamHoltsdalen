@@ -3,6 +3,8 @@ package edu.ntnu.idi.idatt;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import edu.ntnu.idi.idatt.models.Grocery;
+import edu.ntnu.idi.idatt.models.GroceryBatch;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;

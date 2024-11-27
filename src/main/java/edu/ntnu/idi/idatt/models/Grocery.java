@@ -1,11 +1,11 @@
-package edu.ntnu.idi.idatt;
+package edu.ntnu.idi.idatt.models;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 /**
- * A {@code Grocery} object represents a grocery item.
+ * Class representing a grocery item.
  * <p>
  * A grocery object has the following fields:
  * <ul>
@@ -13,8 +13,8 @@ import java.util.List;
  *      set at object creation and cannot be changed afterward.
  * <li>{@code category} A String representing the category of the grocery item. This field is
  *      immutable and assigned at object creation.
- * <li>{@code totalAmount} A double representing the total quantity of the grocery item. This field is mutable
- *      and can be updated throughout the grocery item's lifecycle.
+ * <li>{@code totalAmount} A double representing the total quantity of the grocery item.
+ *      This field is mutable and can be updated throughout the grocery item's lifecycle.
  * <li>{@code unit} A String representing the unit of measurement for the grocery item's amount.
  *      This field is immutable, set at object creation, and unmodifiable thereafter.
  * <li> {@code batches} A list of {@code GroceryBatch} objects representing the batches of the
@@ -22,9 +22,8 @@ import java.util.List;
  *     item's lifecycle.
  * </ul>
  * <p>
- * Each field has an accessor method to get the value of the field.
- * The fields {@code totalAmount} and {@code batches} have mutator methods to change the values of
- * the fields.
+ * Each field has accessor methods to get the values. The fields {@code totalAmount} and
+ * {@code batches} have mutator methods to change the values of the fields.
  * <p>
  * The class constructor validates and initializes all fields. When given an invalid value
  * (such as a negative amount or price, a null or empty string, or a null expiration date), the
@@ -38,7 +37,7 @@ public class Grocery {
   private final List<GroceryBatch> batches;
 
   /**
-   * Constructs a new grocery object.
+   * Constructs a new grocery object, only if the parameters are valid.
    *
    * @param name specifies the name of the grocery item. Name must not equal {@code null} or an
    *             empty string.
@@ -50,7 +49,8 @@ public class Grocery {
    *              equal {@code null}.
    * @throws IllegalArgumentException if any parameters violate the constraints specified.
    */
-  public Grocery(String name, String category, String unit, GroceryBatch batch) throws IllegalArgumentException {
+  public Grocery(String name, String category, String unit, GroceryBatch batch)
+      throws IllegalArgumentException {
     // Guard clauses
     if (name == null || name.isBlank()) {
       throw new IllegalArgumentException("Name cannot be null or blank");
@@ -74,6 +74,8 @@ public class Grocery {
   }
 
   /**
+   * Returns the name of the grocery item.
+   *
    * @return The name of the grocery item.
    */
   public String getName() {
@@ -81,6 +83,8 @@ public class Grocery {
   }
 
   /**
+   * Returns the category of the grocery item.
+   *
    * @return The category of the grocery item.
    */
   public String getCategory() {
@@ -88,6 +92,8 @@ public class Grocery {
   }
 
   /**
+   * Returns the total amount of the grocery item.
+   *
    * @return The amount of the grocery item.
    */
   public double getTotalAmount() {
@@ -95,6 +101,8 @@ public class Grocery {
   }
 
   /**
+   * Returns the unit of the grocery item.
+   *
    * @return The unit of the grocery item.
    */
   public String getUnit() {
@@ -102,20 +110,22 @@ public class Grocery {
   }
 
   /**
-   * @return The purchase history of the grocery item.
+   * Returns a list containing all the grocery batches of the grocery item.
+   *
+   * @return A list containing of GroceryBatch objects.
    */
   public List<GroceryBatch> getBatches() {
     return batches;
   }
 
   /**
-   * Sets the amount of the grocery item.
+   * Sets the total amount of the grocery item.
    *
    * @param newAmount specifies the new amount of the grocery item. Amount must equal a positive
    *               number.
    * @throws IllegalArgumentException if the amount equals zero or a negative number.
    */
-  private void setTotalAmount(double newAmount) {
+  private void setTotalAmount(double newAmount) throws IllegalArgumentException {
     if (newAmount <= 0) {
       throw new IllegalArgumentException("Amount must be a positive number");
     }
@@ -125,8 +135,8 @@ public class Grocery {
   /**
    * Adds a new batch to the grocery item.
    * <p>
-   * The batch is added to the list of batches, and the total amount of the grocery item is updated.
-   * The list of batches is sorted by expiration when updated.
+   * The GroceryBatch object is added to the list of batches, and the total amount of the grocery
+   * item is updated. The list of batches is sorted by expiration date when updated.
    *
    * @param batch specifies the batch to add. Batch must not equal {@code null}.
    * @throws IllegalArgumentException if the batch is {@code null}.
@@ -136,40 +146,59 @@ public class Grocery {
       throw new IllegalArgumentException("Batch cannot be null");
     }
     batches.add(batch);
-    batches.sort(Comparator.comparing(GroceryBatch::getExpirationDate));
+    sortBatches();
     setTotalAmount(this.totalAmount + batch.getAmount());
   }
 
   /**
+   * Consumes a specified amount of the grocery item.
+   * The method will iterate through the batches of the grocery item, and consume the amount from
+   * the batches that expire first. The method will remove the batch if the amount to consume is equal to the amount of the batch. If the amount to consume is greater than
+   * the amount of the batch, the method will remove the batch entirely and update the remaining
+   * amount to consume for the next batch. If the amount to consume is less than the amount of the
+   * batch, the method will subtract the amount from the batch.
    *
    * @param amount specifies the amount of the grocery item to consume. Amount must equal a
    *               positive number.
-   * @throws IllegalArgumentException if the amount to consume is greater than the total amount of the
-   *         grocery item, or if the amount to consume is zero or a negative number.
+   * @throws IllegalArgumentException if the amount to consume is greater than the total amount of
+   *         the grocery item, or if the amount to consume is zero or a negative number.
    */
-  public void consume(double amount) {
+  public void consume(double amount) throws IllegalArgumentException {
     if (amount <= 0) {
       throw new IllegalArgumentException("Amount must be a positive number");
     }
     if (amount > this.totalAmount) {
-      throw new IllegalArgumentException("Amount to consume is greater than the total amount of the grocery item");
+      throw new IllegalArgumentException(
+          "Amount to consume is greater than the total amount of the grocery item");
     }
 
     for (GroceryBatch batch : batches) {
+      // If the amount to consume is equal to the amount of the batch, remove the batch.
       if (batch.getAmount() == amount) {
         batches.remove(batch);
         setTotalAmount(this.totalAmount - amount);
         return;
+      // If the amount to consume is greater than the amount of the batch, remove the batch and
+      // update the remaining amount to consume for the next batch.
       } else if (batch.getAmount() < amount) {
         amount -= batch.getAmount();
         batches.remove(batch);
         setTotalAmount(this.totalAmount - batch.getAmount());
+      // If the amount to consume is less than the amount of the batch, subtract the amount from the
+      // batch.
       } else {
         batch.setAmount(batch.getAmount() - amount);
         setTotalAmount(this.totalAmount - amount);
         return;
       }
     }
+  }
+
+  /**
+   * Sorts the batches of the grocery item by expiration date.
+   */
+  public void sortBatches() {
+    batches.sort(Comparator.comparing(GroceryBatch::getExpirationDate));
   }
 
   /**

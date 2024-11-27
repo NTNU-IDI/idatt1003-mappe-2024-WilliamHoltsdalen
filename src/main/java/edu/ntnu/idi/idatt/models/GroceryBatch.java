@@ -1,4 +1,4 @@
-package edu.ntnu.idi.idatt;
+package edu.ntnu.idi.idatt.models;
 
 import java.time.LocalDate;
 
@@ -8,7 +8,8 @@ public class GroceryBatch {
   private final LocalDate expirationDate;
 
 
-  public GroceryBatch(double amount, double pricePerUnit, LocalDate expirationDate) throws IllegalArgumentException {
+  public GroceryBatch(double amount, double pricePerUnit, LocalDate expirationDate)
+      throws IllegalArgumentException {
     if (amount <= 0) {
       throw new IllegalArgumentException("Amount cannot be zero or a negative number.");
     }
@@ -42,13 +43,15 @@ public class GroceryBatch {
       throw new IllegalArgumentException("Amount must be a positive number");
     }
     if (newAmount > this.amount) {
-      throw new IllegalArgumentException("Amount to consume is greater than the amount of the grocery batch");
+      throw new IllegalArgumentException(
+          "Amount to consume is greater than the amount of the grocery batch");
     }
     this.amount = newAmount;
   }
 
   @Override
   public String toString() {
-    return "Amount: " + amount +", Price per unit: " + pricePerUnit + ", Expiration date: " + expirationDate;
+    return "Amount: " + amount +", Price per unit: " + pricePerUnit + ", Expiration date: "
+        + expirationDate;
   }
 }
