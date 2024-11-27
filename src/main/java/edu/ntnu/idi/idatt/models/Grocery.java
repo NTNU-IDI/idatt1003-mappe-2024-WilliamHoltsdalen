@@ -29,7 +29,7 @@ import java.util.List;
  * (such as a negative amount or price, a null or empty string, or a null expiration date), the
  * constructor will throw an {@code IllegalArgumentException}.
  */
-public class Grocery {
+public class Grocery implements FoodItem{
   private final String name;
   private final String category;
   private double totalAmount;
@@ -65,7 +65,6 @@ public class Grocery {
       throw new IllegalArgumentException("Batch cannot be null");
     }
 
-    // Assigning valid values
     this.name = name;
     this.category = category;
     this.unit = unit;
@@ -78,6 +77,7 @@ public class Grocery {
    *
    * @return The name of the grocery item.
    */
+  @Override
   public String getName() {
     return name;
   }
@@ -87,6 +87,7 @@ public class Grocery {
    *
    * @return The category of the grocery item.
    */
+  @Override
   public String getCategory() {
     return category;
   }
@@ -195,7 +196,7 @@ public class Grocery {
   }
 
   /**
-   * Sorts the batches of the grocery item by expiration date.
+   * Sorts the batches of the grocery item by expiration date, in ascending order.
    */
   public void sortBatches() {
     batches.sort(Comparator.comparing(GroceryBatch::getExpirationDate));
