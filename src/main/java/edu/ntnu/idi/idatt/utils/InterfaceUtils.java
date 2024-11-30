@@ -36,6 +36,10 @@ public final class InterfaceUtils {
         System.out.println("Error: " + errorMessage);
     }
 
+    public static void printMenuSpacing() {
+        System.out.print("\n\n\n");
+    }
+
     public static int integerInput() {
         try {
             return Integer.parseInt(scanner.nextLine());
@@ -92,10 +96,9 @@ public final class InterfaceUtils {
     }
 
     public static void promptGroceryMenu() {
-        System.out.print(
+      printMenuSpacing();
+      System.out.print(
                 """
-                
-                
                        Grocery menu
                 ---------------------------
                 1. Add a new grocery
@@ -112,10 +115,9 @@ public final class InterfaceUtils {
     }
 
     public static void promptCookbookMenu() {
-        System.out.print(
+      printMenuSpacing();
+      System.out.print(
                 """
-                
-                
                        Cookbook menu
                 ---------------------------
                 1. Search for a recipe by name
@@ -129,6 +131,18 @@ public final class InterfaceUtils {
                 Your choice:\s""");
     }
 
+  public static void promptSettingsMenu() {
+    printMenuSpacing();
+    System.out.print(
+            """
+                     Settings menu
+            ---------------------------
+            1. Add demo data
+            2. Remove all data
+            0. Return to main menu
+            ---------------------------
+            Your choice:\s""");
+  }
     public static void exitApplication() {
         scanner.close();
         printGoodbyeMessage();
