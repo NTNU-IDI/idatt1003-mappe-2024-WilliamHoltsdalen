@@ -2,8 +2,9 @@ package edu.ntnu.idi.idatt.models;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class CookBook {
+public class Cookbook {
   private static final String NULL_RECIPE_ERROR = "Recipe cannot be null";
   private static final String NULL_RECIPES_ERROR = "Recipes cannot be null";
   private static final String RECIPE_NOT_FOUND_ERROR = "Recipe was not found";
@@ -12,22 +13,9 @@ public class CookBook {
   private final List<Recipe> recipes;
 
   /**
-   * Constructs a new cook book with the provided recipes.
-   *
-   * @param recipes the recipes to add to the cook book
-   * @throws IllegalArgumentException if the provided list of recipes is null
+   * Constructs a new empty cook book.
    */
-  public CookBook(List<Recipe> recipes) throws IllegalArgumentException {
-    if (recipes == null) {
-      throw new IllegalArgumentException(NULL_RECIPES_ERROR);
-    }
-    this.recipes = recipes;
-  }
-
-  /**
-   * Constructs a new cook book with no recipes.
-   */
-  public CookBook() {
+  public Cookbook() {
     this.recipes = new java.util.ArrayList<>();
   }
 
@@ -41,7 +29,19 @@ public class CookBook {
   }
 
   /**
-   * Returns the recipe with the provided name.
+   * Returns a list of all recipes in the cook book, sorted alphabetically by name.
+   *
+   * @return a list of all recipes in the cook book, sorted alphabetically by name
+   */
+  public List<Recipe> getSortedRecipes() {
+    List<Recipe> sortedRecipes = new java.util.ArrayList<>(recipes);
+    sortedRecipes.sort(Comparator.comparing(Recipe::getName));
+    return sortedRecipes;
+  }
+
+  /**
+   * Returns the recipe with the provided name. If no recipe with the provided name is found, or
+   * the name is null or blank, an IllegalArgumentException is thrown.
    *
    * @param name the name of the recipe
    * @return the recipe with the provided name
@@ -56,6 +56,25 @@ public class CookBook {
       .filter(recipe -> recipe.getName().equals(name))
       .findFirst()
       .orElseThrow(() -> new IllegalArgumentException(RECIPE_NOT_FOUND_ERROR));
+  }
+
+  /**
+   * Searches for recipes that contain the given keyword in their name.
+   *
+   * @param keyword the keyword to search for (case-insensitive).
+   * @return a list of matching recipes.
+   */
+  public List<Recipe> searchRecipesByKeyword(String keyword) {
+    if (keyword == null || keyword.isBlank()) {
+      throw new IllegalArgumentException("Keyword cannot be null or blank");
+    }
+
+    String lowerCaseKeyword = keyword.toLowerCase();
+
+    // Filter recipes where the name contains the keyword (case-insensitive)
+    return recipes.stream()
+        .filter(recipe -> recipe.getName().toLowerCase().contains(lowerCaseKeyword))
+        .collect(Collectors.toList());
   }
 
   /**
@@ -129,6 +148,5 @@ public class CookBook {
   public void sortRecipes() {
     recipes.sort(Comparator.comparing(Recipe::getName));
   }
-
 }
 
