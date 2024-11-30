@@ -166,27 +166,24 @@ public class Grocery implements FoodItem{
    */
   public void consume(double amount) throws IllegalArgumentException {
     if (amount <= 0) {
-      throw new IllegalArgumentException("Amount must be a positive number");
+      throw new IllegalArgumentException("Amount must be a positive number.");
     }
     if (amount > this.totalAmount) {
       throw new IllegalArgumentException(
-          "Amount to consume is greater than the total amount of the grocery item");
+          "Amount to consume is greater than the total amount of the grocery item. \nTotal amount: "
+              + this.totalAmount + " " + unit);
     }
 
-    for (GroceryBatch batch : batches) {
-      // If the amount to consume is equal to the amount of the batch, remove the batch.
+    while (batches.iterator().hasNext()) {
+      GroceryBatch batch = batches.getFirst();
       if (batch.getAmount() == amount) {
         batches.remove(batch);
         setTotalAmount(this.totalAmount - amount);
         return;
-      // If the amount to consume is greater than the amount of the batch, remove the batch and
-      // update the remaining amount to consume for the next batch.
       } else if (batch.getAmount() < amount) {
         amount -= batch.getAmount();
-        batches.remove(batch);
         setTotalAmount(this.totalAmount - batch.getAmount());
-      // If the amount to consume is less than the amount of the batch, subtract the amount from the
-      // batch.
+        batches.remove(batch);
       } else {
         batch.setAmount(batch.getAmount() - amount);
         setTotalAmount(this.totalAmount - amount);
