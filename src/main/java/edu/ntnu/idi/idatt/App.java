@@ -8,6 +8,7 @@ public class App {
         // Testing the TextUserInterface class
         TextUserInterface tui = new TextUserInterface();
         tui.init();
+        tui.addDemoData();
         tui.start();
     }
 }
