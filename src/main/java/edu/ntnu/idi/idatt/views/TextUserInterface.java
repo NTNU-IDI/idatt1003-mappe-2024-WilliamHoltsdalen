@@ -3,6 +3,8 @@ package edu.ntnu.idi.idatt.views;
 import edu.ntnu.idi.idatt.models.FoodStorage;
 import edu.ntnu.idi.idatt.models.Grocery;
 import edu.ntnu.idi.idatt.models.GroceryBatch;
+import edu.ntnu.idi.idatt.services.GroceryMenuService;
+import edu.ntnu.idi.idatt.utils.InterfaceUtils;
 import java.time.LocalDate;
 
 /**
@@ -22,7 +24,7 @@ public class TextUserInterface {
    */
   public void init() {
     // Initialize the application
-    foodStorage = new FoodStorage();
+    this.foodStorage = new FoodStorage();
   }
 
   /**
@@ -32,6 +34,80 @@ public class TextUserInterface {
    */
   public void start() {
 
+    InterfaceUtils.printWelcomeMessage();
+
+    handleMainMenu();
+    InterfaceUtils.exitApplication();
+  }
+
+
+
+  public void handleMainMenu() {
+    boolean finished = false;
+    while (!finished) {
+      InterfaceUtils.promptMainMenu();
+      int choice = InterfaceUtils.integerInput();
+
+      switch (choice) {
+        case 1 -> handleGroceryMenu();
+        case 2 -> handleCookbookMenu();
+        case 3 -> System.out.println("Meal suggestions not implemented yet.");
+        case 4 -> System.out.println("Settings not implemented yet.");
+        case 0 -> finished = true;
+        default -> System.out.println("Invalid choice");
+      }
+    }
+  }
+
+  public void handleGroceryMenu() {
+    GroceryMenuService groceryMenuService = new GroceryMenuService(foodStorage);
+    boolean finished = false;
+
+    while (!finished) {
+      InterfaceUtils.promptGroceryMenu();
+
+      int choice = InterfaceUtils.integerInput();
+      switch (choice) {
+        case 1 -> groceryMenuService.caseAddGrocery();
+        case 2 -> groceryMenuService.caseConsumeGrocery();
+        case 3 -> groceryMenuService.caseFindGroceryByName();
+        case 4 -> groceryMenuService.caseFindGroceriesByCategory();
+        case 5 -> groceryMenuService.caseFindGroceriesExpiringOnDate();
+        case 6 -> groceryMenuService.caseShowAllGroceries();
+        case 7 -> groceryMenuService.caseShowAllExpiredGroceries();
+        case 8 -> groceryMenuService.caseShowGroceriesExpiringBeforeDate();
+        case 0 -> finished = true;
+        default -> System.out.println("Invalid choice");
+      }
+    }
+    System.out.println("Returning to main menu");
+  }
+
+  public void handleCookbookMenu() {
+    boolean finished = false;
+    while (!finished) {
+      InterfaceUtils.promptCookbookMenu();
+      int choice = InterfaceUtils.integerInput();
+
+      switch (choice) {
+        case 1 -> System.out.println("Search for a recipe by name feature not implemented yet.");
+        case 2 -> System.out.println("Search recipes by keyword feature not implemented yet.");
+        case 3 -> System.out.println("Add a new recipe feature not implemented yet.");
+        case 4 -> System.out.println("Edit a recipe feature not implemented yet.");
+        case 5 -> System.out.println("Remove a recipe feature not implemented yet.");
+        case 6 -> System.out.println("Show all recipes feature not implemented yet.");
+        case 0 -> finished = true;
+        default -> System.out.println("Invalid choice");
+      }
+    }
+    System.out.println("Returning to main menu");
+  }
+
+  /**
+   * Add some example grocery items to the food storage system. This method is used for testing and
+   * demonstration purposes only.
+   */
+  public void addDemoData() {
     // Create some grocery items
     Grocery milk = new Grocery("Milk", "Dairy", "liters",
         new GroceryBatch(1, 5, LocalDate.now()));
@@ -57,11 +133,5 @@ public class TextUserInterface {
     foodStorage.addGrocery(banana);
     foodStorage.addGrocery(grapes);
     foodStorage.addGrocery(salt);
-
-    // Print the grocery items
-    System.out.println("Grocery items:");
-    for (Grocery grocery : foodStorage.getGroceries()) {
-      System.out.println(grocery + "\n");
-    }
   }
 }
