@@ -37,7 +37,11 @@ public final class InterfaceUtils {
     }
 
     public static void printMenuSpacing() {
-        System.out.print("\n\n\n");
+        System.out.print("\n\n");
+    }
+
+    public static void printSubMenuSpacing() {
+        System.out.print("\n");
     }
 
     public static int integerInput() {
@@ -80,10 +84,9 @@ public final class InterfaceUtils {
     }
 
     public static void promptMainMenu() {
-        System.out.print(
+      printMenuSpacing();
+      System.out.print(
                 """
-                
-                
                          Main menu
                 ---------------------------
                 1. Open grocery menu
@@ -99,8 +102,8 @@ public final class InterfaceUtils {
       printMenuSpacing();
       System.out.print(
                 """
-                       Grocery menu
-                ---------------------------
+                                      Grocery menu
+                ------------------------------------------------------
                 1. Add a new grocery
                 2. Consume amount of a grocery
                 3. Find a grocery by name
@@ -110,7 +113,7 @@ public final class InterfaceUtils {
                 7. Show all expired groceries
                 8. Show all groceries that expire before a given date
                 0. Return to main menu
-                --------------------------
+                ------------------------------------------------------
                 Your choice:\s""");
     }
 
@@ -118,31 +121,49 @@ public final class InterfaceUtils {
       printMenuSpacing();
       System.out.print(
                 """
-                       Cookbook menu
-                ---------------------------
-                1. Search for a recipe by name
-                2. Search recipes by keyword
+                          Cookbook menu
+                --  -- --  --  --  --  --  --  --
+                1. Find a recipe by name
+                2. Find recipes by ingredients
                 3. Add a new recipe
                 4. Edit a recipe
                 5. Remove a recipe
                 6. Show all recipes
                 0. Return to main menu
-                ---------------------------
+                --  -- --  --  --  --  --  --  --
                 Your choice:\s""");
     }
 
-  public static void promptSettingsMenu() {
-    printMenuSpacing();
-    System.out.print(
-            """
-                     Settings menu
-            ---------------------------
-            1. Add demo data
-            2. Remove all data
-            0. Return to main menu
-            ---------------------------
-            Your choice:\s""");
-  }
+    public static void promptRecipeEditMenu() {
+      printMenuSpacing();
+      System.out.print(
+              """
+                   What would you like to edit?
+              - - - - - - - - - - - - - - - - - -
+              1. Edit the name
+              2. Edit the description
+              3. Edit the instructions
+              4. Add an ingredient
+              5. Remove an ingredient
+              6. Edit the servings
+              0. Cancel
+              - - - - - - - - - - - - - - - - - -
+              Your choice:\s""");
+    }
+
+    public static void promptSettingsMenu() {
+      printMenuSpacing();
+      System.out.print(
+              """
+                   Settings menu
+              -----------------------
+              1. Add demo data
+              2. Remove all data
+              0. Return to main menu
+              -----------------------
+              Your choice:\s""");
+    }
+
     public static void exitApplication() {
         scanner.close();
         printGoodbyeMessage();

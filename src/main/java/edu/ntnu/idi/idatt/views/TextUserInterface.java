@@ -1,12 +1,11 @@
 package edu.ntnu.idi.idatt.views;
 
+import edu.ntnu.idi.idatt.models.Cookbook;
 import edu.ntnu.idi.idatt.models.FoodStorage;
-import edu.ntnu.idi.idatt.models.Grocery;
-import edu.ntnu.idi.idatt.models.GroceryBatch;
+import edu.ntnu.idi.idatt.services.CookbookMenuService;
 import edu.ntnu.idi.idatt.services.GroceryMenuService;
 import edu.ntnu.idi.idatt.services.SettingsMenuService;
 import edu.ntnu.idi.idatt.utils.InterfaceUtils;
-import java.time.LocalDate;
 
 /**
  * Functions as a simple text-based user interface for a food storage system.
@@ -17,6 +16,7 @@ import java.time.LocalDate;
  */
 public class TextUserInterface {
   private FoodStorage foodStorage;
+  private Cookbook cookbook;
 
   /**
    * Initialize the text user interface application.
@@ -26,9 +26,10 @@ public class TextUserInterface {
   public void init() {
     // Initialize the application
     this.foodStorage = new FoodStorage();
+    this.cookbook = new Cookbook();
 
     // Add some example grocery items to the food storage system
-    SettingsMenuService settingsMenuService = new SettingsMenuService(foodStorage);
+    SettingsMenuService settingsMenuService = new SettingsMenuService(foodStorage, cookbook);
     settingsMenuService.addDemoData();
   }
 
@@ -88,17 +89,18 @@ public class TextUserInterface {
   }
 
   public void handleCookbookMenu() {
+    final CookbookMenuService cookbookMenuService = new CookbookMenuService(cookbook);
     boolean finished = false;
     while (!finished) {
       InterfaceUtils.promptCookbookMenu();
       final int choice = InterfaceUtils.integerInput();
       switch (choice) {
-        case 1 -> System.out.println("Search for a recipe by name feature not implemented yet.");
-        case 2 -> System.out.println("Search recipes by keyword feature not implemented yet.");
-        case 3 -> System.out.println("Add a new recipe feature not implemented yet.");
-        case 4 -> System.out.println("Edit a recipe feature not implemented yet.");
-        case 5 -> System.out.println("Remove a recipe feature not implemented yet.");
-        case 6 -> System.out.println("Show all recipes feature not implemented yet.");
+        case 1 -> cookbookMenuService.caseFindRecipeByName();
+        case 2 -> cookbookMenuService.caseSearchRecipesByIngredients();
+        case 3 -> cookbookMenuService.caseAddNewRecipe();
+        case 4 -> cookbookMenuService.caseEditRecipe();
+        case 5 -> cookbookMenuService.caseRemoveRecipe();
+        case 6 -> cookbookMenuService.caseShowAllRecipes();
         case 0 -> finished = true;
         default -> System.out.println("Invalid choice");
       }
@@ -107,7 +109,7 @@ public class TextUserInterface {
   }
 
   public void handleSettingsMenu() {
-    final SettingsMenuService settingsMenuService = new SettingsMenuService(foodStorage);
+    final SettingsMenuService settingsMenuService = new SettingsMenuService(foodStorage, cookbook);
     boolean finished = false;
 
     while (!finished) {

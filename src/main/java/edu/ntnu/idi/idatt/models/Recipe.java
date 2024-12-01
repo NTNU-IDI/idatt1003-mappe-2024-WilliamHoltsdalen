@@ -1,6 +1,7 @@
 package edu.ntnu.idi.idatt.models;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Recipe {
@@ -11,11 +12,11 @@ public class Recipe {
   private static final String NULL_OR_BLANK_INSTRUCTIONS = "Instructions cannot be null or blank";
   private static final String NON_POSITIVE_SERVINGS_ERROR = "Servings must be a positive number";
 
-  private final String name;
-  private final String description;
-  private final String instructions;
+  private String name;
+  private String description;
+  private String instructions;
   private Map<String, Ingredient> ingredients;
-  private final int servings;
+  private int servings;
 
   public Recipe(String name, String description, String instructions, int servings) {
     // Guard clauses
@@ -36,6 +37,7 @@ public class Recipe {
     this.description = description;
     this.instructions = instructions;
     this.servings = servings;
+    this.ingredients = new HashMap<>();
   }
 
   public String getName() {
@@ -50,12 +52,50 @@ public class Recipe {
     return instructions;
   }
 
-  public Map<String, Ingredient> getIngredients() {
-    return new HashMap<>(ingredients);
+  public List<Ingredient> getIngredients() {
+    return ingredients.values().stream().toList();
+  }
+
+  public Ingredient getIngredient(String name) {
+    if (name == null || name.isBlank()) {
+      throw new IllegalArgumentException(NULL_OR_BLANK_NAME);
+    }
+    if (!ingredients.containsKey(name)) {
+      throw new IllegalArgumentException(INGREDIENT_NOT_FOUND_ERROR);
+    }
+    return ingredients.get(name);
   }
 
   public int getServings() {
     return servings;
+  }
+
+  public void setName(String name) {
+    if (name == null || name.isBlank()) {
+      throw new IllegalArgumentException(NULL_OR_BLANK_NAME);
+    }
+    this.name = name;
+  }
+
+  public void setDescription(String description) {
+    if (description == null || description.isBlank()) {
+      throw new IllegalArgumentException(NULL_OR_BLANK_DESCRIPTION);
+    }
+    this.description = description;
+  }
+
+  public void setInstructions(String instructions) {
+    if (instructions == null || instructions.isBlank()) {
+      throw new IllegalArgumentException(NULL_OR_BLANK_INSTRUCTIONS);
+    }
+    this.instructions = instructions;
+  }
+
+  public void setServings(int servings) {
+    if (servings <= 0) {
+      throw new IllegalArgumentException(NON_POSITIVE_SERVINGS_ERROR);
+    }
+    this.servings = servings;
   }
 
   public void addIngredient(Ingredient ingredient) throws IllegalArgumentException {
@@ -84,7 +124,18 @@ public class Recipe {
 
   @Override
   public String toString() {
-    return "";
-  }
+    String ingredientsString = ingredients.values().stream()
+        .map(Ingredient::toString)
+        .reduce("", (acc, ingredient) -> acc + ingredient + "\n");
 
+    return String.format("""
+            Name: %s
+            Description: %s
+            Servings: %d
+            
+            Instructions: %s
+            
+            Ingredients: %s
+            """, name, description, servings, instructions, ingredientsString);
+  }
 }

@@ -57,4 +57,8 @@ public class Ingredient implements FoodItem {
     }
   }
 
+  @Override
+  public String toString() {
+    return String.format("%s (%s): %.2f %s", name, category, amount, unit);
+  }
 }

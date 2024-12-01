@@ -148,5 +148,12 @@ public class Cookbook {
   public void sortRecipes() {
     recipes.sort(Comparator.comparing(Recipe::getName));
   }
+
+  /**
+   * Removes all recipes from the cook book.
+   */
+  public void removeAllRecipes() {
+    recipes.clear();
+  }
 }
 
