@@ -174,7 +174,6 @@ class GroceryBatchTest {
     LocalDate expirationDate = LocalDate.of(2022, 1, 1);
 
     GroceryBatch groceryBatch = new GroceryBatch(amount, pricePerUnit, expirationDate);
-    groceryBatch.setAmount(2);
 
     assertThrows(IllegalArgumentException.class, () -> groceryBatch.setAmount(3));
   }
