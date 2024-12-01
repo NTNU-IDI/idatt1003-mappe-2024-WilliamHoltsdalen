@@ -37,20 +37,24 @@ public class GroceryMenuService {
       return;
     }
 
+    try {
+      System.out.print("Enter category: ");
+      final String category = InterfaceUtils.stringInput();
+      System.out.print("Enter unit: ");
+      final String unit = InterfaceUtils.stringInput();
+      System.out.print("Enter amount: ");
+      final double amount = InterfaceUtils.doubleInput();
+      System.out.printf("Enter price (per %s): ", unit);
+      final double pricePerUnit = InterfaceUtils.doubleInput();
+      System.out.print("Enter expiration date (yyyy-mm-dd): ");
+      final LocalDate expDate = InterfaceUtils.dateInput();
 
-    System.out.print("Enter category: ");
-    final String category = InterfaceUtils.stringInput();
-    System.out.print("Enter unit: ");
-    final String unit = InterfaceUtils.stringInput();
-    System.out.print("Enter amount: ");
-    final double amount = InterfaceUtils.doubleInput();
-    System.out.printf("Enter price (per %s): ", unit);
-    final double pricePerUnit = InterfaceUtils.doubleInput();
-    System.out.print("Enter expiration date (yyyy-mm-dd): ");
-    final LocalDate expDate = InterfaceUtils.dateInput();
-
-    foodStorage.addGrocery(new Grocery(name, category, unit, new GroceryBatch(amount, pricePerUnit, expDate)));
-    System.out.println("\nGrocery added successfully!");
+      foodStorage.addGrocery(new Grocery(name, category, unit, new GroceryBatch(amount, pricePerUnit, expDate)));
+      System.out.println("\nGrocery added successfully!");
+    } catch (IllegalArgumentException e) {
+      System.out.println("Failed to add grocery: ");
+      System.out.println("Error: " + e.getMessage());
+    }
   }
 
   public void addGroceryBatch(String name) {
@@ -90,7 +94,7 @@ public class GroceryMenuService {
       grocery.consume(amount);
     } catch (IllegalArgumentException e) {
       System.out.println("Failed to consume grocery: ");
-      System.out.println(e.getMessage());
+      System.out.println("Error: " + e.getMessage());
       return;
     }
 
