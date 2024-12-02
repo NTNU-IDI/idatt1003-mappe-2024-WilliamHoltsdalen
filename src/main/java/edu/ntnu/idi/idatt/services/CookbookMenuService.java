@@ -96,9 +96,9 @@ public class CookbookMenuService {
 
   public void caseEditRecipe() {
     System.out.println("Enter the name of the recipe you want to edit: ");
-    final String name = InterfaceUtils.stringInput();
+    final String recipeName = InterfaceUtils.stringInput();
     try {
-      final Recipe recipe = cookbook.getRecipe(name);
+      final Recipe recipe = cookbook.getRecipe(recipeName);
       System.out.println("Recipe found:");
       System.out.println(recipe);
 
@@ -133,11 +133,25 @@ public class CookbookMenuService {
           recipe.addIngredient(new Ingredient(ingredientName, ingredientCategory, ingredientUnit,  ingredientAmount));
           break;
         case 5:
-          System.out.println("Enter the name of the ingredient you want to remove: ");
-          final String ingredientToRemove = InterfaceUtils.stringInput();
-          cookbook.getRecipe(name).removeIngredient(cookbook.getRecipe(name).getIngredient(ingredientToRemove));
+          System.out.println("Enter the name of the ingredient to edit the amount of: ");
+          final String ingredientToEditName = InterfaceUtils.stringInput();
+          Ingredient ingredient = cookbook.getRecipe(recipeName).getIngredient(ingredientToEditName);
+          System.out.printf("Enter the new amount for the ingredient (currently %.2f): %n", ingredient.getAmount());
+          final double newAmount = InterfaceUtils.doubleInput();
+          try {
+            ingredient.setAmount(newAmount);
+          } catch (IllegalArgumentException e) {
+            System.out.println("Could not edit the amount.");
+            System.out.println("Error: " + e.getMessage());
+            return;
+          }
           break;
         case 6:
+          System.out.println("Enter the name of the ingredient you want to remove: ");
+          final String ingredientToRemove = InterfaceUtils.stringInput();
+          cookbook.getRecipe(recipeName).removeIngredient(cookbook.getRecipe(recipeName).getIngredient(ingredientToRemove));
+          break;
+        case 7:
           System.out.println("Enter the new amount of servings: ");
           final int newServings = InterfaceUtils.integerInput();
           recipe.setServings(newServings);
