@@ -53,10 +53,10 @@ class IngredientTest {
   }
 
   /**
-   * Ensure that the method {@code setAmount} sets the correct amount of the ingredient.
+   * Test that the method {@code setAmount} sets the correct amount of the ingredient.
    */
   @Test
-  @DisplayName("Ensure that the method setAmount sets the correct amount of the ingredient.")
+  @DisplayName("Test that the method setAmount sets the correct amount of the ingredient.")
   void testSetAmount() {
     Ingredient ingredient = new Ingredient("Milk", "Dairy", "liters", 1.0);
     ingredient.setAmount(2.0);
@@ -64,10 +64,10 @@ class IngredientTest {
   }
 
   /**
-   * Ensure that the method {@code toString} returns the correct string representation.
+   * Test that the method {@code toString} returns the correct string representation.
    */
   @Test
-  @DisplayName("Ensure that the method toString returns the correct string representation.")
+  @DisplayName("Test that the method toString returns the correct string representation.")
   void testToString() {
     Ingredient ingredient = new Ingredient("Milk", "Dairy", "liters", 1.0);
     assertEquals("Milk (Dairy): 1.00 liters", ingredient.toString());

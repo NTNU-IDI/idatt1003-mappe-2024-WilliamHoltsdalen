@@ -90,6 +90,12 @@ public class GroceryMenuService {
     System.out.printf("Enter amount to consume (%s): ", grocery.getUnit());
     final double amount = InterfaceUtils.doubleInput();
 
+    if (amount == grocery.getTotalAmount()) {
+      foodStorage.removeGrocery(grocery);
+      System.out.println("Successfully removed grocery.");
+      return;
+    }
+
     try {
       grocery.consume(amount);
     } catch (IllegalArgumentException e) {

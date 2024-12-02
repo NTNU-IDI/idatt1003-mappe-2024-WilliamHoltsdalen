@@ -1,10 +1,8 @@
-package edu.ntnu.idi.idatt;
+package edu.ntnu.idi.idatt.models;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import edu.ntnu.idi.idatt.models.Grocery;
-import edu.ntnu.idi.idatt.models.GroceryBatch;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -86,18 +84,23 @@ class GroceryTest {
    * Ensure that the method {@code consume} sets the correct amount of the grocery object.
    */
   @Test
-  @DisplayName("Test consuming an amount of the grocery object, and ensure the amount is updated "
+  @DisplayName("Test consuming different amounts of the grocery object, and ensure the amount is updated "
       + "correctly.")
   void testConsumeGrocery() {
-    Grocery grocery1 = new Grocery("Milk", "Dairy", "liters", new GroceryBatch(3, 20, LocalDate.now()));
-    grocery1.consume(2);
+    Grocery grocery = new Grocery("Milk", "Dairy", "liters", new GroceryBatch(10, 20, LocalDate.now()));
+    grocery.addBatch(new GroceryBatch(3, 20, LocalDate.now().plusDays(1)));
 
-    Grocery grocery2 = new Grocery("Milk", "Dairy", "liters", new GroceryBatch(3, 20, LocalDate.now().plusDays(1)));
-    grocery2.addBatch(new GroceryBatch(2, 20, LocalDate.now()));
-    grocery2.consume(3);
+    grocery.consume(2);
+    assertEquals(11, grocery.getTotalAmount());
+    assertEquals(8, grocery.getBatches().getFirst().getAmount());
 
-    assertEquals(1, grocery1.getTotalAmount());
-    assertEquals(2, grocery2.getTotalAmount());
+    grocery.consume(9);
+    assertEquals(2, grocery.getTotalAmount());
+    assertEquals(1, grocery.getBatches().size());
+
+    grocery.consume(2);
+    assertEquals(0, grocery.getTotalAmount());
+    assertEquals(0, grocery.getBatches().size());
   }
 
   /**

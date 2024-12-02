@@ -170,5 +170,4 @@ public final class InterfaceUtils {
         printGoodbyeMessage();
         System.exit(0);
     }
-
 }

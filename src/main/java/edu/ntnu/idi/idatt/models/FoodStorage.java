@@ -6,15 +6,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * A class representing a food storage system.
- * <p>
- * The food storage contains a {@code map} of grocery objects. The class provides methods for adding
- * and removing grocery objects, adding grocery batches to existing grocery objects, and decreasing
- * the amount of a grocery object to reflect user consumption. The class also provides methods for
- * retrieving grocery objects, all grocery objects that expire before a given date, and all grocery
- * objects in the food storage.
- */
+
 public class FoodStorage {
   /** The exception message for when a grocery object does not exist. */
   private static final String NO_GROCERY_FOUND_ERROR = "Grocery not found.";
@@ -22,11 +14,18 @@ public class FoodStorage {
   private static final String GROCERY_EXISTS_ERROR = "Grocery already exists in storage.";
   private static final String INVALID_NAME_ERROR = "Invalid name. Cannot be null or an empty string.";
   private static final String INVALID_CATEGORY_ERROR = "Invalid category. Cannot be null or an empty string.";
-  private static final String INVALID_AMOUNT_ERROR = "Invalid amount.";
   private static final String INVALID_EXPIRATION_DATE_ERROR = "Invalid expiration date.";
 
-  /** A map of grocery objects. */
-  private final HashMap<String, Grocery> groceries = new HashMap<>();
+  /** A map of grocery objects. The key is the name of the grocery, and the value is the grocery object. */
+  private final HashMap<String, Grocery> groceries;
+
+  /**
+   * Constructs a new empty food storage.
+   */
+  public FoodStorage() {
+    this.groceries = new HashMap<>();
+  }
+
 
   /**
    * Returns a list of all grocery objects in the food storage.
@@ -86,8 +85,9 @@ public class FoodStorage {
    * @param category the category to filter the grocery objects by.
    * @return a list of all grocery objects in the food storage that belong to the specified
    *         category.
+   * @throws IllegalArgumentException if the category is null or an empty string.
    */
-  public List<Grocery> getGroceriesByCategory(String category) {
+  public List<Grocery> getGroceriesByCategory(String category) throws IllegalArgumentException {
     if (category == null || category.isBlank()) {
       throw new IllegalArgumentException(INVALID_CATEGORY_ERROR);
     }
@@ -152,23 +152,6 @@ public class FoodStorage {
   }
 
   /**
-   * Adds a grocery batch to an existing grocery object in the food storage.
-   * <p>
-   * If the food storage does not contain the grocery object, the method will throw an
-   * {@code IllegalArgumentException}.
-   * @param name the name of the grocery object to add the batch to.
-   * @param batch the grocery batch to add.
-   * @throws IllegalArgumentException if the food storage does not contain the grocery object.
-   */
-  public void addGroceryBatch(String name, GroceryBatch batch) throws IllegalArgumentException {
-    if (!groceries.containsKey(name)) {
-      throw new IllegalArgumentException(NO_GROCERY_FOUND_ERROR);
-    }
-    Grocery existingGrocery = groceries.get(name);
-    existingGrocery.addBatch(batch);
-  }
-
-  /**
    * Removes the specified object from the food storage.
    * <p>
    * If the food storage does not contain the grocery object, the method will throw an
@@ -178,7 +161,7 @@ public class FoodStorage {
    * @throws IllegalArgumentException if the given grocery object does not exist in the food
    *        storage.
    */
-  private void removeGrocery(Grocery grocery) throws IllegalArgumentException {
+  public void removeGrocery(Grocery grocery) throws IllegalArgumentException {
     if (grocery == null) {
       throw new IllegalArgumentException(NULL_GROCERY_ERROR);
     }
@@ -189,38 +172,9 @@ public class FoodStorage {
   }
 
   /**
-   * Updates the amount of a specified grocery object to reflect user consumption.
-   * <p>
-   * Takes a {@code grocery} object and a double {@code amount} as parameters. {@code amount}
-   * cannot equal zero or a negative number. If {@code amount} equals zero, or a negative number,
-   * the specified {@code amount} is less than the current amount of the grocery object, or the
-   * food storage does not contain the grocery object, the method throws an
-   * {@code IllegalArgumentException}. If the {@code amount} equals the amount of the grocery item,
-   * the method {@link #removeGrocery} will be invoked, to remove the grocery object from the food
-   * storage. Otherwise, the method {@link Grocery#consume} will be invoked to update the amount of
-   * the grocery object.
-   *
-   * @param grocery the grocery object.
-   * @param amount the amount to decrease the grocery amount by.
-   * @throws IllegalArgumentException if the food storage does not contain the grocery
-   *        object, current amount is less than given amount, or the given amount equals zero
-   *        or a negative number.
+   * Removes all grocery objects from the food storage.
    */
-  public void consumeGrocery(Grocery grocery, double amount) throws IllegalArgumentException {
-    String name = grocery.getName();
-    if (!groceries.containsKey(name)) {
-      throw new IllegalArgumentException(NO_GROCERY_FOUND_ERROR);
-    }
-    if (amount <= 0) {
-      throw new IllegalArgumentException(INVALID_AMOUNT_ERROR + "Must be a positive number.");
-    }
-    if (groceries.get(name).getTotalAmount() < amount) {
-      throw new IllegalArgumentException(INVALID_AMOUNT_ERROR + "Exceeds the current amount of the grocery");
-    }
-    if (groceries.get(name).getTotalAmount() == amount) {
-      removeGrocery(groceries.get(name));
-      return;
-    }
-    grocery.consume(amount);
+  public void removeAllGroceries() {
+    groceries.clear();
   }
 }

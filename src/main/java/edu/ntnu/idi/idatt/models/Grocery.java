@@ -29,7 +29,7 @@ import java.util.List;
  * (such as a negative amount or price, a null or empty string, or a null expiration date), the
  * constructor will throw an {@code IllegalArgumentException}.
  */
-public class Grocery implements FoodItem{
+public class Grocery implements FoodItem {
   private final String name;
   private final String category;
   private double totalAmount;
@@ -127,7 +127,7 @@ public class Grocery implements FoodItem{
    * @throws IllegalArgumentException if the amount equals zero or a negative number.
    */
   private void setTotalAmount(double newAmount) throws IllegalArgumentException {
-    if (newAmount <= 0) {
+    if (newAmount < 0) {
       throw new IllegalArgumentException("Amount must be a positive number");
     }
     this.totalAmount = newAmount;
@@ -209,7 +209,7 @@ public class Grocery implements FoodItem{
   @Override
   public String toString() {
     StringBuilder str = new StringBuilder("Name: " + name + ", Category: " + category + ", Unit: "
-        + unit + ", totalAmount: " + totalAmount + " " + unit);
+        + unit + ", Total amount: " + totalAmount + " " + unit + "\nBatches:");
     for (GroceryBatch batch : batches) {
       str.append("\n").append(batch.toString());
     }

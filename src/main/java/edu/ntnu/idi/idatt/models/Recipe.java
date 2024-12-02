@@ -133,9 +133,11 @@ public class Recipe {
             Description: %s
             Servings: %d
             
-            Instructions: %s
+            Instructions: 
+            %s
             
-            Ingredients: %s
+            Ingredients: 
+            %s
             """, name, description, servings, instructions, ingredientsString);
   }
 }

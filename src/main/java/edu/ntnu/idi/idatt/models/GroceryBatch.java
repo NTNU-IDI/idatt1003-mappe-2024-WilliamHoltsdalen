@@ -37,21 +37,20 @@ public class GroceryBatch {
     return expirationDate;
   }
 
-
   public void setAmount(double newAmount) {
     if (newAmount <= 0) {
       throw new IllegalArgumentException("Amount must be a positive number");
     }
     if (newAmount > this.amount) {
       throw new IllegalArgumentException(
-          "Amount to consume is greater than the amount of the grocery batch");
+          "New amount cannot be greater than the current amount of the grocery batch");
     }
     this.amount = newAmount;
   }
 
   @Override
   public String toString() {
-    return "Amount: " + amount +", Price per unit: " + pricePerUnit + ", Expiration date: "
+    return "Amount: " + amount + ", Price per unit: " + pricePerUnit + ", Expiration date: "
         + expirationDate;
   }
 }
