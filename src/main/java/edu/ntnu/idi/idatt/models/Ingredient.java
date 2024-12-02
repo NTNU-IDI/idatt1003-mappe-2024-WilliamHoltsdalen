@@ -9,7 +9,7 @@ public class Ingredient implements FoodItem {
   private final String name;
   private final String category;
   private final String unit;
-  private final double amount;
+  private double amount;
 
   public Ingredient(String name, String category, String unit, double amount) {
     // Guard clauses
@@ -55,6 +55,7 @@ public class Ingredient implements FoodItem {
     if (amount <= 0) {
       throw new IllegalArgumentException(NON_POSITIVE_AMOUNT_ERROR);
     }
+    this.amount = amount;
   }
 
   @Override

@@ -144,8 +144,9 @@ public final class InterfaceUtils {
               2. Edit the description
               3. Edit the instructions
               4. Add an ingredient
-              5. Remove an ingredient
-              6. Edit the servings
+              5. Edit amount of an ingredient
+              6. Remove an ingredient
+              7. Edit the servings
               0. Cancel
               - - - - - - - - - - - - - - - - - -
               Your choice:\s""");
