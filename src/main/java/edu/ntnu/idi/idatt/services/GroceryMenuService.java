@@ -54,7 +54,7 @@ public class GroceryMenuService {
       final String unit = InterfaceUtils.stringInput();
       System.out.print("Enter amount: ");
       final double amount = InterfaceUtils.doubleInput();
-      System.out.printf("Enter price (per %s): ", unit);
+      System.out.printf("Enter price (per %s) in NOK: ", unit);
       final double pricePerUnit = InterfaceUtils.doubleInput();
       System.out.print("Enter expiration date (yyyy-mm-dd): ");
       final LocalDate expDate = InterfaceUtils.dateInput();
@@ -76,7 +76,7 @@ public class GroceryMenuService {
 
     System.out.printf("Enter amount (%s): ", grocery.getUnit());
     final double amount = InterfaceUtils.doubleInput();
-    System.out.print("Enter price (per " + grocery.getUnit() + "): ");
+    System.out.print("Enter price (per " + grocery.getUnit() + ") in NOK: ");
     final double pricePerUnit = InterfaceUtils.doubleInput();
     System.out.print("Enter expiration date (yyyy-mm-dd): ");
     final LocalDate expDate = InterfaceUtils.dateInput();
@@ -179,10 +179,17 @@ public class GroceryMenuService {
       System.out.println("There are no groceries that are expired in the food storage.");
       return;
     }
+    double totalValue = 0;
     System.out.println("Expired groceries:");
     for (Grocery grocery : groceries) {
-      System.out.println(grocery);
+      System.out.println("\n" + grocery);
+      for (GroceryBatch batch : grocery.getBatches()) {
+        if (batch.getExpirationDate().isBefore(LocalDate.now())) {
+          totalValue += batch.getAmount() * batch.getPricePerUnit();
+        }
+      }
     }
+    System.out.printf("%nTotal value of all expired grocery batches: %.2f NOK%n", totalValue);
   }
 
   public void caseShowGroceriesExpiringBeforeDate() {
