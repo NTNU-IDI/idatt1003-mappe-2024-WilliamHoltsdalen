@@ -11,15 +11,25 @@ public class GroceryMenuService {
   private final FoodStorage foodStorage;
 
   public GroceryMenuService(FoodStorage foodStorage) {
+    if (foodStorage == null) {
+      throw new IllegalArgumentException("Food storage cannot be null");
+    }
+
     this.foodStorage = foodStorage;
   }
 
-  public boolean checkIfGroceryExists(String name) {
+  private boolean checkIfGroceryExists(String name) throws IllegalArgumentException {
+    if (name == null || name.isBlank()) {
+      throw new IllegalArgumentException("Name cannot be null or blank");
+    }
     return foodStorage.getAllGroceries().stream()
         .anyMatch(grocery -> grocery.getName().equalsIgnoreCase(name));
   }
 
-  public Grocery getGroceryByName(String name) {
+  private Grocery getGroceryByName(String name) {
+    if (name == null || name.isBlank()) {
+      throw new IllegalArgumentException("Name cannot be null or blank");
+    }
     try {
       return foodStorage.getGroceryByName(name);
     } catch (IllegalArgumentException e) {
@@ -58,6 +68,10 @@ public class GroceryMenuService {
   }
 
   public void addGroceryBatch(String name) {
+    if (name == null || name.isBlank()) {
+      throw new IllegalArgumentException("Name cannot be null or blank");
+    }
+
     final Grocery grocery = getGroceryByName(name);
 
     System.out.printf("Enter amount (%s): ", grocery.getUnit());

@@ -4,6 +4,7 @@ import edu.ntnu.idi.idatt.models.Cookbook;
 import edu.ntnu.idi.idatt.models.FoodStorage;
 import edu.ntnu.idi.idatt.services.CookbookMenuService;
 import edu.ntnu.idi.idatt.services.GroceryMenuService;
+import edu.ntnu.idi.idatt.services.MealSuggestionsService;
 import edu.ntnu.idi.idatt.services.SettingsMenuService;
 import edu.ntnu.idi.idatt.utils.InterfaceUtils;
 
@@ -57,7 +58,7 @@ public class TextUserInterface {
       switch (choice) {
         case 1 -> handleGroceryMenu();
         case 2 -> handleCookbookMenu();
-        case 3 -> System.out.println("Meal suggestions not implemented yet.");
+        case 3 -> handleMealSuggestionsMenu();
         case 4 -> handleSettingsMenu();
         case 0 -> finished = true;
         default -> System.out.println("Invalid choice");
@@ -106,6 +107,23 @@ public class TextUserInterface {
       }
     }
     System.out.println("Returning to main menu");
+  }
+
+  public void handleMealSuggestionsMenu() {
+    final MealSuggestionsService mealSuggestionsService = new MealSuggestionsService(foodStorage, cookbook);
+    boolean finished = false;
+
+    while (!finished) {
+      InterfaceUtils.promptMealSUggestionsMenu();
+      final int choice = InterfaceUtils.integerInput();
+      switch (choice) {
+        case 1 -> mealSuggestionsService.caseSuggestMealFromExpiringGroceries();
+        case 2 -> mealSuggestionsService.caseSuggestMealsFromExistingGroceries();
+        case 3 -> mealSuggestionsService.caseSuggestRandomMeal();
+        case 0 -> finished = true;
+        default -> System.out.println("Invalid choice");
+      }
+    }
   }
 
   public void handleSettingsMenu() {

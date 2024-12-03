@@ -13,6 +13,9 @@ public class CookbookMenuService {
   final Cookbook cookbook;
 
   public CookbookMenuService(Cookbook cookbook) {
+    if (cookbook == null) {
+      throw new IllegalArgumentException("Cookbook cannot be null");
+    }
     this.cookbook = cookbook;
   }
 
