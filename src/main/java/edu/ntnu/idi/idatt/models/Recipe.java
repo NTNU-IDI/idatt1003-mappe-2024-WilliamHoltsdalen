@@ -7,10 +7,11 @@ import java.util.Map;
 /**
  * A class representing a recipe. A recipe consists of a name, description, instructions,
  * ingredients and amount of servings.
+ *
  * <p>
  * Provides methods for getting the name, description, instructions, ingredients, and amount of
- * servings of a recipe object. Also provides methods for adding and removing ingredients, and for setting
- * the name, description, instructions, and amount of servings of a recipe.
+ * servings of a recipe object. Also provides methods for adding and removing ingredients, and for
+ * setting the name, description, instructions, and amount of servings of a recipe.
  *
  * @see Ingredient
  *
@@ -34,10 +35,12 @@ public class Recipe {
   /**
    * Constructs a new recipe with the provided name, description, instructions, and number of
    * servings.
+   *
    * <p>
    * The method validates the provided parameters and initializes the recipe with the provided
    * values if they are all valid. If any of the provided parameters are null or an empty string,
    * the method throws an {@code IllegalArgumentException}.
+   *
    * <p>
    * The method also initializes an empty map to store the ingredients of the recipe.
    *
@@ -45,10 +48,10 @@ public class Recipe {
    * @param description the description of the recipe
    * @param instructions the instructions for the recipe
    * @param servings the number of servings of the recipe
-   *
    * @throws IllegalArgumentException if any of the provided parameters are null or an empty string.
    */
-  public Recipe(String name, String description, String instructions, int servings) throws IllegalArgumentException {
+  public Recipe(String name, String description, String instructions, int servings)
+      throws IllegalArgumentException {
     // Guard clauses
     if (name == null || name.isBlank()) {
       throw new IllegalArgumentException(NULL_OR_BLANK_NAME);
@@ -108,14 +111,15 @@ public class Recipe {
 
   /**
    * Returns an ingredient with the provided name.
+   *
    * <p>
-   * The method checks if the ingredient with the provided name exists in the recipe. If the ingredient
-   * does not exist, the method throws an {@code IllegalArgumentException}. It also checks if the
-   * name is null or an empty string, and throws an {@code IllegalArgumentException} if it is.
+   * The method checks if the ingredient with the provided name exists in the recipe. If the
+   * ingredient does not exist, the method throws an {@code IllegalArgumentException}. It also
+   * checks if the name is null or an empty string, and throws an {@code IllegalArgumentException}
+   * if it is.
    *
    * @param name the name of the ingredient to get
    * @return the ingredient with the provided name
-   *
    * @throws IllegalArgumentException if the name is null or an empty string, or if the ingredient
    *         does not exist in the recipe.
    */
@@ -140,12 +144,13 @@ public class Recipe {
 
   /**
    * Sets the name of the recipe.
+   *
    * <p>
-   * The method checks if the name is null or an empty string, and throws an {@code IllegalArgumentException}
-   * if it is. Otherwise, it sets the name of the recipe to the provided value.
+   * The method checks if the name is null or an empty string, and throws an
+   * {@code IllegalArgumentException} if it is. Otherwise, it sets the name of the recipe to the
+   * provided value.
    *
    * @param name the new name of the recipe
-   *
    * @throws IllegalArgumentException if the name is null or an empty string.
    */
   public void setName(String name) throws IllegalArgumentException {
@@ -157,12 +162,13 @@ public class Recipe {
 
   /**
    * Sets the description of the recipe.
+   *
    * <p>
-   * The method checks if the description is null or an empty string, and throws an {@code IllegalArgumentException}
-   * if it is. Otherwise, it sets the description of the recipe to the provided value.
+   * The method checks if the description is null or an empty string, and throws an
+   * {@code IllegalArgumentException} if it is. Otherwise, it sets the description of the recipe to
+   * the provided value.
    *
    * @param description the new description of the recipe
-   *
    * @throws IllegalArgumentException if the description is null or an empty string.
    */
   public void setDescription(String description) throws IllegalArgumentException {
@@ -174,12 +180,13 @@ public class Recipe {
 
   /**
    * Sets the instructions for the recipe.
+   *
    * <p>
-   * The method checks if the instructions are null or an empty string, and throws an {@code IllegalArgumentException}
-   * if it is. Otherwise, it sets the instructions for the recipe to the provided value.
+   * The method checks if the instructions are null or an empty string, and throws an
+   * {@code IllegalArgumentException} if it is. Otherwise, it sets the instructions for the recipe
+   * to the provided value.
    *
    * @param instructions the new instructions for the recipe
-   *
    * @throws IllegalArgumentException if the instructions are null or an empty string.
    */
   public void setInstructions(String instructions) throws IllegalArgumentException {
@@ -191,12 +198,13 @@ public class Recipe {
 
   /**
    * Sets the number of servings of the recipe.
+   *
    * <p>
-   * The method checks if the number of servings is less than or equal to zero, and throws an {@code IllegalArgumentException}
-   * if it is. Otherwise, it sets the number of servings of the recipe to the provided value.
+   * The method checks if the number of servings is less than or equal to zero, and throws an
+   * {@code IllegalArgumentException} if it is. Otherwise, it sets the number of servings of the
+   * recipe to the provided value.
    *
    * @param servings the new number of servings of the recipe
-   *
    * @throws IllegalArgumentException if the number of servings is less than or equal to zero.
    */
   public void setServings(int servings) throws IllegalArgumentException {
@@ -208,6 +216,7 @@ public class Recipe {
 
   /**
    * Adds an ingredient to the recipe.
+   *
    * <p>
    * The method checks if the provided ingredient is null, and throws an
    * {@code IllegalArgumentException} if it is. If the ingredient already exists in the recipe, the
@@ -215,11 +224,10 @@ public class Recipe {
    * If the ingredient does not exist in the recipe, the method adds the ingredient to the recipe.
    *
    * @param ingredient the ingredient to add
-   *
    * @throws IllegalArgumentException if the provided ingredient is null.
    */
   public void addIngredient(Ingredient ingredient) throws IllegalArgumentException {
-    if (ingredient == null ) {
+    if (ingredient == null) {
       throw new IllegalArgumentException(NULL_INGREDIENT_ERROR);
     }
 
@@ -233,13 +241,13 @@ public class Recipe {
 
   /**
    * Removes an ingredient from the recipe.
+   *
    * <p>
    * The method checks if the ingredient is null, and throws an {@code IllegalArgumentException} if
    * it is. If the ingredient does not exist in the recipe, the method also throws an
    * {@code IllegalArgumentException}. Otherwise, the method removes the ingredient from the recipe.
    *
    * @param ingredient the ingredient to remove
-   *
    * @throws IllegalArgumentException if the ingredient is null, or if the ingredient does not exist
    *         in the recipe.
    */

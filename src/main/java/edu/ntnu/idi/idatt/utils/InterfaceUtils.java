@@ -7,9 +7,10 @@ import java.util.Scanner;
 /**
  * A utility class containing methods for interacting with the user, meant to be used in conjunction
  * with a text based user interface, like {@link TextUserInterface}.
+ *
  * <p>
  * Provides methods for printing welcome and goodbye messages, handling errors, and for
- * interacting with the user through the console, such as inputting integers, doubles, strings, and
+ * interacting with the user through the console, such as inputting integers, doubles strings, and
  * dates. Also provides methods for printing menu and sub-menus, and for exiting the application.
  *
  * @see TextUserInterface
@@ -17,12 +18,13 @@ import java.util.Scanner;
  * @author WilliamHoltsdalen
  * @since 0.2
  */
-public final class InterfaceUtil {
+public final class InterfaceUtils {
+  private static final String TRY_AGAIN_ERROR = "Try again";
   /** The scanner used to read input from the console. */
   private static final Scanner scanner = new Scanner(System.in);
 
   /** Prevent instantiation, as this is a utility class. */
-  private InterfaceUtil() {}
+  private InterfaceUtils() {}
 
   /**
    * Prints the welcome message to the console.
@@ -85,7 +87,7 @@ public final class InterfaceUtil {
       return Integer.parseInt(scanner.nextLine());
     } catch (NumberFormatException nfe) {
       printErrorMessage("Please enter a valid number");
-      System.out.print("Try again: ");
+      System.out.print(TRY_AGAIN_ERROR);
       return integerInput();
     }
   }
@@ -102,7 +104,7 @@ public final class InterfaceUtil {
       return Double.parseDouble(scanner.nextLine());
     } catch (NumberFormatException nfe) {
       printErrorMessage("Please enter a valid number");
-      System.out.print("Try again: ");
+      System.out.print(TRY_AGAIN_ERROR);
       return doubleInput();
     }
   }
@@ -119,7 +121,7 @@ public final class InterfaceUtil {
       return scanner.nextLine();
     }
     printErrorMessage("Please enter a valid string");
-    System.out.print("Try again: ");
+    System.out.print(TRY_AGAIN_ERROR);
     return stringInput();
   }
 
@@ -135,7 +137,7 @@ public final class InterfaceUtil {
       return LocalDate.parse(scanner.nextLine());
     } catch (Exception e) {
       printErrorMessage("Please enter a valid date (yyyy-mm-dd)");
-      System.out.print("Try again: ");
+      System.out.print(TRY_AGAIN_ERROR);
       return dateInput();
     }
   }

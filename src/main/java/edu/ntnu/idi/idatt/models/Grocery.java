@@ -7,11 +7,13 @@ import java.util.List;
 /**
  * A class representing a grocery item, which is a food item that can be consumed. A grocery item
  * consists of a name, category, unit, and one or more {@link GroceryBatch} objects.
+ *
  * <p>
  * The class provides methods for adding and removing grocery batches, and decreasing the amount of
  * a grocery item to reflect user consumption. The class also provides methods for retrieving
- * grocery batches, the total amount of a grocery item, and for sorting grocery batches by expiration
- * date.
+ * grocery batches, the total amount of a grocery item, and for sorting grocery batches by
+ * expiration date.
+ *
  * <p>
  * The class implements the {@link FoodItem} interface, which provides methods for getting the name,
  * category, and unit of a food item.

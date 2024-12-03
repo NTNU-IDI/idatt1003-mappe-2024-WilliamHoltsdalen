@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 /**
  * A class representing a grocery batch.
+ *
  * <p>
  * Provides methods for getting the amount, price per unit, and expiration date of a grocery batch.
  * Also provides a method for setting the amount of a grocery batch.
@@ -20,6 +21,7 @@ public class GroceryBatch {
 
   /**
    * Constructs a new grocery batch with the provided amount, price per unit, and expiration date.
+   *
    * <p>
    * The method validates the provided parameters and initializes the grocery batch with the
    * provided values if they are all valid. If any of the provided parameters are negative or zero,
@@ -28,7 +30,6 @@ public class GroceryBatch {
    * @param amount the amount of the grocery batch
    * @param pricePerUnit the price per unit of the grocery batch
    * @param expirationDate the expiration date of the grocery batch
-   *
    * @throws IllegalArgumentException if any of the provided parameters are negative or zero, or if
    *         the expiration date is null.
    */
@@ -78,6 +79,7 @@ public class GroceryBatch {
 
   /**
    * Sets the amount of the grocery batch.
+   *
    * <p>
    * If the new amount is less than or equal to zero, the method throws an
    * {@code IllegalArgumentException}. If the new amount is greater than the current amount of the
@@ -85,7 +87,6 @@ public class GroceryBatch {
    * amount of the grocery batch to the provided value.
    *
    * @param newAmount the new amount of the grocery batch
-   *
    * @throws IllegalArgumentException if the new amount is less than or equal to zero, or if the new
    *         amount is greater than the current amount of the grocery batch.
    */

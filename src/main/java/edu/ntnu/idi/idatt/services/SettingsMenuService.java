@@ -6,13 +6,14 @@ import edu.ntnu.idi.idatt.models.Grocery;
 import edu.ntnu.idi.idatt.models.GroceryBatch;
 import edu.ntnu.idi.idatt.models.Ingredient;
 import edu.ntnu.idi.idatt.models.Recipe;
-import edu.ntnu.idi.idatt.utils.InterfaceUtil;
+import edu.ntnu.idi.idatt.utils.InterfaceUtils;
 import edu.ntnu.idi.idatt.views.TextUserInterface;
 import java.time.LocalDate;
 
 /**
  * A service class allowing for a user interface, like {@link TextUserInterface}, to interact with
  * a {@link FoodStorage} and {@link Cookbook} object.
+ *
  * <p>
  * Provides the following functionality:
  * <ul>
@@ -42,10 +43,10 @@ public class SettingsMenuService {
    * @param foodStorage the food storage object to use
    * @param cookbook the cookbook object to use
    * @param currentDate the current date object to use
-   *
    * @throws IllegalArgumentException if any of the provided objects are null.
    */
-  public SettingsMenuService(FoodStorage foodStorage, Cookbook cookbook, LocalDate currentDate) throws IllegalArgumentException {
+  public SettingsMenuService(FoodStorage foodStorage, Cookbook cookbook, LocalDate currentDate)
+      throws IllegalArgumentException {
     if (foodStorage == null) {
       throw new IllegalArgumentException("Food storage cannot be null");
     }
@@ -64,6 +65,7 @@ public class SettingsMenuService {
   /**
    * Adds some grocery items to the food storage system. This method is primarily used for testing
    * and demonstration purposes.
+   *
    * <p>
    * The method creates some grocery items, some with multiple batches with varying expiration
    * dates and some with a single batch. It then adds these grocery items to the food storage.
@@ -227,6 +229,6 @@ public class SettingsMenuService {
    */
   public LocalDate caseGetNewDate() {
     System.out.println("Enter a new date in the format yyyy-mm-dd");
-    return InterfaceUtil.dateInput();
+    return InterfaceUtils.dateInput();
   }
 }

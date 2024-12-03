@@ -6,21 +6,23 @@ import edu.ntnu.idi.idatt.services.CookbookMenuService;
 import edu.ntnu.idi.idatt.services.FoodStorageMenuService;
 import edu.ntnu.idi.idatt.services.MealSuggestionsService;
 import edu.ntnu.idi.idatt.services.SettingsMenuService;
-import edu.ntnu.idi.idatt.utils.InterfaceUtil;
+import edu.ntnu.idi.idatt.utils.InterfaceUtils;
 import java.time.LocalDate;
 
 /**
  * A text-based user interface for a food storage system. This class provides the main navigation
  * structure for the user interface, including menus and sub-menus. It also handles the input and
- * output of the user interface, using methods from the {@link InterfaceUtil} class.
+ * output of the user interface, using methods from the {@link InterfaceUtils} class.
+ *
  * <p>
  * The {@code init} method initializes an empty food storage system and a cookbook. It also sets the
  * current date of the application to the current date of the system.
+ *
  * <p>
  * The {@code start} method starts the application, allowing the user to navigate through the
  * different menus and sub-menus.
  *
- * @see InterfaceUtil
+ * @see InterfaceUtils
  *
  * @author WilliamHoltsdalen
  * @since 0.1
@@ -36,6 +38,7 @@ public class TextUserInterface {
   /**
    * Initializes the text user interface application, by creating a new food storage, cookbook, and
    * current date.
+   *
    * <p>
    * If an error occurs during initialization, the method passes the error message to the
    * {@code stopByError} method, which is responsible for stopping the application and
@@ -53,6 +56,7 @@ public class TextUserInterface {
 
   /**
    * Start the text user interface application.
+   *
    * <p>
    * If an error occurs during the start process, the method passes the error message to the
    * {@code stopByError} method, which is responsible for stopping the application and
@@ -60,9 +64,9 @@ public class TextUserInterface {
    */
   public void start() {
     try {
-      InterfaceUtil.printWelcomeMessage();
+      InterfaceUtils.printWelcomeMessage();
       handleMainMenu();
-      InterfaceUtil.exitApplication();
+      InterfaceUtils.exitApplication();
     } catch (Exception e) {
       stopByError(e.getMessage());
     }
@@ -92,8 +96,8 @@ public class TextUserInterface {
   private void handleMainMenu() {
     boolean finished = false;
     while (!finished) {
-      InterfaceUtil.promptMainMenu();
-      final int choice = InterfaceUtil.integerInput();
+      InterfaceUtils.promptMainMenu();
+      final int choice = InterfaceUtils.integerInput();
 
       switch (choice) {
         case 1 -> handleFoodStorageMenu();
@@ -113,12 +117,13 @@ public class TextUserInterface {
    * @see FoodStorageMenuService
    */
   private void handleFoodStorageMenu() {
-    final FoodStorageMenuService foodStorageMenuService = new FoodStorageMenuService(foodStorage, currentDate);
+    final FoodStorageMenuService foodStorageMenuService = new FoodStorageMenuService(foodStorage,
+        currentDate);
     boolean finished = false;
 
     while (!finished) {
-      InterfaceUtil.promptFoodStorageMenu();
-      final int choice = InterfaceUtil.integerInput();
+      InterfaceUtils.promptFoodStorageMenu();
+      final int choice = InterfaceUtils.integerInput();
       switch (choice) {
         case 1 -> foodStorageMenuService.caseAddGrocery();
         case 2 -> foodStorageMenuService.caseConsumeGrocery();
@@ -129,7 +134,7 @@ public class TextUserInterface {
         case 7 -> foodStorageMenuService.caseShowAllExpiredGroceries();
         case 8 -> foodStorageMenuService.caseShowGroceriesExpiringBeforeDate();
         case 9 -> foodStorageMenuService.caseCalculateGroceriesTotalValue();
-        case 10 -> foodStorageMenuService.caseRemoveALlExpiredGroceries();
+        case 10 -> foodStorageMenuService.caseRemoveAllExpiredGroceries();
         case 0 -> finished = true;
         default -> System.out.println(INVALID_CHOICE_ERROR);
       }
@@ -147,8 +152,8 @@ public class TextUserInterface {
     final CookbookMenuService cookbookMenuService = new CookbookMenuService(cookbook);
     boolean finished = false;
     while (!finished) {
-      InterfaceUtil.promptCookbookMenu();
-      final int choice = InterfaceUtil.integerInput();
+      InterfaceUtils.promptCookbookMenu();
+      final int choice = InterfaceUtils.integerInput();
       switch (choice) {
         case 1 -> cookbookMenuService.caseFindRecipeByName();
         case 2 -> cookbookMenuService.caseSearchRecipesByIngredients();
@@ -170,12 +175,13 @@ public class TextUserInterface {
    * @see MealSuggestionsService
    */
   private void handleMealSuggestionsMenu() {
-    final MealSuggestionsService mealSuggestionsService = new MealSuggestionsService(foodStorage, cookbook);
+    final MealSuggestionsService mealSuggestionsService = new MealSuggestionsService(foodStorage,
+        cookbook);
     boolean finished = false;
 
     while (!finished) {
-      InterfaceUtil.promptMealSuggestionsMenu();
-      final int choice = InterfaceUtil.integerInput();
+      InterfaceUtils.promptMealSuggestionsMenu();
+      final int choice = InterfaceUtils.integerInput();
       switch (choice) {
         case 1 -> mealSuggestionsService.caseSuggestMealFromExpiringGroceries();
         case 2 -> mealSuggestionsService.caseSuggestMealsFromExistingGroceries();
@@ -194,12 +200,13 @@ public class TextUserInterface {
    * @see SettingsMenuService
    */
   private void handleSettingsMenu() {
-    final SettingsMenuService settingsMenuService = new SettingsMenuService(foodStorage, cookbook, currentDate);
+    final SettingsMenuService settingsMenuService = new SettingsMenuService(foodStorage, cookbook,
+        currentDate);
     boolean finished = false;
 
     while (!finished) {
-      InterfaceUtil.promptSettingsMenu();
-      final int choice = InterfaceUtil.integerInput();
+      InterfaceUtils.promptSettingsMenu();
+      final int choice = InterfaceUtils.integerInput();
       switch (choice) {
         case 1 -> settingsMenuService.caseAddDemoData();
         case 2 -> settingsMenuService.caseRemoveDemoData();

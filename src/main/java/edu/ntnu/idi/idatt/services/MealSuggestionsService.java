@@ -1,10 +1,10 @@
 package edu.ntnu.idi.idatt.services;
 
 import edu.ntnu.idi.idatt.models.Cookbook;
-import edu.ntnu.idi.idatt.models.Grocery;
 import edu.ntnu.idi.idatt.models.FoodStorage;
+import edu.ntnu.idi.idatt.models.Grocery;
 import edu.ntnu.idi.idatt.models.Recipe;
-import edu.ntnu.idi.idatt.utils.InterfaceUtil;
+import edu.ntnu.idi.idatt.utils.InterfaceUtils;
 import edu.ntnu.idi.idatt.views.TextUserInterface;
 import java.time.LocalDate;
 import java.util.Comparator;
@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 /**
  * A service class allowing for a user interface, like {@link TextUserInterface}, to interact with
  * a {@link FoodStorage} and {@link Cookbook} object.
+ *
  * <p>
  * Provides the following functionality:
  * <ul>
@@ -39,12 +40,13 @@ public class MealSuggestionsService {
 
   /**
    * Constructs a new meal suggestions service with the provided food storage and cookbook.
+   *
    * @param foodStorage the food storage object to use
    * @param cookbook the cookbook object to use
-   *
    * @throws IllegalArgumentException if any of the provided objects are null.
    */
-  public MealSuggestionsService(FoodStorage foodStorage, Cookbook cookbook) throws IllegalArgumentException {
+  public MealSuggestionsService(FoodStorage foodStorage, Cookbook cookbook)
+      throws IllegalArgumentException {
     if (foodStorage == null) {
       throw new IllegalArgumentException("Food storage cannot be null");
     }
@@ -58,6 +60,7 @@ public class MealSuggestionsService {
 
   /**
    * Suggests meals based on groceries that expire before a given date.
+   *
    * <p>
    * The method prompts the user to enter a date, and then suggests meals based on recipes that can
    * be made with groceries that expire before the given date. The method then prints the suggested
@@ -70,10 +73,10 @@ public class MealSuggestionsService {
         + "storage that expire *before* that date, are suggested.");
 
     System.out.print("Enter expiration date (yyyy-mm-dd): ");
-    final LocalDate expDate = InterfaceUtil.dateInput();
+    final LocalDate expDate = InterfaceUtils.dateInput();
     final List<Grocery> expiringGroceries = foodStorage.getGroceriesExpiringBeforeDate(expDate);
 
-    final Map <Recipe, List<Grocery>> possibleRecipes = findPossibleRecipes(expiringGroceries);
+    final Map<Recipe, List<Grocery>> possibleRecipes = findPossibleRecipes(expiringGroceries);
 
     if (possibleRecipes.isEmpty()) {
       System.out.println("No meal suggestions available for the given date.");
@@ -106,6 +109,7 @@ public class MealSuggestionsService {
 
   /**
    * Suggests meals based on existing groceries in the food storage.
+   *
    * <p>
    * The method calls the {@code findPossibleRecipes} method to find recipes that can be made with
    * existing groceries in the food storage. If there are recipes that can be made with existing
@@ -128,19 +132,19 @@ public class MealSuggestionsService {
       final List<Grocery> matchingGroceries = entry.getValue();
 
       System.out.printf("""
-            -------------------------
-            Meal suggestion %d:
-            - - - - - - - - - - - - -
-            Recipe: %s
-            Ingredients:
-            """, suggestionNumber++, recipe.getName());
+          -------------------------
+          Meal suggestion %d:
+          - - - - - - - - - - - - -
+          Recipe: %s
+          Ingredients:
+          """, suggestionNumber++, recipe.getName());
       matchingGroceries.forEach(grocery ->
-        System.out.printf("- %s (Need: %.2f %s, Amount in storage: %.2f %s)%n",
-          grocery.getName(),
-          recipe.getIngredient(grocery.getName()).getAmount(),
-          recipe.getIngredient(grocery.getName()).getUnit(),
-          grocery.getTotalAmount(),
-          grocery.getUnit())
+          System.out.printf("- %s (Need: %.2f %s, Amount in storage: %.2f %s)%n",
+            grocery.getName(),
+            recipe.getIngredient(grocery.getName()).getAmount(),
+            recipe.getIngredient(grocery.getName()).getUnit(),
+            grocery.getTotalAmount(),
+            grocery.getUnit())
       );
       System.out.print("\n");
     }
@@ -148,6 +152,7 @@ public class MealSuggestionsService {
 
   /**
    * Suggests a random meal based on existing groceries in the food storage.
+   *
    * <p>
    * The method calls the {@code findPossibleRecipes} method to find recipes that can be made with
    * existing groceries in the food storage. If there are recipes that can be made with existing
@@ -165,7 +170,8 @@ public class MealSuggestionsService {
       return;
     }
 
-    final Map<Recipe, List<Grocery>> possibleRecipes = findPossibleRecipes(foodStorage.getAllGroceriesAlphabetically());
+    final Map<Recipe, List<Grocery>> possibleRecipes = findPossibleRecipes(foodStorage
+        .getAllGroceriesAlphabetically());
 
     if (possibleRecipes.isEmpty()) {
       System.out.println("No meal suggestions available for the groceries in the food storage.");
@@ -195,6 +201,7 @@ public class MealSuggestionsService {
 
   /**
    * Finds possible recipes that can be made with the provided groceries.
+   *
    * <p>
    * The method takes a list of groceries and returns a map of recipes to groceries. The map
    * contains recipes that can be made with the provided groceries, and the groceries that can be
@@ -210,24 +217,27 @@ public class MealSuggestionsService {
       return new HashMap<>();
     }
 
-    final Map<Recipe, List<Grocery>> recipeToGroceriesMap = cookbook.getRecipes().stream()
-      .filter(recipe -> recipe.getIngredients().stream()
-        .allMatch(ingredient -> {
-          Grocery matchingGrocery = groceriesList.stream()
-            .filter(grocery -> grocery.getName().equals(ingredient.getName()))
-            .findFirst()
-            .orElse(null);
+    final Map<Recipe, List<Grocery>> recipeToGroceriesMap = cookbook.getRecipes()
+        .stream()
+          .filter(recipe -> recipe.getIngredients().stream()
+            .allMatch(ingredient -> {
+              Grocery matchingGrocery = groceriesList.stream()
+                  .filter(grocery -> grocery.getName().equals(ingredient.getName()))
+                  .findFirst()
+                  .orElse(null);
 
-          return matchingGrocery != null && matchingGrocery.getTotalAmount() >= ingredient.getAmount();
-        })
+              return matchingGrocery != null
+                  && matchingGrocery.getTotalAmount() >= ingredient.getAmount();
+            })
     ).collect(Collectors.toMap(recipe -> recipe, recipe -> groceriesList.stream()
-      .filter(grocery -> recipe.getIngredients().stream()
-        .anyMatch(ingredient -> ingredient.getName().equals(grocery.getName())
-          && grocery.getTotalAmount() >= ingredient.getAmount())
-      )
-      .sorted(Comparator.comparing(Grocery::getName))
-      .sorted(Comparator.comparing(grocery -> grocery.getBatches().getFirst().getExpirationDate()))
-      .toList()
+        .filter(grocery -> recipe.getIngredients().stream()
+          .anyMatch(ingredient -> ingredient.getName().equals(grocery.getName())
+            && grocery.getTotalAmount() >= ingredient.getAmount())
+        )
+        .sorted(Comparator.comparing(Grocery::getName))
+        .sorted(Comparator.comparing(grocery -> grocery.getBatches().getFirst()
+            .getExpirationDate()))
+        .toList()
       ));
 
     recipeToGroceriesMap.entrySet().removeIf(entry -> entry.getValue().isEmpty());

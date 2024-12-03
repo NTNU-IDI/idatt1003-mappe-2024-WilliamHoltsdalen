@@ -5,9 +5,10 @@ import java.util.List;
 
 /**
  * A class representing a cook book.
+ *
  * <p>
- * The class provides methods for adding and removing recipes, as well as retrieving recipes by name.
- * The class also provides methods for sorting the recipes in the cook book alphabetically by name,
+ * The class provides methods for adding and removing recipes, as well as retrieving recipes by
+ * name. It also has methods for sorting the recipes in the cook book alphabetically by name,
  * and for removing all recipes from the cook book.
  *
  * @author WilliamHoltsdalen
@@ -39,6 +40,7 @@ public class Cookbook {
 
   /**
    * Returns the recipe with the provided name.
+   *
    * <p>
    * If the name is null or an empty string, or if no recipe with the provided name is found, the
    * method throws an {@code IllegalArgumentException}.
@@ -46,7 +48,7 @@ public class Cookbook {
    * @param name the name of the recipe
    * @return the recipe with the provided name
    * @throws IllegalArgumentException if no recipe with the provided name is found, or if the name
-   *                                 is null or blank
+   *                                 is null or blank.
    */
   public Recipe getRecipe(String name) throws IllegalArgumentException {
     if (name == null || name.isBlank()) {
@@ -60,8 +62,10 @@ public class Cookbook {
 
   /**
    * Adds a recipe to the cook book.
+   *
    * <p>
    * After adding the recipe, the list of recipes is sorted alphabetically by name.
+   *
    * <p>
    * If the recipe object is null, or if the recipe already exists in the cook book, the method
    * throws an {@code IllegalArgumentException}.
@@ -83,6 +87,7 @@ public class Cookbook {
 
   /**
    * Removes a recipe from the cook book.
+   *
    * <p>
    * If the recipe object is null, or if the recipe does not exist in the cook book, the method
    * throws an {@code IllegalArgumentException}.

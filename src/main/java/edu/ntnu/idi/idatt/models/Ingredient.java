@@ -2,9 +2,11 @@ package edu.ntnu.idi.idatt.models;
 
 /**
  * A class representing an ingredient.
+ *
  * <p>
  * Provides methods for getting the name, category, unit, and amount of an ingredient.
  * Also provides a method for setting the amount of an ingredient.
+ *
  * <p>
  * The class implements the {@link FoodItem} interface, which provides methods for getting the name,
  * category, and unit of a food item.
@@ -27,6 +29,7 @@ public class Ingredient implements FoodItem {
 
   /**
    * Constructs a new ingredient with the provided name, category, unit, and amount.
+   *
    * <p>
    * The method validates the provided parameters and initializes the ingredient with the provided
    * values if they are all valid. If any of the provided String parameters are null or an empty
@@ -37,11 +40,11 @@ public class Ingredient implements FoodItem {
    * @param category the category of the ingredient
    * @param unit the unit of the ingredient
    * @param amount the amount of the ingredient
-   *
    * @throws IllegalArgumentException if any of the provided String parameters are null or an empty
    *         string, or if the amount is negative or zero.
    */
-  public Ingredient(String name, String category, String unit, double amount) throws IllegalArgumentException {
+  public Ingredient(String name, String category, String unit, double amount)
+      throws IllegalArgumentException {
     if (name == null || name.isBlank()) {
       throw new IllegalArgumentException(NULL_OR_BLANK_NAME_ERROR);
     }
@@ -102,13 +105,13 @@ public class Ingredient implements FoodItem {
 
   /**
    * Sets the amount of the ingredient.
+   *
    * <p>
    * If the provided amount is less than or equal to zero, the method throws an
    * {@code IllegalArgumentException}. Otherwise, it sets the amount of the ingredient to the
    * provided value.
    *
    * @param amount the new amount of the ingredient
-   *
    * @throws IllegalArgumentException if the amount is less than or equal to zero.
    */
   public void setAmount(double amount) throws IllegalArgumentException {
