@@ -5,29 +5,22 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * Class representing a grocery item.
+ * A class representing a grocery item, which is a food item that can be consumed. A grocery item
+ * consists of a name, category, unit, and one or more {@link GroceryBatch} objects.
  * <p>
- * A grocery object has the following fields:
- * <ul>
- * <li>{@code name} A String representing the name of the grocery item. This field is immutable,
- *      set at object creation and cannot be changed afterward.
- * <li>{@code category} A String representing the category of the grocery item. This field is
- *      immutable and assigned at object creation.
- * <li>{@code totalAmount} A double representing the total quantity of the grocery item.
- *      This field is mutable and can be updated throughout the grocery item's lifecycle.
- * <li>{@code unit} A String representing the unit of measurement for the grocery item's amount.
- *      This field is immutable, set at object creation, and unmodifiable thereafter.
- * <li> {@code batches} A list of {@code GroceryBatch} objects representing the batches of the
- *      grocery item. This field is mutable and can be updated throughout the grocery
- *     item's lifecycle.
- * </ul>
+ * The class provides methods for adding and removing grocery batches, and decreasing the amount of
+ * a grocery item to reflect user consumption. The class also provides methods for retrieving
+ * grocery batches, the total amount of a grocery item, and for sorting grocery batches by expiration
+ * date.
  * <p>
- * Each field has accessor methods to get the values. The fields {@code totalAmount} and
- * {@code batches} have mutator methods to change the values of the fields.
- * <p>
- * The class constructor validates and initializes all fields. When given an invalid value
- * (such as a negative amount or price, a null or empty string, or a null expiration date), the
- * constructor will throw an {@code IllegalArgumentException}.
+ * The class implements the {@link FoodItem} interface, which provides methods for getting the name,
+ * category, and unit of a food item.
+ *
+ * @see GroceryBatch
+ * @see FoodItem
+ *
+ * @author WilliamHoltsdalen
+ * @since V0.1
  */
 public class Grocery implements FoodItem {
   private final String name;
@@ -37,7 +30,9 @@ public class Grocery implements FoodItem {
   private final List<GroceryBatch> batches;
 
   /**
-   * Constructs a new grocery object, only if the parameters are valid.
+   * Constructs a new grocery object. The method validates the provided parameters and initializes
+   * the grocery object with the provided values if they are all valid. If any of the provided
+   * parameters are null or an empty string, the method throws an {@code IllegalArgumentException}.
    *
    * @param name specifies the name of the grocery item. Name must not equal {@code null} or an
    *             empty string.
@@ -47,11 +42,11 @@ public class Grocery implements FoodItem {
    *             empty string.
    * @param batch specifies the {@code GroceryBatch} object of the grocery item. Must not
    *              equal {@code null}.
+   *
    * @throws IllegalArgumentException if any parameters violate the constraints specified.
    */
   public Grocery(String name, String category, String unit, GroceryBatch batch)
       throws IllegalArgumentException {
-    // Guard clauses
     if (name == null || name.isBlank()) {
       throw new IllegalArgumentException("Name cannot be null or blank");
     }
@@ -120,10 +115,12 @@ public class Grocery implements FoodItem {
   }
 
   /**
-   * Sets the total amount of the grocery item.
+   * Sets the total amount of the grocery item. If the new amount is less than or equal to zero,
+   * the method throws an {@code IllegalArgumentException}. Otherwise, it sets the total amount of
+   * the grocery item to the provided value.
    *
    * @param newAmount specifies the new amount of the grocery item. Amount must equal a positive
-   *               number.
+   *               number or zero.
    * @throws IllegalArgumentException if the amount equals zero or a negative number.
    */
   private void setTotalAmount(double newAmount) throws IllegalArgumentException {
@@ -134,13 +131,10 @@ public class Grocery implements FoodItem {
   }
 
   /**
-   * Adds a new batch to the grocery item.
-   * <p>
-   * The GroceryBatch object is added to the list of batches, and the total amount of the grocery
-   * item is updated. The list of batches is sorted by expiration date when updated.
-   *
-   * @param batch specifies the batch to add. Batch must not equal {@code null}.
-   * @throws IllegalArgumentException if the batch is {@code null}.
+   * Adds a new batch to the grocery item. If the batch is null, the method throws an
+   * {@code IllegalArgumentException}. Otherwise, the method adds the batch to the list of batches,
+   * and updates the total amount of the grocery item. The list of batches is sorted by expiration
+   * date when updated.
    */
   public void addBatch(GroceryBatch batch) throws IllegalArgumentException {
     if (batch == null) {
@@ -153,11 +147,12 @@ public class Grocery implements FoodItem {
 
   /**
    * Consumes a specified amount of the grocery item.
-   * The method will iterate through the batches of the grocery item, and consume the amount from
-   * the batches that expire first. The method will remove the batch if the amount to consume is equal to the amount of the batch. If the amount to consume is greater than
-   * the amount of the batch, the method will remove the batch entirely and update the remaining
-   * amount to consume for the next batch. If the amount to consume is less than the amount of the
-   * batch, the method will subtract the amount from the batch.
+   * The method iterates through the batches of the grocery item, and consume the amount from
+   * the batches that expire first. The method will remove the batch if the amount to consume is
+   * equal to the amount of the batch. If the amount to consume is greater than the amount of the
+   * batch, the method will remove the batch entirely and update the remaining amount to consume
+   * for the next batch. If the amount to consume is less than the amount of the batch, the method
+   * will subtract the amount from the batch.
    *
    * @param amount specifies the amount of the grocery item to consume. Amount must equal a
    *               positive number.
@@ -204,7 +199,7 @@ public class Grocery implements FoodItem {
    * representation of the grocery item.
    *
    * @return A string representation of the grocery item. Including name, category, amount, unit,
-   *        expiration date, and batch history.
+   *        expiration date, and all batches.
    */
   @Override
   public String toString() {

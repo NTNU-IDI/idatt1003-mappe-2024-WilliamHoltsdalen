@@ -6,26 +6,71 @@ import edu.ntnu.idi.idatt.models.Grocery;
 import edu.ntnu.idi.idatt.models.GroceryBatch;
 import edu.ntnu.idi.idatt.models.Ingredient;
 import edu.ntnu.idi.idatt.models.Recipe;
-import edu.ntnu.idi.idatt.utils.InterfaceUtils;
+import edu.ntnu.idi.idatt.utils.InterfaceUtil;
+import edu.ntnu.idi.idatt.views.TextUserInterface;
 import java.time.LocalDate;
 
+/**
+ * A service class allowing for a user interface, like {@link TextUserInterface}, to interact with
+ * a {@link FoodStorage} and {@link Cookbook} object.
+ * <p>
+ * Provides the following functionality:
+ * <ul>
+ * <li>Adding demo data
+ * <li>Removing demo data
+ * <li>Showing the current date
+ * <li>Changing the current date
+ * </ul>
+ *
+ * @see TextUserInterface
+ * @see FoodStorage
+ * @see Cookbook
+ *
+ * @author WilliamHoltsdalen
+ * @since 0.2
+ *
+ */
 public class SettingsMenuService {
   final FoodStorage foodStorage;
   final Cookbook cookbook;
   LocalDate currentDate;
 
-  public SettingsMenuService(FoodStorage foodStorage, Cookbook cookbook, LocalDate currentDate) {
+  /**
+   * Constructs a new settings menu service with the provided food storage, cookbook, and current
+   * date.
+   *
+   * @param foodStorage the food storage object to use
+   * @param cookbook the cookbook object to use
+   * @param currentDate the current date object to use
+   *
+   * @throws IllegalArgumentException if any of the provided objects are null.
+   */
+  public SettingsMenuService(FoodStorage foodStorage, Cookbook cookbook, LocalDate currentDate) throws IllegalArgumentException {
+    if (foodStorage == null) {
+      throw new IllegalArgumentException("Food storage cannot be null");
+    }
+    if (cookbook == null) {
+      throw new IllegalArgumentException("Cookbook cannot be null");
+    }
+    if (currentDate == null) {
+      throw new IllegalArgumentException("Current date cannot be null");
+    }
+
     this.foodStorage = foodStorage;
     this.cookbook = cookbook;
     this.currentDate = currentDate;
   }
 
   /**
-   * Add some example grocery items to the food storage system. This method is used for testing and
-   * demonstration purposes only.
+   * Adds some grocery items to the food storage system. This method is primarily used for testing
+   * and demonstration purposes.
+   * <p>
+   * The method creates some grocery items, some with multiple batches with varying expiration
+   * dates and some with a single batch. It then adds these grocery items to the food storage.
+   * The method also adds some example recipes to the cookbook, some of which can be made using the
+   * previously created grocery items.
    */
   public void caseAddDemoData() {
-
     try {
       // Create some grocery items
       final Grocery milk = new Grocery("Milk", "Dairy", "liters",
@@ -158,6 +203,9 @@ public class SettingsMenuService {
     System.out.println("Demo data added successfully");
   }
 
+  /**
+   * Removes all grocery items and recipes from the food storage and cookbook.
+   */
   public void caseRemoveDemoData() {
     foodStorage.removeAllGroceries();
     System.out.println("All grocery objects removed from the food storage.");
@@ -165,12 +213,20 @@ public class SettingsMenuService {
     System.out.println("All recipe objects removed from the cookbook.");
   }
 
+  /**
+   * Prints the current date of the application to the console.
+   */
   public void caseShowCurrentDate() {
     System.out.println("Current date: " + currentDate);
   }
 
-  public LocalDate caseChangeCurrentDate() {
+  /**
+   * Gets a new date from the user and returns it as a {@code LocalDate} object.
+   *
+   * @return the new date as a {@code LocalDate} object
+   */
+  public LocalDate caseGetNewDate() {
     System.out.println("Enter a new date in the format yyyy-mm-dd");
-    return InterfaceUtils.dateInput();
+    return InterfaceUtil.dateInput();
   }
 }

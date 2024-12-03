@@ -1,5 +1,14 @@
 package edu.ntnu.idi.idatt.models;
 
+/**
+ * An interface representing a food item.
+ * <p>
+ * Provides methods for getting the name, category, and unit of a food item.
+ * The interface is used to ensure that all food items have these three attributes.
+ *
+ * @author WilliamHoltsdalen
+ * @since V0.2
+ */
 public interface FoodItem {
   /**
    * Gets the name of the food item.

@@ -6,9 +6,18 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
-
+/**
+ * A class representing a food storage system.
+ * <p>
+ * The class provides methods for adding and removing grocery objects, and decreasing the amount of
+ * a grocery object to reflect user consumption. The class also provides methods for retrieving
+ * grocery objects, all grocery objects that expire before a given date, and all grocery objects in
+ * the food storage, by category, expiration date, and alphabetically.
+ *
+ * @author WilliamHoltsdalen
+ * @since V0.1
+ */
 public class FoodStorage {
-  /** The exception message for when a grocery object does not exist. */
   private static final String NO_GROCERY_FOUND_ERROR = "Grocery not found.";
   private static final String NULL_GROCERY_ERROR = "Grocery cannot be null.";
   private static final String GROCERY_EXISTS_ERROR = "Grocery already exists in storage.";
@@ -16,16 +25,20 @@ public class FoodStorage {
   private static final String INVALID_CATEGORY_ERROR = "Invalid category. Cannot be null or an empty string.";
   private static final String INVALID_EXPIRATION_DATE_ERROR = "Invalid expiration date.";
 
-  /** A map of grocery objects. The key is the name of the grocery, and the value is the grocery object. */
+  /**
+   * A map of grocery objects. The key is the name of the grocery, and the value is the grocery
+   * object.
+   */
   private final HashMap<String, Grocery> groceries;
 
   /**
    * Constructs a new empty food storage.
+   * <p>
+   * The method initializes an empty map to store grocery objects.
    */
   public FoodStorage() {
     this.groceries = new HashMap<>();
   }
-
 
   /**
    * Returns a list of all grocery objects in the food storage.
@@ -64,10 +77,14 @@ public class FoodStorage {
 
   /**
    * Returns the grocery object with the specified name.
+   * <p>
+   * If the name is null or an empty string, or if a grocery with the provided name does not exist
+   * in the food storage, the method throws an {@code IllegalArgumentException}.
    *
-   * @param name the name of the grocery object.
-   * @return the Grocery object with the specified name.
-   * @throws IllegalArgumentException if the grocery object does not exist,
+   * @param name the name of the grocery object
+   * @return the grocery object with the specified name
+   * @throws IllegalArgumentException if the name is null or an empty string, or if the grocery
+   *         object does not exist in the food storage.
    */
   public Grocery getGroceryByName(String name) throws IllegalArgumentException {
     if (name == null || name.isBlank()) {
@@ -81,6 +98,10 @@ public class FoodStorage {
 
   /**
    * Returns a list of all grocery objects in the food storage that belong to a specified category.
+   * <p>
+   * If the category is null or an empty string, the method throws an
+   * {@code IllegalArgumentException}. Otherwise, it returns a list of all grocery objects in the
+   * food storage that belong to the specified category.
    *
    * @param category the category to filter the grocery objects by.
    * @return a list of all grocery objects in the food storage that belong to the specified
@@ -100,6 +121,10 @@ public class FoodStorage {
    * Returns a list of all grocery objects in the food storage that expire before a given date.
    * <p>
    * Does not return grocery objects that expire on the given date, only those that expire before.
+   * <p>
+   * If the given date is null, the method throws an {@code IllegalArgumentException}. Otherwise,
+   * it returns a list of all grocery objects in the food storage that expire before the given
+   * date. The list can be empty.
    *
    * @param date the date to compare the expiration date of the grocery objects to.
    * @return a list of all grocery objects that expire before the given date. List can be empty.
@@ -120,6 +145,10 @@ public class FoodStorage {
    * <p>
    * Does not return grocery objects that expire before the given date, only those that expire on
    * the given date.
+   * <p>
+   * If the given date is null, the method throws an {@code IllegalArgumentException}. Otherwise,
+   * it returns a list of all grocery objects in the food storage that expire on the given date.
+   * The list can be empty.
    *
    * @param date the date to compare the expiration date of the grocery objects to.
    * @return a list of all grocery objects that expire on the given date. List can be empty.
@@ -137,6 +166,9 @@ public class FoodStorage {
 
   /**
    * Adds a grocery object to the food storage.
+   * <p>
+   * If the grocery object is null, or if the grocery object already exists in the food storage,
+   * the method throws an {@code IllegalArgumentException}.
    *
    * @param grocery the grocery object to add.
    * @throws IllegalArgumentException if the grocery object already exists in the food storage.
@@ -154,8 +186,8 @@ public class FoodStorage {
   /**
    * Removes the specified object from the food storage.
    * <p>
-   * If the food storage does not contain the grocery object, the method will throw an
-   * {@code IllegalArgumentException}.
+   * If the grocery object is null, or if the grocery object does not exist in the food storage,
+   * the method throws an {@code IllegalArgumentException}.
    *
    * @param grocery the grocery object.
    * @throws IllegalArgumentException if the given grocery object does not exist in the food

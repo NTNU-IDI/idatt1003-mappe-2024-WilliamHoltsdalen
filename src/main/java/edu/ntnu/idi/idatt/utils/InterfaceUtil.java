@@ -1,15 +1,32 @@
 package edu.ntnu.idi.idatt.utils;
 
+import edu.ntnu.idi.idatt.views.TextUserInterface;
 import java.time.LocalDate;
 import java.util.Scanner;
 
-public final class InterfaceUtils {
-
+/**
+ * A utility class containing methods for interacting with the user, meant to be used in conjunction
+ * with a text based user interface, like {@link TextUserInterface}.
+ * <p>
+ * Provides methods for printing welcome and goodbye messages, handling errors, and for
+ * interacting with the user through the console, such as inputting integers, doubles, strings, and
+ * dates. Also provides methods for printing menu and sub-menus, and for exiting the application.
+ *
+ * @see TextUserInterface
+ *
+ * @author WilliamHoltsdalen
+ * @since 0.2
+ */
+public final class InterfaceUtil {
+  /** The scanner used to read input from the console. */
   private static final Scanner scanner = new Scanner(System.in);
 
-  // Prevent instantiation, as this is a utility class
-  private InterfaceUtils() {}
+  /** Prevent instantiation, as this is a utility class. */
+  private InterfaceUtil() {}
 
+  /**
+   * Prints the welcome message to the console.
+   */
   public static void printWelcomeMessage() {
     printMenuSpacing();
     System.out.println(
@@ -20,6 +37,9 @@ public final class InterfaceUtils {
               """);
   }
 
+  /**
+   * Prints the goodbye message to the console.
+   */
   public static void printGoodbyeMessage() {
     printMenuSpacing();
     System.out.println(
@@ -30,18 +50,36 @@ public final class InterfaceUtils {
               """);
   }
 
+  /**
+   * Prints an error message to the console.
+   *
+   * @param errorMessage the error message to print
+   */
   public static void printErrorMessage(String errorMessage) {
     System.out.println("Error: " + errorMessage);
   }
 
+  /**
+   * Prints a menu spacing to the console, which is two newlines.
+   */
   public static void printMenuSpacing() {
     System.out.print("\n\n");
   }
 
+  /**
+   * Prints a sub-menu spacing to the console, which is one newline.
+   */
   public static void printSubMenuSpacing() {
     System.out.print("\n");
   }
 
+  /**
+   * Reads an integer input from the console. If the input is not a valid integer, the method will
+   * print an error message and prompt the user to try again. It will continue to prompt the user
+   * until a valid integer is entered.
+   *
+   * @return the integer input read from the console
+   */
   public static int integerInput() {
     try {
       return Integer.parseInt(scanner.nextLine());
@@ -52,6 +90,13 @@ public final class InterfaceUtils {
     }
   }
 
+  /**
+   * Reads a double input from the console. If the input is not a valid double, the method will
+   * print an error message and prompt the user to try again. It will continue to prompt the user
+   * until a valid double is entered.
+   *
+   * @return the double input read from the console
+   */
   public static double doubleInput() {
     try {
       return Double.parseDouble(scanner.nextLine());
@@ -62,6 +107,13 @@ public final class InterfaceUtils {
     }
   }
 
+  /**
+   * Reads a string input from the console. If the input is not a valid string, the method will
+   * print an error message and prompt the user to try again. It will continue to prompt the user
+   * until a valid string is entered.
+   *
+   * @return the string input read from the console
+   */
   public static String stringInput() {
     if (scanner.hasNextLine()) {
       return scanner.nextLine();
@@ -71,6 +123,13 @@ public final class InterfaceUtils {
     return stringInput();
   }
 
+  /**
+   * Reads a date input from the console. If the input is not a valid date, the method will
+   * print an error message and prompt the user to try again. It will continue to prompt the user
+   * until a valid date is entered.
+   *
+   * @return the date input read from the console
+   */
   public static LocalDate dateInput() {
     try {
       return LocalDate.parse(scanner.nextLine());
@@ -81,6 +140,9 @@ public final class InterfaceUtils {
     }
   }
 
+  /**
+   * Prompts the user with a main menu, allowing them to select a menu option.
+   */
   public static void promptMainMenu() {
     printMenuSpacing();
     System.out.print(
@@ -96,7 +158,10 @@ public final class InterfaceUtils {
               Your choice:\s""");
   }
 
-  public static void promptGroceryMenu() {
+  /**
+   * Prompts the user with a grocery menu, allowing them to select a menu option.
+   */
+  public static void promptFoodStorageMenu() {
     printMenuSpacing();
     System.out.print(
               """
@@ -117,6 +182,9 @@ public final class InterfaceUtils {
               Your choice:\s""");
   }
 
+  /**
+   * Prompts the user with a cookbook menu, allowing them to select a menu option.
+   */
   public static void promptCookbookMenu() {
     printMenuSpacing();
     System.out.print(
@@ -134,6 +202,9 @@ public final class InterfaceUtils {
               Your choice:\s""");
   }
 
+  /**
+   * Prompts the user with a recipe editing menu, allowing them to select a menu option.
+   */
   public static void promptRecipeEditMenu() {
     printSubMenuSpacing();
     System.out.print(
@@ -152,6 +223,9 @@ public final class InterfaceUtils {
             Your choice:\s""");
   }
 
+  /**
+   * Prompts the user with a meal suggestions menu, allowing them to select a menu option.
+   */
   public static void promptMealSuggestionsMenu() {
     printMenuSpacing();
     System.out.print(
@@ -166,6 +240,9 @@ public final class InterfaceUtils {
             Your choice:\s""");
   }
 
+  /**
+   * Prompts the user with a settings menu, allowing them to select a menu option.
+   */
   public static void promptSettingsMenu() {
     printMenuSpacing();
     System.out.print(
@@ -181,6 +258,10 @@ public final class InterfaceUtils {
             Your choice:\s""");
   }
 
+  /**
+   * Exits the application by closing the scanner and printing the goodbye message, and then exiting
+   * the application.
+   */
   public static void exitApplication() {
     scanner.close();
     printGoodbyeMessage();

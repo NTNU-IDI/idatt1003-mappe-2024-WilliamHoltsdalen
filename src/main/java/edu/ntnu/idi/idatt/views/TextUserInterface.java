@@ -6,55 +6,94 @@ import edu.ntnu.idi.idatt.services.CookbookMenuService;
 import edu.ntnu.idi.idatt.services.FoodStorageMenuService;
 import edu.ntnu.idi.idatt.services.MealSuggestionsService;
 import edu.ntnu.idi.idatt.services.SettingsMenuService;
-import edu.ntnu.idi.idatt.utils.InterfaceUtils;
+import edu.ntnu.idi.idatt.utils.InterfaceUtil;
 import java.time.LocalDate;
 
 /**
- * Functions as a simple text-based user interface for a food storage system.
+ * A text-based user interface for a food storage system. This class provides the main navigation
+ * structure for the user interface, including menus and sub-menus. It also handles the input and
+ * output of the user interface, using methods from the {@link InterfaceUtil} class.
  * <p>
- * A food storage system is initialized, within the {@code init} method. Some example grocery items
- * are added to the food storage within the {@code start} method. Details about the grocery items
- * are then printed to the console.
+ * The {@code init} method initializes an empty food storage system and a cookbook. It also sets the
+ * current date of the application to the current date of the system.
+ * <p>
+ * The {@code start} method starts the application, allowing the user to navigate through the
+ * different menus and sub-menus.
+ *
+ * @see InterfaceUtil
+ *
+ * @author WilliamHoltsdalen
+ * @since 0.1
  */
 public class TextUserInterface {
+  private static final String INVALID_CHOICE_ERROR = "Invalid choice";
+  private static final String RETURNING_TO_MAIN_MENU = "Returning to main menu";
+
   private FoodStorage foodStorage;
   private Cookbook cookbook;
   private LocalDate currentDate;
 
   /**
-   * Initialize the text user interface application.
+   * Initializes the text user interface application, by creating a new food storage, cookbook, and
+   * current date.
    * <p>
-   * This method initializes the food storage system.
+   * If an error occurs during initialization, the method passes the error message to the
+   * {@code stopByError} method, which is responsible for stopping the application and
+   * printing the error message..
    */
   public void init() {
-    // Initialize the application
-    this.foodStorage = new FoodStorage();
-    this.cookbook = new Cookbook();
-    this.currentDate = LocalDate.now();
-
-    // Add some example grocery items to the food storage system
-    SettingsMenuService settingsMenuService = new SettingsMenuService(foodStorage, cookbook, currentDate);
-    settingsMenuService.caseAddDemoData();
+    try {
+      this.foodStorage = new FoodStorage();
+      this.cookbook = new Cookbook();
+      this.currentDate = LocalDate.now();
+    } catch (Exception e) {
+      stopByError(e.getMessage());
+    }
   }
 
   /**
    * Start the text user interface application.
    * <p>
-   * This method adds some grocery items to the food storage system and prints them to the console.
+   * If an error occurs during the start process, the method passes the error message to the
+   * {@code stopByError} method, which is responsible for stopping the application and
+   * printing the error message.
    */
   public void start() {
-
-    InterfaceUtils.printWelcomeMessage();
-
-    handleMainMenu();
-    InterfaceUtils.exitApplication();
+    try {
+      InterfaceUtil.printWelcomeMessage();
+      handleMainMenu();
+      InterfaceUtil.exitApplication();
+    } catch (Exception e) {
+      stopByError(e.getMessage());
+    }
   }
 
-  public void handleMainMenu() {
+  /**
+   * Stops the application by printing the provided error message and exiting the application
+   * smoothly.
+   *
+   * @param errorMessage the error message to print
+   */
+  private void stopByError(String errorMessage) {
+    System.out.println("An error occurred: " + errorMessage);
+    System.out.println("Exiting application...");
+    System.exit(0);
+  }
+
+  /**
+   * Handles the main menu of the application. This method prompts the user to select a menu option
+   * and then calls the appropriate method based on the selected option.
+   *
+   * @see FoodStorageMenuService
+   * @see CookbookMenuService
+   * @see MealSuggestionsService
+   * @see SettingsMenuService
+   */
+  private void handleMainMenu() {
     boolean finished = false;
     while (!finished) {
-      InterfaceUtils.promptMainMenu();
-      final int choice = InterfaceUtils.integerInput();
+      InterfaceUtil.promptMainMenu();
+      final int choice = InterfaceUtil.integerInput();
 
       switch (choice) {
         case 1 -> handleFoodStorageMenu();
@@ -62,18 +101,24 @@ public class TextUserInterface {
         case 3 -> handleMealSuggestionsMenu();
         case 4 -> handleSettingsMenu();
         case 0 -> finished = true;
-        default -> System.out.println("Invalid choice");
+        default -> System.out.println(INVALID_CHOICE_ERROR);
       }
     }
   }
 
-  public void handleFoodStorageMenu() {
+  /**
+   * Handles the food storage menu of the application. This method prompts the user to select a menu
+   * option and then calls the appropriate method based on the selected option.
+   *
+   * @see FoodStorageMenuService
+   */
+  private void handleFoodStorageMenu() {
     final FoodStorageMenuService foodStorageMenuService = new FoodStorageMenuService(foodStorage, currentDate);
     boolean finished = false;
 
     while (!finished) {
-      InterfaceUtils.promptGroceryMenu();
-      final int choice = InterfaceUtils.integerInput();
+      InterfaceUtil.promptFoodStorageMenu();
+      final int choice = InterfaceUtil.integerInput();
       switch (choice) {
         case 1 -> foodStorageMenuService.caseAddGrocery();
         case 2 -> foodStorageMenuService.caseConsumeGrocery();
@@ -86,18 +131,24 @@ public class TextUserInterface {
         case 9 -> foodStorageMenuService.caseCalculateGroceriesTotalValue();
         case 10 -> foodStorageMenuService.caseRemoveALlExpiredGroceries();
         case 0 -> finished = true;
-        default -> System.out.println("Invalid choice");
+        default -> System.out.println(INVALID_CHOICE_ERROR);
       }
     }
-    System.out.println("Returning to main menu");
+    System.out.println(RETURNING_TO_MAIN_MENU);
   }
 
-  public void handleCookbookMenu() {
+  /**
+   * Handles the cookbook menu of the application. This method prompts the user to select a menu
+   * option and then calls the appropriate method based on the selected option.
+   *
+   * @see CookbookMenuService
+   */
+  private void handleCookbookMenu() {
     final CookbookMenuService cookbookMenuService = new CookbookMenuService(cookbook);
     boolean finished = false;
     while (!finished) {
-      InterfaceUtils.promptCookbookMenu();
-      final int choice = InterfaceUtils.integerInput();
+      InterfaceUtil.promptCookbookMenu();
+      final int choice = InterfaceUtil.integerInput();
       switch (choice) {
         case 1 -> cookbookMenuService.caseFindRecipeByName();
         case 2 -> cookbookMenuService.caseSearchRecipesByIngredients();
@@ -106,45 +157,58 @@ public class TextUserInterface {
         case 5 -> cookbookMenuService.caseRemoveRecipe();
         case 6 -> cookbookMenuService.caseShowAllRecipes();
         case 0 -> finished = true;
-        default -> System.out.println("Invalid choice");
+        default -> System.out.println(INVALID_CHOICE_ERROR);
       }
     }
-    System.out.println("Returning to main menu");
+    System.out.println(RETURNING_TO_MAIN_MENU);
   }
 
-  public void handleMealSuggestionsMenu() {
+  /**
+   * Handles the meal suggestions menu of the application. This method prompts the user to select a
+   * menu option and then calls the appropriate method based on the selected option.
+   *
+   * @see MealSuggestionsService
+   */
+  private void handleMealSuggestionsMenu() {
     final MealSuggestionsService mealSuggestionsService = new MealSuggestionsService(foodStorage, cookbook);
     boolean finished = false;
 
     while (!finished) {
-      InterfaceUtils.promptMealSuggestionsMenu();
-      final int choice = InterfaceUtils.integerInput();
+      InterfaceUtil.promptMealSuggestionsMenu();
+      final int choice = InterfaceUtil.integerInput();
       switch (choice) {
         case 1 -> mealSuggestionsService.caseSuggestMealFromExpiringGroceries();
         case 2 -> mealSuggestionsService.caseSuggestMealsFromExistingGroceries();
         case 3 -> mealSuggestionsService.caseSuggestRandomMeal();
         case 0 -> finished = true;
-        default -> System.out.println("Invalid choice");
+        default -> System.out.println(INVALID_CHOICE_ERROR);
       }
     }
+    System.out.println(RETURNING_TO_MAIN_MENU);
   }
 
-  public void handleSettingsMenu() {
+  /**
+   * Handles the settings menu of the application. This method prompts the user to select a menu
+   * option and then calls the appropriate method based on the selected option.
+   *
+   * @see SettingsMenuService
+   */
+  private void handleSettingsMenu() {
     final SettingsMenuService settingsMenuService = new SettingsMenuService(foodStorage, cookbook, currentDate);
     boolean finished = false;
 
     while (!finished) {
-      InterfaceUtils.promptSettingsMenu();
-      final int choice = InterfaceUtils.integerInput();
+      InterfaceUtil.promptSettingsMenu();
+      final int choice = InterfaceUtil.integerInput();
       switch (choice) {
         case 1 -> settingsMenuService.caseAddDemoData();
         case 2 -> settingsMenuService.caseRemoveDemoData();
         case 3 -> settingsMenuService.caseShowCurrentDate();
-        case 4 -> currentDate = settingsMenuService.caseChangeCurrentDate();
+        case 4 -> currentDate = settingsMenuService.caseGetNewDate();
         case 0 -> finished = true;
-        default -> System.out.println("Invalid choice");
+        default -> System.out.println(INVALID_CHOICE_ERROR);
       }
     }
-    System.out.println("Returning to main menu");
+    System.out.println(RETURNING_TO_MAIN_MENU);
   }
 }

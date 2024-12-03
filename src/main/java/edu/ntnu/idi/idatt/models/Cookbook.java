@@ -3,6 +3,16 @@ package edu.ntnu.idi.idatt.models;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * A class representing a cook book.
+ * <p>
+ * The class provides methods for adding and removing recipes, as well as retrieving recipes by name.
+ * The class also provides methods for sorting the recipes in the cook book alphabetically by name,
+ * and for removing all recipes from the cook book.
+ *
+ * @author WilliamHoltsdalen
+ * @since V0.2
+ */
 public class Cookbook {
   private static final String NULL_RECIPE_ERROR = "Recipe cannot be null";
   private static final String RECIPE_NOT_FOUND_ERROR = "Recipe was not found";
@@ -12,7 +22,7 @@ public class Cookbook {
   private final List<Recipe> recipes;
 
   /**
-   * Constructs a new empty cook book.
+   * Constructs a new empty cook book with no recipes.
    */
   public Cookbook() {
     this.recipes = new java.util.ArrayList<>();
@@ -28,8 +38,10 @@ public class Cookbook {
   }
 
   /**
-   * Returns the recipe with the provided name. If no recipe with the provided name is found, or
-   * the name is null or blank, an IllegalArgumentException is thrown.
+   * Returns the recipe with the provided name.
+   * <p>
+   * If the name is null or an empty string, or if no recipe with the provided name is found, the
+   * method throws an {@code IllegalArgumentException}.
    *
    * @param name the name of the recipe
    * @return the recipe with the provided name
@@ -47,8 +59,13 @@ public class Cookbook {
   }
 
   /**
-   * Adds a recipe to the cook book. After adding the recipe, the list of recipes is sorted
-   * alphabetically by name.
+   * Adds a recipe to the cook book.
+   * <p>
+   * After adding the recipe, the list of recipes is sorted alphabetically by name.
+   * <p>
+   * If the recipe object is null, or if the recipe already exists in the cook book, the method
+   * throws an {@code IllegalArgumentException}.
+   *
    *
    * @param recipe the Recipe object to add
    * @throws IllegalArgumentException if the recipe object is null
@@ -65,8 +82,10 @@ public class Cookbook {
   }
 
   /**
-   * Removes a recipe from the cook book. If the recipe object is null, or the recipe does not exist
-   * in the cook book, an IllegalArgumentException is thrown.
+   * Removes a recipe from the cook book.
+   * <p>
+   * If the recipe object is null, or if the recipe does not exist in the cook book, the method
+   * throws an {@code IllegalArgumentException}.
    *
    * @param recipe the Recipe object to remove from the cook book
    * @throws IllegalArgumentException if the recipe object is null or if the recipe does not exist
