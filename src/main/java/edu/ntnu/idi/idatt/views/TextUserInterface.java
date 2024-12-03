@@ -82,6 +82,7 @@ public class TextUserInterface {
         case 6 -> groceryMenuService.caseShowAllGroceries();
         case 7 -> groceryMenuService.caseShowAllExpiredGroceries();
         case 8 -> groceryMenuService.caseShowGroceriesExpiringBeforeDate();
+        case 9 -> groceryMenuService.caseCalculateGroceriesTotalValue();
         case 0 -> finished = true;
         default -> System.out.println("Invalid choice");
       }

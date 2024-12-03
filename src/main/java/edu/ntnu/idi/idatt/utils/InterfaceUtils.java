@@ -110,6 +110,7 @@ public final class InterfaceUtils {
               6. Show all groceries
               7. Show all expired groceries
               8. Show all groceries that expire before a given date
+              9. Calculate total value of all groceries
               0. Return to main menu
               --  -- --  --  --  --  --  --  --  --  --  --  --  -- --
               Your choice:\s""");

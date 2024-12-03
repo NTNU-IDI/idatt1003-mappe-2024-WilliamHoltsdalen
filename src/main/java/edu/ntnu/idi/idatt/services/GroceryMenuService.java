@@ -206,4 +206,15 @@ public class GroceryMenuService {
       System.out.println(grocery);
     }
   }
+
+  public void caseCalculateGroceriesTotalValue() {
+    double totalValue = 0;
+    for (Grocery grocery : foodStorage.getAllGroceries()) {
+      for (GroceryBatch batch : grocery.getBatches()) {
+        totalValue += batch.getAmount() * batch.getPricePerUnit();
+      }
+    }
+
+    System.out.printf("Total value of all grocery batches: %.2f NOK%n", totalValue);
+  }
 }
