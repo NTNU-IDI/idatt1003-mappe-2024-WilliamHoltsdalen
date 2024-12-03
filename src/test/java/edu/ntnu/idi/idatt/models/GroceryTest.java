@@ -133,11 +133,22 @@ class GroceryTest {
     Grocery grocery = new Grocery("Milk", "Dairy", "liters", new GroceryBatch(3, 20, LocalDate.now()));
     grocery.addBatch(new GroceryBatch(2, 20, LocalDate.now().plusDays(1)));
 
-    assertEquals("Name: Milk, Category: Dairy, Unit: liters, Total amount: 5.0 liters"
-                  + "\nBatches:"
-                  + "\nAmount: 3.0, Price per unit: 20.0, Expiration date: " + LocalDate.now()
-                  + "\nAmount: 2.0, Price per unit: 20.0, Expiration date: " + LocalDate.now().plusDays(1),
-                  grocery.toString());
+    assertEquals("""
+      Milk
+      ---------------------------------
+      Category: Dairy
+      Unit: liters
+      Total amount: 5.00 liters
+      Batches:
+      - Amount 3.00 liters
+        Price per unit: 20.00 NOK
+        Expiration date: 2024-12-03
+      
+      - Amount 2.00 liters
+        Price per unit: 20.00 NOK
+        Expiration date: 2024-12-04
+      
+      """, grocery.toString());
   }
 
   // ------------------------------ Negative tests ------------------------------

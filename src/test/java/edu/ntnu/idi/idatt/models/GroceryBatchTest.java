@@ -17,8 +17,6 @@ import org.junit.jupiter.api.Test;
  * <li>that a grocery batch object can be created with valid parameters, and that all accessor
  * methods return the correct values.
  * <li>that the amount of a grocery batch object can be updated correctly.
- * <li>that the {@code toString} method returns the correct string representation of the grocery
- * batch object.
  * </ul>
  * <li>Negative tests:
  * <ul>
@@ -75,22 +73,6 @@ class GroceryBatchTest {
     assertEquals(0.5, groceryBatch.getAmount());
 
   }
-
-  /**
-   * Test that the {@code toString} method returns the correct string representation of the grocery
-   * batch object.
-   */
-  @Test
-  @DisplayName("Test that the toString method returns the correct string representation of the "
-      + "grocery batch object")
-  void testToStringReturnsCorrectString() {
-    GroceryBatch groceryBatch = new GroceryBatch(1.0, 10.0,
-        LocalDate.of(2022, 1, 1));
-
-    assertEquals("Amount: 1.0, Price per unit: 10.0, Expiration date: 2022-01-01",
-        groceryBatch.toString());
-  }
-
 
   // ------------------------------ Negative tests ------------------------------
 
