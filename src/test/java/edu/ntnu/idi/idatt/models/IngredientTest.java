@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -34,117 +35,130 @@ import org.junit.jupiter.api.Test;
  */
 @DisplayName("Test cases for the Ingredient class")
 class IngredientTest {
-  // ------------------------------ Positive tests ------------------------------
-
   /**
-   * Test creating an ingredient with valid parameters, and ensure accessor methods for all fields
-   * return the correct values.
+   * Positive tests for the Ingredient class.
    */
-  @Test
-  @DisplayName("Test creating an ingredient with valid parameters, and that the accessor methods"
-      + "return the correct values.")
-  void testCreateIngredient() {
-    Ingredient ingredient = new Ingredient("Milk", "Dairy", "liters", 1.0);
+  @Nested
+  @DisplayName("Positive tests for the Ingredient class")
+  class PositiveIngredientTests {
 
-    assertEquals("Milk", ingredient.getName());
-    assertEquals("Dairy", ingredient.getCategory());
-    assertEquals("liters", ingredient.getUnit());
-    assertEquals(1.0, ingredient.getAmount());
+    /**
+     * Test creating an ingredient with valid parameters, and ensure accessor methods for all fields
+     * return the correct values.
+     */
+    @Test
+    @DisplayName("Test creating an ingredient with valid parameters, and that the accessor methods"
+        + "return the correct values.")
+    void testCreateIngredient() {
+      Ingredient ingredient = new Ingredient("Milk", "Dairy", "liters", 1.0);
+
+      assertEquals("Milk", ingredient.getName());
+      assertEquals("Dairy", ingredient.getCategory());
+      assertEquals("liters", ingredient.getUnit());
+      assertEquals(1.0, ingredient.getAmount());
+    }
+
+    /**
+     * Test that the method {@code setAmount} sets the correct amount of the ingredient.
+     */
+    @Test
+    @DisplayName("Test that the method setAmount sets the correct amount of the ingredient.")
+    void testSetAmount() {
+      Ingredient ingredient = new Ingredient("Milk", "Dairy", "liters", 1.0);
+      ingredient.setAmount(2.0);
+      assertEquals(2.0, ingredient.getAmount());
+    }
+
+    /**
+     * Test that the method {@code toString} returns the correct string representation.
+     */
+    @Test
+    @DisplayName("Test that the method toString returns the correct string representation.")
+    void testToString() {
+      Ingredient ingredient = new Ingredient("Milk", "Dairy", "liters", 1.0);
+      assertEquals("Milk (Dairy): 1.00 liters", ingredient.toString());
+    }
   }
 
   /**
-   * Test that the method {@code setAmount} sets the correct amount of the ingredient.
+   * Negative tests for the Ingredient class.
    */
-  @Test
-  @DisplayName("Test that the method setAmount sets the correct amount of the ingredient.")
-  void testSetAmount() {
-    Ingredient ingredient = new Ingredient("Milk", "Dairy", "liters", 1.0);
-    ingredient.setAmount(2.0);
-    assertEquals(2.0, ingredient.getAmount());
-  }
+  @Nested
+  @DisplayName("Negative tests for the Ingredient class")
+  class NegativeIngredientTests {
 
-  /**
-   * Test that the method {@code toString} returns the correct string representation.
-   */
-  @Test
-  @DisplayName("Test that the method toString returns the correct string representation.")
-  void testToString() {
-    Ingredient ingredient = new Ingredient("Milk", "Dairy", "liters", 1.0);
-    assertEquals("Milk (Dairy): 1.00 liters", ingredient.toString());
-  }
+    /**
+     * Test creating an ingredient instance with the parameter {@code name} set to {@code null} or
+     * an empty string, and ensure an {@code IllegalArgumentException} is thrown.
+     */
+    @Test
+    @DisplayName("Test creating an ingredient instance with the parameter name set to null or an"
+        + "empty string, and ensure an IllegalArgumentException is thrown.")
+    void testNullOrEmptyNameThrows() {
+      assertThrows(IllegalArgumentException.class, () -> new Ingredient(
+          null, "Dairy", "liters", 1.0));
 
-  // ------------------------------ Negative tests ------------------------------
+      assertThrows(IllegalArgumentException.class, () -> new Ingredient(
+          "", "Dairy", "liters", 1.0));
+    }
 
-  /**
-   * Test creating an ingredient instance with the parameter {@code name} set to {@code null} or an
-   * empty string, and ensure an {@code IllegalArgumentException} is thrown.
-   */
-  @Test
-  @DisplayName("Test creating an ingredient instance with the parameter name set to null or an"
-      + "empty string, and ensure an IllegalArgumentException is thrown.")
-  void testNullOrEmptyNameThrows() {
-    assertThrows(IllegalArgumentException.class, () -> new Ingredient(
-        null, "Dairy", "liters", 1.0));
+    /**
+     * Test creating an ingredient instance with the parameter {@code category} set to {@code null}
+     * or an empty string, and ensure an {@code IllegalArgumentException} is thrown.
+     */
+    @Test
+    @DisplayName(
+        "Test creating an ingredient instance with the parameter category set to null or an"
+            + "empty string, and ensure an IllegalArgumentException is thrown.")
+    void testNullOrEmptyCategoryThrows() {
+      assertThrows(IllegalArgumentException.class, () -> new Ingredient(
+          "Milk", null, "liters", 1.0));
 
-    assertThrows(IllegalArgumentException.class, () -> new Ingredient(
-        "", "Dairy", "liters", 1.0));
-  }
+      assertThrows(IllegalArgumentException.class, () -> new Ingredient(
+          "Milk", "", "liters", 1.0));
+    }
 
-  /**
-   * Test creating an ingredient instance with the parameter {@code category} set to {@code null} or
-   * an empty string, and ensure an {@code IllegalArgumentException} is thrown.
-   */
-  @Test
-  @DisplayName("Test creating an ingredient instance with the parameter category set to null or an"
-      + "empty string, and ensure an IllegalArgumentException is thrown.")
-  void testNullOrEmptyCategoryThrows() {
-    assertThrows(IllegalArgumentException.class, () -> new Ingredient(
-        "Milk", null, "liters", 1.0));
+    /**
+     * Test creating an ingredient instance with the parameter {@code unit} set to {@code null} or
+     * an empty string, and ensure an {@code IllegalArgumentException} is thrown.
+     */
+    @Test
+    @DisplayName("Test creating an ingredient instance with the parameter unit set to null or an"
+        + "empty string, and ensure an IllegalArgumentException is thrown.")
+    void testNullOrEmptyUnitThrows() {
+      assertThrows(IllegalArgumentException.class, () -> new Ingredient(
+          "Milk", "Dairy", null, 1.0));
 
-    assertThrows(IllegalArgumentException.class, () -> new Ingredient(
-        "Milk", "", "liters", 1.0));
-  }
+      assertThrows(IllegalArgumentException.class, () -> new Ingredient(
+          "Milk", "Dairy", "", 1.0));
+    }
 
-  /**
-   * Test creating an ingredient instance with the parameter {@code unit} set to {@code null} or an
-   * empty string, and ensure an {@code IllegalArgumentException} is thrown.
-   */
-  @Test
-  @DisplayName("Test creating an ingredient instance with the parameter unit set to null or an"
-      + "empty string, and ensure an IllegalArgumentException is thrown.")
-  void testNullOrEmptyUnitThrows() {
-    assertThrows(IllegalArgumentException.class, () -> new Ingredient(
-        "Milk", "Dairy", null, 1.0));
+    /**
+     * Test creating an ingredient instance with the parameter {@code amount} set to zero or a
+     * negative number, and ensure an {@code IllegalArgumentException} is thrown.
+     */
+    @Test
+    @DisplayName("Test creating an ingredient instance with the parameter amount set to zero or a"
+        + "negative number, and ensure an IllegalArgumentException is thrown.")
+    void testNegativeAmountThrows() {
+      assertThrows(IllegalArgumentException.class, () -> new Ingredient(
+          "Milk", "Dairy", "liters", 0.0));
 
-    assertThrows(IllegalArgumentException.class, () -> new Ingredient(
-        "Milk", "Dairy", "", 1.0));
-  }
+      assertThrows(IllegalArgumentException.class, () -> new Ingredient(
+          "Milk", "Dairy", "liters", -1.0));
+    }
 
-  /**
-   * Test creating an ingredient instance with the parameter {@code amount} set to zero or a
-   * negative number, and ensure an {@code IllegalArgumentException} is thrown.
-   */
-  @Test
-  @DisplayName("Test creating an ingredient instance with the parameter amount set to zero or a"
-      + "negative number, and ensure an IllegalArgumentException is thrown.")
-  void testNegativeAmountThrows() {
-    assertThrows(IllegalArgumentException.class, () -> new Ingredient(
-        "Milk", "Dairy", "liters", 0.0));
-
-    assertThrows(IllegalArgumentException.class, () -> new Ingredient(
-        "Milk", "Dairy", "liters", -1.0));
-  }
-
-  /**
-   * Test setting the amount of an ingredient to zero or a negative number, and ensure an
-   * {@code IllegalArgumentException} is thrown.
-   */
-  @Test
-  @DisplayName("Test setting the amount of an ingredient to zero or a negative number, and ensure"
-      + " an IllegalArgumentException is thrown.")
-  void testNegativeAmountSetThrows() {
-    Ingredient ingredient = new Ingredient("Milk", "Dairy", "liters", 1.0);
-    assertThrows(IllegalArgumentException.class, () -> ingredient.setAmount(0.0));
-    assertThrows(IllegalArgumentException.class, () -> ingredient.setAmount(-1.0));
+    /**
+     * Test setting the amount of an ingredient to zero or a negative number, and ensure an
+     * {@code IllegalArgumentException} is thrown.
+     */
+    @Test
+    @DisplayName("Test setting the amount of an ingredient to zero or a negative number, and ensure"
+        + " an IllegalArgumentException is thrown.")
+    void testNegativeAmountSetThrows() {
+      Ingredient ingredient = new Ingredient("Milk", "Dairy", "liters", 1.0);
+      assertThrows(IllegalArgumentException.class, () -> ingredient.setAmount(0.0));
+      assertThrows(IllegalArgumentException.class, () -> ingredient.setAmount(-1.0));
+    }
   }
 }
