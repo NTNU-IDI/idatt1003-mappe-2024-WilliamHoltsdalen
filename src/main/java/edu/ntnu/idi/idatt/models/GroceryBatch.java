@@ -47,10 +47,4 @@ public class GroceryBatch {
     }
     this.amount = newAmount;
   }
-
-  @Override
-  public String toString() {
-    return "Amount: " + amount + ", Price per unit: " + pricePerUnit + ", Expiration date: "
-        + expirationDate;
-  }
 }

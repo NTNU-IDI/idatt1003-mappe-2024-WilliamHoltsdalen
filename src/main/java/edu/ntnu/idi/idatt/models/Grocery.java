@@ -208,10 +208,22 @@ public class Grocery implements FoodItem {
    */
   @Override
   public String toString() {
-    StringBuilder str = new StringBuilder("Name: " + name + ", Category: " + category + ", Unit: "
-        + unit + ", Total amount: " + totalAmount + " " + unit + "\nBatches:");
+    StringBuilder str = new StringBuilder(String.format("""
+        %s
+        ---------------------------------
+        Category: %s
+        Unit: %s
+        Total amount: %.2f %s
+        Batches:
+        """, name, category, unit, totalAmount, unit));
+
     for (GroceryBatch batch : batches) {
-      str.append("\n").append(batch.toString());
+      str.append(String.format("""
+          - Amount %.2f %s
+            Price per unit: %.2f NOK
+            Expiration date: %s
+          
+          """, batch.getAmount(), unit, batch.getPricePerUnit(), batch.getExpirationDate()));
     }
     return str.toString();
   }

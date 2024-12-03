@@ -129,7 +129,7 @@ public class FoodStorageMenuService {
       System.out.println("Grocery called '" + name + "' not found.");
       return;
     }
-    System.out.println("Grocery: ");
+    System.out.println("Grocery:\n");
     System.out.println(grocery);
   }
 
@@ -141,7 +141,7 @@ public class FoodStorageMenuService {
       System.out.println("No groceries found in category: " + category);
       return;
     }
-    System.out.println("Groceries in category: " + category);
+    System.out.printf("%nGroceries in category: %s%n%n", category);
     for (Grocery grocery : groceries) {
       System.out.println(grocery);
     }
@@ -155,7 +155,7 @@ public class FoodStorageMenuService {
       System.out.println("No groceries expire on: " + expDate);
       return;
     }
-    System.out.println("Groceries expiring on: " + expDate);
+    System.out.printf("%nGroceries expiring on: %s%n%n", expDate);
     for (Grocery grocery : groceries) {
       System.out.println(grocery);
     }
@@ -167,7 +167,8 @@ public class FoodStorageMenuService {
       System.out.println("There are no groceries in the food storage.");
       return;
     }
-    System.out.println("Groceries:");
+
+    System.out.println("All groceries in the food storage:\n");
     for (Grocery grocery : groceries) {
       System.out.println(grocery);
     }
@@ -180,9 +181,9 @@ public class FoodStorageMenuService {
       return;
     }
     double totalValue = 0;
-    System.out.println("Expired groceries:");
+    System.out.println("Expired groceries:\n");
     for (Grocery grocery : groceries) {
-      System.out.println("\n" + grocery);
+      System.out.println(grocery);
       for (GroceryBatch batch : grocery.getBatches()) {
         if (batch.getExpirationDate().isBefore(LocalDate.now())) {
           totalValue += batch.getAmount() * batch.getPricePerUnit();
@@ -201,7 +202,7 @@ public class FoodStorageMenuService {
       System.out.println("No groceries expire before: " + expDate);
       return;
     }
-    System.out.println("Groceries expiring before " + expDate + ":");
+    System.out.println("Groceries expiring before " + expDate + ":\n");
     for (Grocery grocery : groceries) {
       System.out.println(grocery);
     }
@@ -215,6 +216,6 @@ public class FoodStorageMenuService {
       }
     }
 
-    System.out.printf("Total value of all grocery batches: %.2f NOK%n", totalValue);
+    System.out.printf("Total value of all groceries: %.2f NOK%n", totalValue);
   }
 }
