@@ -223,4 +223,17 @@ public class FoodStorageMenuService {
 
     System.out.printf("Total value of all groceries: %.2f NOK%n", totalValue);
   }
+
+  public void caseRemoveALlExpiredGroceries() {
+    final List<Grocery> expiredGroceries = foodStorage.getGroceriesExpiringBeforeDate(currentDate);
+
+    for (Grocery grocery : expiredGroceries) {
+      for (GroceryBatch batch : grocery.getBatches()) {
+        if (batch.getExpirationDate().isBefore(currentDate)) {
+          grocery.consume(batch.getAmount());
+        }
+      }
+    }
+    System.out.println("All expired groceries removed from the food storage.");
+  }
 }

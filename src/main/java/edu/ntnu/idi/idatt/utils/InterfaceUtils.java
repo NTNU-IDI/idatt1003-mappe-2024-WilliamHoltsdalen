@@ -111,6 +111,7 @@ public final class InterfaceUtils {
               7. Show all expired groceries
               8. Show all groceries that expire before a given date
               9. Calculate total value of all groceries
+              10. Remove all expired grocery batches
               0. Return to main menu
               --  -- --  --  --  --  --  --  --  --  --  --  --  -- --
               Your choice:\s""");
@@ -151,7 +152,7 @@ public final class InterfaceUtils {
             Your choice:\s""");
   }
 
-  public static void promptMealSUggestionsMenu() {
+  public static void promptMealSuggestionsMenu() {
     printMenuSpacing();
     System.out.print(
             """

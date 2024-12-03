@@ -84,6 +84,7 @@ public class TextUserInterface {
         case 7 -> foodStorageMenuService.caseShowAllExpiredGroceries();
         case 8 -> foodStorageMenuService.caseShowGroceriesExpiringBeforeDate();
         case 9 -> foodStorageMenuService.caseCalculateGroceriesTotalValue();
+        case 10 -> foodStorageMenuService.caseRemoveALlExpiredGroceries();
         case 0 -> finished = true;
         default -> System.out.println("Invalid choice");
       }
@@ -116,7 +117,7 @@ public class TextUserInterface {
     boolean finished = false;
 
     while (!finished) {
-      InterfaceUtils.promptMealSUggestionsMenu();
+      InterfaceUtils.promptMealSuggestionsMenu();
       final int choice = InterfaceUtils.integerInput();
       switch (choice) {
         case 1 -> mealSuggestionsService.caseSuggestMealFromExpiringGroceries();
