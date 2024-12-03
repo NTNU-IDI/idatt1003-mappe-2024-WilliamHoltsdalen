@@ -7,6 +7,7 @@ import edu.ntnu.idi.idatt.services.FoodStorageMenuService;
 import edu.ntnu.idi.idatt.services.MealSuggestionsService;
 import edu.ntnu.idi.idatt.services.SettingsMenuService;
 import edu.ntnu.idi.idatt.utils.InterfaceUtils;
+import java.time.LocalDate;
 
 /**
  * Functions as a simple text-based user interface for a food storage system.
@@ -18,6 +19,7 @@ import edu.ntnu.idi.idatt.utils.InterfaceUtils;
 public class TextUserInterface {
   private FoodStorage foodStorage;
   private Cookbook cookbook;
+  private LocalDate currentDate;
 
   /**
    * Initialize the text user interface application.
@@ -28,10 +30,11 @@ public class TextUserInterface {
     // Initialize the application
     this.foodStorage = new FoodStorage();
     this.cookbook = new Cookbook();
+    this.currentDate = LocalDate.now();
 
     // Add some example grocery items to the food storage system
-    SettingsMenuService settingsMenuService = new SettingsMenuService(foodStorage, cookbook);
-    settingsMenuService.addDemoData();
+    SettingsMenuService settingsMenuService = new SettingsMenuService(foodStorage, cookbook, currentDate);
+    settingsMenuService.caseAddDemoData();
   }
 
   /**
@@ -46,8 +49,6 @@ public class TextUserInterface {
     handleMainMenu();
     InterfaceUtils.exitApplication();
   }
-
-
 
   public void handleMainMenu() {
     boolean finished = false;
@@ -67,7 +68,7 @@ public class TextUserInterface {
   }
 
   public void handleFoodStorageMenu() {
-    final FoodStorageMenuService foodStorageMenuService = new FoodStorageMenuService(foodStorage);
+    final FoodStorageMenuService foodStorageMenuService = new FoodStorageMenuService(foodStorage, currentDate);
     boolean finished = false;
 
     while (!finished) {
@@ -128,15 +129,17 @@ public class TextUserInterface {
   }
 
   public void handleSettingsMenu() {
-    final SettingsMenuService settingsMenuService = new SettingsMenuService(foodStorage, cookbook);
+    final SettingsMenuService settingsMenuService = new SettingsMenuService(foodStorage, cookbook, currentDate);
     boolean finished = false;
 
     while (!finished) {
       InterfaceUtils.promptSettingsMenu();
       final int choice = InterfaceUtils.integerInput();
       switch (choice) {
-        case 1 -> settingsMenuService.addDemoData();
-        case 2 -> settingsMenuService.removeAllData();
+        case 1 -> settingsMenuService.caseAddDemoData();
+        case 2 -> settingsMenuService.caseRemoveDemoData();
+        case 3 -> settingsMenuService.caseShowCurrentDate();
+        case 4 -> currentDate = settingsMenuService.caseChangeCurrentDate();
         case 0 -> finished = true;
         default -> System.out.println("Invalid choice");
       }

@@ -173,6 +173,8 @@ public final class InterfaceUtils {
             --  -- --  --  --  --  --
             1. Add demo data
             2. Remove all data
+            3. Show current date
+            4. Change current date
             0. Return to main menu
             --  -- --  --  --  --  --
             Your choice:\s""");

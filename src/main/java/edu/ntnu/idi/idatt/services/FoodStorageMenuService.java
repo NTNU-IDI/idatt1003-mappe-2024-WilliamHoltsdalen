@@ -9,13 +9,18 @@ import java.util.List;
 
 public class FoodStorageMenuService {
   private final FoodStorage foodStorage;
+  private final LocalDate currentDate;
 
-  public FoodStorageMenuService(FoodStorage foodStorage) {
+  public FoodStorageMenuService(FoodStorage foodStorage, LocalDate currentDate) {
     if (foodStorage == null) {
       throw new IllegalArgumentException("Food storage cannot be null");
     }
+    if (currentDate == null) {
+      throw new IllegalArgumentException("Current date cannot be null");
+    }
 
     this.foodStorage = foodStorage;
+    this.currentDate = currentDate;
   }
 
   private boolean checkIfGroceryExists(String name) throws IllegalArgumentException {
@@ -175,9 +180,9 @@ public class FoodStorageMenuService {
   }
 
   public void caseShowAllExpiredGroceries() {
-    final List<Grocery> groceries = foodStorage.getGroceriesExpiringBeforeDate(LocalDate.now());
+    final List<Grocery> groceries = foodStorage.getGroceriesExpiringBeforeDate(currentDate);
     if (groceries.isEmpty()) {
-      System.out.println("There are no groceries that are expired in the food storage.");
+      System.out.println("There are no expired groceries in the food storage.");
       return;
     }
     double totalValue = 0;
@@ -185,7 +190,7 @@ public class FoodStorageMenuService {
     for (Grocery grocery : groceries) {
       System.out.println(grocery);
       for (GroceryBatch batch : grocery.getBatches()) {
-        if (batch.getExpirationDate().isBefore(LocalDate.now())) {
+        if (batch.getExpirationDate().isBefore(currentDate)) {
           totalValue += batch.getAmount() * batch.getPricePerUnit();
         }
       }
