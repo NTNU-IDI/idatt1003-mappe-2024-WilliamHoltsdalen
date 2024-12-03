@@ -3,7 +3,7 @@ package edu.ntnu.idi.idatt.views;
 import edu.ntnu.idi.idatt.models.Cookbook;
 import edu.ntnu.idi.idatt.models.FoodStorage;
 import edu.ntnu.idi.idatt.services.CookbookMenuService;
-import edu.ntnu.idi.idatt.services.GroceryMenuService;
+import edu.ntnu.idi.idatt.services.FoodStorageMenuService;
 import edu.ntnu.idi.idatt.services.MealSuggestionsService;
 import edu.ntnu.idi.idatt.services.SettingsMenuService;
 import edu.ntnu.idi.idatt.utils.InterfaceUtils;
@@ -56,7 +56,7 @@ public class TextUserInterface {
       final int choice = InterfaceUtils.integerInput();
 
       switch (choice) {
-        case 1 -> handleGroceryMenu();
+        case 1 -> handleFoodStorageMenu();
         case 2 -> handleCookbookMenu();
         case 3 -> handleMealSuggestionsMenu();
         case 4 -> handleSettingsMenu();
@@ -66,23 +66,23 @@ public class TextUserInterface {
     }
   }
 
-  public void handleGroceryMenu() {
-    final GroceryMenuService groceryMenuService = new GroceryMenuService(foodStorage);
+  public void handleFoodStorageMenu() {
+    final FoodStorageMenuService foodStorageMenuService = new FoodStorageMenuService(foodStorage);
     boolean finished = false;
 
     while (!finished) {
       InterfaceUtils.promptGroceryMenu();
       final int choice = InterfaceUtils.integerInput();
       switch (choice) {
-        case 1 -> groceryMenuService.caseAddGrocery();
-        case 2 -> groceryMenuService.caseConsumeGrocery();
-        case 3 -> groceryMenuService.caseFindGroceryByName();
-        case 4 -> groceryMenuService.caseFindGroceriesByCategory();
-        case 5 -> groceryMenuService.caseFindGroceriesExpiringOnDate();
-        case 6 -> groceryMenuService.caseShowAllGroceries();
-        case 7 -> groceryMenuService.caseShowAllExpiredGroceries();
-        case 8 -> groceryMenuService.caseShowGroceriesExpiringBeforeDate();
-        case 9 -> groceryMenuService.caseCalculateGroceriesTotalValue();
+        case 1 -> foodStorageMenuService.caseAddGrocery();
+        case 2 -> foodStorageMenuService.caseConsumeGrocery();
+        case 3 -> foodStorageMenuService.caseFindGroceryByName();
+        case 4 -> foodStorageMenuService.caseFindGroceriesByCategory();
+        case 5 -> foodStorageMenuService.caseFindGroceriesExpiringOnDate();
+        case 6 -> foodStorageMenuService.caseShowAllGroceries();
+        case 7 -> foodStorageMenuService.caseShowAllExpiredGroceries();
+        case 8 -> foodStorageMenuService.caseShowGroceriesExpiringBeforeDate();
+        case 9 -> foodStorageMenuService.caseCalculateGroceriesTotalValue();
         case 0 -> finished = true;
         default -> System.out.println("Invalid choice");
       }

@@ -7,10 +7,10 @@ import edu.ntnu.idi.idatt.utils.InterfaceUtils;
 import java.time.LocalDate;
 import java.util.List;
 
-public class GroceryMenuService {
+public class FoodStorageMenuService {
   private final FoodStorage foodStorage;
 
-  public GroceryMenuService(FoodStorage foodStorage) {
+  public FoodStorageMenuService(FoodStorage foodStorage) {
     if (foodStorage == null) {
       throw new IllegalArgumentException("Food storage cannot be null");
     }

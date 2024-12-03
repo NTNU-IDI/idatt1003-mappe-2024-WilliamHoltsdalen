@@ -87,7 +87,7 @@ public final class InterfaceUtils {
               """
                        Main menu
               ---------------------------
-              1. Open grocery menu
+              1. Open food storage menu
               2. Open cookbook menu
               3. Explore meal suggestions
               4. Open settings
@@ -100,7 +100,7 @@ public final class InterfaceUtils {
     printMenuSpacing();
     System.out.print(
               """
-                                     Grocery menu
+                                  Food storage menu
               --  --  --  --  --  --  --  --  --  --  --  --  --  --  --
               1. Add a new grocery
               2. Consume amount of a grocery
