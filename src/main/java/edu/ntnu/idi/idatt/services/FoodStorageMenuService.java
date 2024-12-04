@@ -6,6 +6,8 @@ import edu.ntnu.idi.idatt.models.GroceryBatch;
 import edu.ntnu.idi.idatt.utils.InterfaceUtils;
 import edu.ntnu.idi.idatt.views.TextUserInterface;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -375,15 +377,32 @@ public class FoodStorageMenuService {
    * batch is not expired, the method does not remove the grocery batch.
    */
   public void caseRemoveAllExpiredGroceries() {
-    final List<Grocery> expiredGroceries = foodStorage.getGroceriesExpiringBeforeDate(currentDate);
+    // Copying the list to allow for modification during iteration.
+    final List<Grocery> expiredGroceriesForIteration = new ArrayList<>(
+        foodStorage.getGroceriesExpiringBeforeDate(currentDate));
+    if (expiredGroceriesForIteration.isEmpty()) {
+      System.out.println("There are no expired groceries in the food storage.");
+      return;
+    }
 
-    for (Grocery grocery : expiredGroceries) {
-      for (GroceryBatch batch : grocery.getBatches()) {
+    for (Grocery grocery : expiredGroceriesForIteration) {
+      // Copying the list to allow for modification during iteration.
+      final List<GroceryBatch> batchesForIteration = new ArrayList<>(grocery.getBatches());
+
+      for (GroceryBatch batch : batchesForIteration) {
         if (batch.getExpirationDate().isBefore(currentDate)) {
+          if (grocery.getBatches().size() == 1) {
+            foodStorage.removeGrocery(grocery);
+            System.out.printf("Removed %s, expired on %s%n", grocery.getName(),
+                batch.getExpirationDate());
+            break;
+          }
           grocery.consume(batch.getAmount());
+          System.out.printf("Removed batch from %s, expired on %s%n",
+              grocery.getName(), batch.getExpirationDate());
         }
       }
     }
-    System.out.println("All expired groceries removed from the food storage.");
+    System.out.println("All expired grocery batches removed from the food storage.");
   }
 }
