@@ -19,7 +19,7 @@ import java.util.Scanner;
  * @since 0.2
  */
 public final class InterfaceUtils {
-  private static final String TRY_AGAIN_ERROR = "Try again";
+  private static final String TRY_AGAIN_ERROR = "Try again: ";
   /** The scanner used to read input from the console. */
   private static final Scanner scanner = new Scanner(System.in);
 
@@ -84,9 +84,13 @@ public final class InterfaceUtils {
    */
   public static int integerInput() {
     try {
-      return Integer.parseInt(scanner.nextLine());
-    } catch (NumberFormatException nfe) {
-      printErrorMessage("Please enter a valid number");
+      int input = Integer.parseInt(scanner.nextLine());
+      if (!ValidationUtils.isValidPositiveInteger(input)) {
+        throw new IllegalArgumentException();
+      }
+      return input;
+    } catch (Exception e) {
+      printErrorMessage("Please enter a valid integer (positive whole number).");
       System.out.print(TRY_AGAIN_ERROR);
       return integerInput();
     }
@@ -101,9 +105,13 @@ public final class InterfaceUtils {
    */
   public static double doubleInput() {
     try {
-      return Double.parseDouble(scanner.nextLine());
-    } catch (NumberFormatException nfe) {
-      printErrorMessage("Please enter a valid number");
+      double input = Double.parseDouble(scanner.nextLine());
+      if (!ValidationUtils.isValidPositiveDouble(input)) {
+        throw new IllegalArgumentException();
+      }
+      return input;
+    } catch (Exception e) {
+      printErrorMessage("Please enter a valid number (positive).");
       System.out.print(TRY_AGAIN_ERROR);
       return doubleInput();
     }
@@ -117,12 +125,17 @@ public final class InterfaceUtils {
    * @return the string input read from the console
    */
   public static String stringInput() {
-    if (scanner.hasNextLine()) {
-      return scanner.nextLine();
+    try{
+      String input = scanner.nextLine();
+      if (!ValidationUtils.isValidString(input)) {
+        throw new IllegalArgumentException();
+      }
+      return input.trim();
+    } catch (Exception e) {
+      printErrorMessage("Please enter a valid text string.");
+      System.out.print(TRY_AGAIN_ERROR);
+      return stringInput();
     }
-    printErrorMessage("Please enter a valid string");
-    System.out.print(TRY_AGAIN_ERROR);
-    return stringInput();
   }
 
   /**
@@ -169,17 +182,17 @@ public final class InterfaceUtils {
               """
                                   Food storage menu
               --  --  --  --  --  --  --  --  --  --  --  --  --  --  --
-              1. Add a new grocery
-              2. Consume amount of a grocery
-              3. Find a grocery by name
-              4. Find groceries by category
-              5. Find groceries expiring on a given date
-              6. Show all groceries
-              7. Show all expired groceries
-              8. Show all groceries that expire before a given date
-              9. Calculate total value of all groceries
+              1.  Add a new grocery
+              2.  Consume amount of a grocery
+              3.  Find a grocery by name
+              4.  Find groceries by category
+              5.  Find groceries expiring on a given date
+              6.  Show all groceries
+              7.  Show all expired groceries
+              8.  Show all groceries that expire before a given date
+              9.  Calculate total value of all groceries
               10. Remove all expired grocery batches
-              0. Return to main menu
+              0.  Return to main menu
               --  -- --  --  --  --  --  --  --  --  --  --  --  -- --
               Your choice:\s""");
   }
