@@ -31,8 +31,11 @@ public class TextUserInterface {
   private static final String INVALID_CHOICE_ERROR = "Invalid choice";
   private static final String RETURNING_TO_MAIN_MENU = "Returning to main menu";
 
+  /** The food storage used by the application. */
   private FoodStorage foodStorage;
+  /** The cookbook used by the application. */
   private Cookbook cookbook;
+  /** The current date used by the application. Can be changed by the user. */
   private LocalDate currentDate;
 
   /**
@@ -96,16 +99,19 @@ public class TextUserInterface {
   private void handleMainMenu() {
     boolean finished = false;
     while (!finished) {
-      InterfaceUtils.promptMainMenu();
-      final int choice = InterfaceUtils.integerInput();
-
-      switch (choice) {
-        case 1 -> handleFoodStorageMenu();
-        case 2 -> handleCookbookMenu();
-        case 3 -> handleMealSuggestionsMenu();
-        case 4 -> handleSettingsMenu();
-        case 0 -> finished = true;
-        default -> System.out.println(INVALID_CHOICE_ERROR);
+      try {
+        InterfaceUtils.promptMainMenu();
+        final int choice = InterfaceUtils.integerInput();
+        switch (choice) {
+          case 1 -> handleFoodStorageMenu();
+          case 2 -> handleCookbookMenu();
+          case 3 -> handleMealSuggestionsMenu();
+          case 4 -> handleSettingsMenu();
+          case 0 -> finished = true;
+          default -> System.out.println(INVALID_CHOICE_ERROR);
+        }
+      } catch (Exception e) {
+        InterfaceUtils.printErrorMessage(e.getMessage());
       }
     }
   }
@@ -120,23 +126,26 @@ public class TextUserInterface {
     final FoodStorageMenuService foodStorageMenuService = new FoodStorageMenuService(foodStorage,
         currentDate);
     boolean finished = false;
-
     while (!finished) {
-      InterfaceUtils.promptFoodStorageMenu();
-      final int choice = InterfaceUtils.integerInput();
-      switch (choice) {
-        case 1 -> foodStorageMenuService.caseAddGrocery();
-        case 2 -> foodStorageMenuService.caseConsumeGrocery();
-        case 3 -> foodStorageMenuService.caseFindGroceryByName();
-        case 4 -> foodStorageMenuService.caseFindGroceriesByCategory();
-        case 5 -> foodStorageMenuService.caseFindGroceriesExpiringOnDate();
-        case 6 -> foodStorageMenuService.caseShowAllGroceries();
-        case 7 -> foodStorageMenuService.caseShowAllExpiredGroceries();
-        case 8 -> foodStorageMenuService.caseShowGroceriesExpiringBeforeDate();
-        case 9 -> foodStorageMenuService.caseCalculateGroceriesTotalValue();
-        case 10 -> foodStorageMenuService.caseRemoveAllExpiredGroceries();
-        case 0 -> finished = true;
-        default -> System.out.println(INVALID_CHOICE_ERROR);
+      try {
+        InterfaceUtils.promptFoodStorageMenu();
+        final int choice = InterfaceUtils.integerInput();
+        switch (choice) {
+          case 1 -> foodStorageMenuService.caseAddGrocery();
+          case 2 -> foodStorageMenuService.caseConsumeGrocery();
+          case 3 -> foodStorageMenuService.caseFindGroceryByName();
+          case 4 -> foodStorageMenuService.caseFindGroceriesByCategory();
+          case 5 -> foodStorageMenuService.caseFindGroceriesExpiringOnDate();
+          case 6 -> foodStorageMenuService.caseShowAllGroceries();
+          case 7 -> foodStorageMenuService.caseShowAllExpiredGroceries();
+          case 8 -> foodStorageMenuService.caseShowGroceriesExpiringBeforeDate();
+          case 9 -> foodStorageMenuService.caseCalculateGroceriesTotalValue();
+          case 10 -> foodStorageMenuService.caseRemoveAllExpiredGroceries();
+          case 0 -> finished = true;
+          default -> System.out.println(INVALID_CHOICE_ERROR);
+        }
+      } catch (Exception e) {
+        InterfaceUtils.printErrorMessage(e.getMessage());
       }
     }
     System.out.println(RETURNING_TO_MAIN_MENU);
@@ -152,17 +161,21 @@ public class TextUserInterface {
     final CookbookMenuService cookbookMenuService = new CookbookMenuService(cookbook);
     boolean finished = false;
     while (!finished) {
-      InterfaceUtils.promptCookbookMenu();
-      final int choice = InterfaceUtils.integerInput();
-      switch (choice) {
-        case 1 -> cookbookMenuService.caseFindRecipeByName();
-        case 2 -> cookbookMenuService.caseSearchRecipesByIngredients();
-        case 3 -> cookbookMenuService.caseAddNewRecipe();
-        case 4 -> cookbookMenuService.caseEditRecipe();
-        case 5 -> cookbookMenuService.caseRemoveRecipe();
-        case 6 -> cookbookMenuService.caseShowAllRecipes();
-        case 0 -> finished = true;
-        default -> System.out.println(INVALID_CHOICE_ERROR);
+      try {
+        InterfaceUtils.promptCookbookMenu();
+        final int choice = InterfaceUtils.integerInput();
+        switch (choice) {
+          case 1 -> cookbookMenuService.caseFindRecipeByName();
+          case 2 -> cookbookMenuService.caseSearchRecipesByIngredients();
+          case 3 -> cookbookMenuService.caseAddNewRecipe();
+          case 4 -> cookbookMenuService.caseEditRecipe();
+          case 5 -> cookbookMenuService.caseRemoveRecipe();
+          case 6 -> cookbookMenuService.caseShowAllRecipes();
+          case 0 -> finished = true;
+          default -> System.out.println(INVALID_CHOICE_ERROR);
+        }
+      } catch (Exception e) {
+        InterfaceUtils.printErrorMessage(e.getMessage());
       }
     }
     System.out.println(RETURNING_TO_MAIN_MENU);
@@ -178,16 +191,19 @@ public class TextUserInterface {
     final MealSuggestionsService mealSuggestionsService = new MealSuggestionsService(foodStorage,
         cookbook);
     boolean finished = false;
-
     while (!finished) {
-      InterfaceUtils.promptMealSuggestionsMenu();
-      final int choice = InterfaceUtils.integerInput();
-      switch (choice) {
-        case 1 -> mealSuggestionsService.caseSuggestMealFromExpiringGroceries();
-        case 2 -> mealSuggestionsService.caseSuggestMealsFromExistingGroceries();
-        case 3 -> mealSuggestionsService.caseSuggestRandomMeal();
-        case 0 -> finished = true;
-        default -> System.out.println(INVALID_CHOICE_ERROR);
+      try {
+        InterfaceUtils.promptMealSuggestionsMenu();
+        final int choice = InterfaceUtils.integerInput();
+        switch (choice) {
+          case 1 -> mealSuggestionsService.caseSuggestMealFromExpiringGroceries();
+          case 2 -> mealSuggestionsService.caseSuggestMealsFromExistingGroceries();
+          case 3 -> mealSuggestionsService.caseSuggestRandomMeal();
+          case 0 -> finished = true;
+          default -> System.out.println(INVALID_CHOICE_ERROR);
+        }
+      } catch (Exception e) {
+        InterfaceUtils.printErrorMessage(e.getMessage());
       }
     }
     System.out.println(RETURNING_TO_MAIN_MENU);
@@ -203,17 +219,20 @@ public class TextUserInterface {
     final SettingsMenuService settingsMenuService = new SettingsMenuService(foodStorage, cookbook,
         currentDate);
     boolean finished = false;
-
     while (!finished) {
-      InterfaceUtils.promptSettingsMenu();
-      final int choice = InterfaceUtils.integerInput();
-      switch (choice) {
-        case 1 -> settingsMenuService.caseAddDemoData();
-        case 2 -> settingsMenuService.caseRemoveDemoData();
-        case 3 -> settingsMenuService.caseShowCurrentDate();
-        case 4 -> currentDate = settingsMenuService.caseGetNewDate();
-        case 0 -> finished = true;
-        default -> System.out.println(INVALID_CHOICE_ERROR);
+      try {
+        InterfaceUtils.promptSettingsMenu();
+        final int choice = InterfaceUtils.integerInput();
+        switch (choice) {
+          case 1 -> settingsMenuService.caseAddDemoData();
+          case 2 -> settingsMenuService.caseRemoveDemoData();
+          case 3 -> settingsMenuService.caseShowCurrentDate();
+          case 4 -> currentDate = settingsMenuService.caseGetNewDate();
+          case 0 -> finished = true;
+          default -> System.out.println(INVALID_CHOICE_ERROR);
+        }
+      } catch (Exception e) {
+        InterfaceUtils.printErrorMessage(e.getMessage());
       }
     }
     System.out.println(RETURNING_TO_MAIN_MENU);
