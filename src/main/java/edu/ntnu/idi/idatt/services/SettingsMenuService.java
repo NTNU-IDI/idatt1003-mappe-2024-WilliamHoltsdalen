@@ -228,7 +228,9 @@ public class SettingsMenuService {
    * @return the new date as a {@code LocalDate} object
    */
   public LocalDate caseGetNewDate() {
-    System.out.println("Enter a new date in the format yyyy-mm-dd");
-    return InterfaceUtils.dateInput();
+    System.out.print("Enter a new date in the format yyyy-mm-dd: ");
+    final LocalDate newDate = InterfaceUtils.dateInput();
+    this.currentDate = newDate; // Update the current date object for this service class
+    return newDate;
   }
 }
