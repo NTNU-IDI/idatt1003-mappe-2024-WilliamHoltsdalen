@@ -125,7 +125,7 @@ public final class InterfaceUtils {
    * @return the string input read from the console
    */
   public static String stringInput() {
-    try{
+    try {
       String input = scanner.nextLine();
       if (!ValidationUtils.isValidString(input)) {
         throw new IllegalArgumentException();

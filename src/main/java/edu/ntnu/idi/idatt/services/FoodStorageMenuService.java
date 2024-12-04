@@ -7,7 +7,6 @@ import edu.ntnu.idi.idatt.utils.InterfaceUtils;
 import edu.ntnu.idi.idatt.views.TextUserInterface;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
