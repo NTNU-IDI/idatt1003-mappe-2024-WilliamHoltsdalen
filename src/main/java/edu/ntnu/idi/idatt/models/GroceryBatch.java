@@ -16,8 +16,8 @@ import java.time.LocalDate;
  */
 public class GroceryBatch {
   private double amount;
-  private final double pricePerUnit;
-  private final LocalDate expirationDate;
+  private double pricePerUnit;
+  private LocalDate expirationDate;
 
   /**
    * Constructs a new grocery batch with the provided amount, price per unit, and expiration date.
@@ -45,9 +45,9 @@ public class GroceryBatch {
       throw new IllegalArgumentException("Expiration date cannot be null.");
     }
 
-    this.amount = amount;
-    this.pricePerUnit = pricePerUnit;
-    this.expirationDate = expirationDate;
+    setAmount(amount);
+    setPricePerUnit(pricePerUnit);
+    setExpirationDate(expirationDate);
   }
 
   /**
@@ -78,19 +78,33 @@ public class GroceryBatch {
   }
 
   /**
-   * Sets the amount of the grocery batch.
+   * Private method for setting the amount of the grocery batch.
+   *
+   * @param amount the amount of the grocery batch
+   * @throws IllegalArgumentException if the amount is less than or equal to zero.
+   */
+  private void setAmount(double amount) throws IllegalArgumentException {
+    if (amount <= 0) {
+      throw new IllegalArgumentException("Amount must be a positive number");
+    }
+    this.amount = amount;
+  }
+
+  /**
+   * Updates the amount of the grocery batch.
    *
    * <p>
    * If the new amount is less than or equal to zero, the method throws an
    * {@code IllegalArgumentException}. If the new amount is greater than the current amount of the
-   * grocery batch, the method throws an {@code IllegalArgumentException}. Otherwise, it sets the
-   * amount of the grocery batch to the provided value.
+   * grocery batch, the method throws an {@code IllegalArgumentException}. Otherwise it updates the
+   * amount of the grocery batch to the provided value, by calling the private {@code setAmount}
+   * method.
    *
    * @param newAmount the new amount of the grocery batch
    * @throws IllegalArgumentException if the new amount is less than or equal to zero, or if the new
    *         amount is greater than the current amount of the grocery batch.
    */
-  public void setAmount(double newAmount) throws IllegalArgumentException {
+  public void updateAmount(double newAmount) throws IllegalArgumentException {
     if (newAmount <= 0) {
       throw new IllegalArgumentException("Amount must be a positive number");
     }
@@ -98,6 +112,32 @@ public class GroceryBatch {
       throw new IllegalArgumentException(
           "New amount cannot be greater than the current amount of the grocery batch");
     }
-    this.amount = newAmount;
+    setAmount(newAmount);
+  }
+
+  /**
+   * Private method for setting the price per unit of the grocery batch.
+   *
+   * @param pricePerUnit the price per unit of the grocery batch
+   * @throws IllegalArgumentException if the price per unit is less than zero.
+   */
+  private void setPricePerUnit(double pricePerUnit) throws IllegalArgumentException {
+    if (pricePerUnit < 0) {
+      throw new IllegalArgumentException("Price per unit cannot be a negative number.");
+    }
+    this.pricePerUnit = pricePerUnit;
+  }
+
+  /**
+   * Private method for setting the expiration date of the grocery batch.
+   *
+   * @param expirationDate the expiration date of the grocery batch
+   * @throws IllegalArgumentException if the expiration date is null.
+   */
+  private void setExpirationDate(LocalDate expirationDate) throws IllegalArgumentException {
+    if (expirationDate == null) {
+      throw new IllegalArgumentException("Expiration date cannot be null.");
+    }
+    this.expirationDate = expirationDate;
   }
 }

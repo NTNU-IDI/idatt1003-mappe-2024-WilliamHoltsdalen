@@ -22,9 +22,9 @@ public class Ingredient implements FoodItem {
   private static final String NULL_OR_BLANK_UNIT_ERROR = "Unit cannot be null or blank";
   private static final String NON_POSITIVE_AMOUNT_ERROR = "Amount cannot be negative or zero";
 
-  private final String name;
-  private final String category;
-  private final String unit;
+  private String name;
+  private String category;
+  private String unit;
   private double amount;
 
   /**
@@ -58,10 +58,10 @@ public class Ingredient implements FoodItem {
       throw new IllegalArgumentException(NON_POSITIVE_AMOUNT_ERROR);
     }
 
-    this.name = name;
-    this.category = category;
-    this.unit = unit;
-    this.amount = amount;
+    setName(name);
+    setCategory(category);
+    setUnit(unit);
+    setAmount(amount);
   }
 
   /**
@@ -101,6 +101,45 @@ public class Ingredient implements FoodItem {
    */
   public double getAmount() {
     return amount;
+  }
+
+  /**
+   * Private method for setting the name of the ingredient.
+   *
+   * @param name the name of the ingredient
+   * @throws IllegalArgumentException if the name is null or an empty string.
+   */
+  private void setName(String name) throws IllegalArgumentException {
+    if (name == null || name.isBlank()) {
+      throw new IllegalArgumentException(NULL_OR_BLANK_NAME_ERROR);
+    }
+    this.name = name;
+  }
+
+  /**
+   * Private method for setting the category of the ingredient.
+   *
+   * @param category the category of the ingredient
+   * @throws IllegalArgumentException if the category is null or an empty string.
+   */
+  private void setCategory(String category) throws IllegalArgumentException {
+    if (category == null || category.isBlank()) {
+      throw new IllegalArgumentException(NULL_OR_BLANK_CATEGORY_ERROR);
+    }
+    this.category = category;
+  }
+
+  /**
+   * Private method for setting the unit of the ingredient.
+   *
+   * @param unit the unit of the ingredient
+   * @throws IllegalArgumentException if the unit is null or an empty string.
+   */
+  private void setUnit(String unit) throws IllegalArgumentException {
+    if (unit == null || unit.isBlank()) {
+      throw new IllegalArgumentException(NULL_OR_BLANK_UNIT_ERROR);
+    }
+    this.unit = unit;
   }
 
   /**

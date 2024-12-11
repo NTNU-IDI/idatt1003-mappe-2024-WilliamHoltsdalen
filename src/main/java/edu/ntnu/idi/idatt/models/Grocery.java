@@ -25,16 +25,17 @@ import java.util.List;
  * @since V0.1
  */
 public class Grocery implements FoodItem {
-  private final String name;
-  private final String category;
+  private String name;
+  private String category;
   private double totalAmount;
-  private final String unit;
+  private String unit;
   private final List<GroceryBatch> batches;
 
   /**
    * Constructs a new grocery object. The method validates the provided parameters and initializes
-   * the grocery object with the provided values if they are all valid. If any of the provided
-   * parameters are null or an empty string, the method throws an {@code IllegalArgumentException}.
+   * the grocery object with the provided values if they are all valid, by calling the setter
+   * methods. If any of the provided parameters are null or an empty string, the method throws an
+   * {@code IllegalArgumentException}.
    *
    * @param name specifies the name of the grocery item. Name must not equal {@code null} or an
    *             empty string.
@@ -62,10 +63,11 @@ public class Grocery implements FoodItem {
       throw new IllegalArgumentException("Batch cannot be null");
     }
 
-    this.name = name;
-    this.category = category;
-    this.unit = unit;
     this.batches = new ArrayList<>();
+
+    setName(name);
+    setCategory(category);
+    setUnit(unit);
     addBatch(batch);
   }
 
@@ -114,6 +116,45 @@ public class Grocery implements FoodItem {
    */
   public List<GroceryBatch> getBatches() {
     return batches;
+  }
+
+  /**
+   * Private method for setting the name of the grocery item.
+   *
+   * @param name the new name of the grocery item
+   * @throws IllegalArgumentException if the name is null or an empty string.
+   */
+  private void setName(String name) throws IllegalArgumentException {
+    if (name == null || name.isBlank()) {
+      throw new IllegalArgumentException("Name cannot be null or blank");
+    }
+    this.name = name;
+  }
+
+  /**
+   * Private method for setting the category of the grocery item.
+   *
+   * @param category the new category of the grocery item
+   * @throws IllegalArgumentException if the category is null or an empty string.
+   */
+  private void setCategory(String category) throws IllegalArgumentException {
+    if (category == null || category.isBlank()) {
+      throw new IllegalArgumentException("Category cannot be null or blank");
+    }
+    this.category = category;
+  }
+
+  /**
+   * Private method for setting the unit of the grocery item.
+   *
+   * @param unit the new unit of the grocery item
+   * @throws IllegalArgumentException if the unit is null or an empty string.
+   */
+  private void setUnit(String unit) throws IllegalArgumentException {
+    if (unit == null || unit.isBlank()) {
+      throw new IllegalArgumentException("Unit cannot be null or blank");
+    }
+    this.unit = unit;
   }
 
   /**
@@ -182,7 +223,7 @@ public class Grocery implements FoodItem {
         setTotalAmount(this.totalAmount - batch.getAmount());
         batches.remove(batch);
       } else {
-        batch.setAmount(batch.getAmount() - amount);
+        batch.updateAmount(batch.getAmount() - amount);
         setTotalAmount(this.totalAmount - amount);
         return;
       }

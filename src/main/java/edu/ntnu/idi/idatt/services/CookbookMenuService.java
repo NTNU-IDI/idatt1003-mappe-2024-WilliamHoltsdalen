@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
  * @since 0.2
  */
 public class CookbookMenuService {
-  final Cookbook cookbook;
+  Cookbook cookbook;
 
   /**
    * Constructs a new cookbook menu service with the provided cookbook.
@@ -40,6 +40,13 @@ public class CookbookMenuService {
    * @throws IllegalArgumentException if the provided cookbook is null.
    */
   public CookbookMenuService(Cookbook cookbook) {
+    if (cookbook == null) {
+      throw new IllegalArgumentException("Cookbook cannot be null");
+    }
+    setCookbook(cookbook);
+  }
+
+  private void setCookbook(Cookbook cookbook) {
     if (cookbook == null) {
       throw new IllegalArgumentException("Cookbook cannot be null");
     }
@@ -77,20 +84,21 @@ public class CookbookMenuService {
   public void caseSearchRecipesByIngredients() {
     System.out.println("Enter the ingredients you want to search for (comma-separated): ");
     final String ingredients = InterfaceUtils.stringInput();
-    List<String> ingredientList = List.of(ingredients.replace(" ", "").split(","));
-    List<Recipe> recipes = cookbook.getRecipes().stream()
+    final List<String> ingredientList = List.of(ingredients.replace(" ", "")
+        .split(","));
+    final List<Recipe> recipesFound = cookbook.getRecipes().stream()
         .filter(recipe -> recipe.getIngredients().stream()
             .map(Ingredient::getName)
             .collect(Collectors.toSet())
             .containsAll(new HashSet<>(ingredientList)))
         .toList();
 
-    if (recipes.isEmpty()) {
+    if (recipesFound.isEmpty()) {
       System.out.println("No recipes found");
       return;
     }
     System.out.println("\nRecipes found:");
-    recipes.forEach(System.out::println);
+    recipesFound.forEach(System.out::println);
   }
 
   /**
@@ -119,7 +127,7 @@ public class CookbookMenuService {
       System.out.println("Enter the number of servings: ");
       final int servings = InterfaceUtils.integerInput();
 
-      Recipe recipe = new Recipe(name, description, instructions, servings);
+      final Recipe recipe = new Recipe(name, description, instructions, servings);
 
       System.out.println("Enter the ingredients for the recipe. ");
       boolean finished = false;
@@ -136,8 +144,8 @@ public class CookbookMenuService {
         System.out.printf("Enter the amount of ingredient #%d: ", i);
         final double ingredientAmount = InterfaceUtils.doubleInput();
 
-        Ingredient ingredient = new Ingredient(ingredientName, ingredientCategory, ingredientUnit,
-            ingredientAmount);
+        final Ingredient ingredient = new Ingredient(ingredientName, ingredientCategory,
+            ingredientUnit, ingredientAmount);
         recipe.addIngredient(ingredient);
 
         System.out.println("Do you want to add another ingredient? (yes/no)");
@@ -207,7 +215,7 @@ public class CookbookMenuService {
         case 5:
           System.out.println("Enter the name of the ingredient to edit the amount of: ");
           final String ingredientToEditName = InterfaceUtils.stringInput();
-          Ingredient ingredient = cookbook.getRecipe(recipeName)
+          final Ingredient ingredient = cookbook.getRecipe(recipeName)
               .getIngredient(ingredientToEditName);
           System.out.printf("Enter the new amount for the ingredient (currently %.2f): %n",
               ingredient.getAmount());

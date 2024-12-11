@@ -1,8 +1,8 @@
 package edu.ntnu.idi.idatt.models;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 
 /**
  * A class representing a recipe. A recipe consists of a name, description, instructions,
@@ -29,7 +29,7 @@ public class Recipe {
   private String name;
   private String description;
   private String instructions;
-  private final Map<String, Ingredient> ingredients;
+  private final List<Ingredient> ingredients;
   private int servings;
 
   /**
@@ -66,11 +66,12 @@ public class Recipe {
       throw new IllegalArgumentException(NON_POSITIVE_SERVINGS_ERROR);
     }
 
-    this.name = name;
-    this.description = description;
-    this.instructions = instructions;
-    this.servings = servings;
-    this.ingredients = new HashMap<>();
+    this.ingredients = new ArrayList<>();
+
+    setName(name);
+    setDescription(description);
+    setInstructions(instructions);
+    setServings(servings);
   }
 
   /**
@@ -106,7 +107,7 @@ public class Recipe {
    * @return a list of all ingredients in the recipe
    */
   public List<Ingredient> getIngredients() {
-    return ingredients.values().stream().toList();
+    return ingredients.stream().toList();
   }
 
   /**
@@ -127,10 +128,8 @@ public class Recipe {
     if (name == null || name.isBlank()) {
       throw new IllegalArgumentException(NULL_OR_BLANK_NAME);
     }
-    if (!ingredients.containsKey(name)) {
-      throw new IllegalArgumentException(INGREDIENT_NOT_FOUND_ERROR);
-    }
-    return ingredients.get(name);
+    return ingredients.stream().filter(ingredient -> ingredient.getName().equals(name)).findFirst()
+        .orElseThrow(() -> new IllegalArgumentException(INGREDIENT_NOT_FOUND_ERROR));
   }
 
   /**
@@ -215,7 +214,8 @@ public class Recipe {
   }
 
   /**
-   * Adds an ingredient to the recipe.
+   * Adds an ingredient to the recipe, or updates the amount of an ingredient if it already exists.
+   * Also sorts the ingredients in the recipe by amount after adding a new ingredient.
    *
    * <p>
    * The method checks if the provided ingredient is null, and throws an
@@ -231,12 +231,14 @@ public class Recipe {
       throw new IllegalArgumentException(NULL_INGREDIENT_ERROR);
     }
 
-    if (ingredients.containsKey(ingredient.getName())) {
-      ingredients.get(ingredient.getName()).setAmount(
-          ingredients.get(ingredient.getName()).getAmount() + ingredient.getAmount());
+    Ingredient existingIngredient = ingredients.stream().filter(i -> i.getName()
+        .equals(ingredient.getName())).findFirst().orElse(null);
+    if (existingIngredient != null) {
+      existingIngredient.setAmount(existingIngredient.getAmount() + ingredient.getAmount());
+      return;
     }
-
-    ingredients.put(ingredient.getName(), ingredient);
+    ingredients.add(ingredient);
+    sortIngredients();
   }
 
   /**
@@ -255,11 +257,17 @@ public class Recipe {
     if (ingredient == null) {
       throw new IllegalArgumentException(NULL_INGREDIENT_ERROR);
     }
-    if (!ingredients.containsKey(ingredient.getName())) {
+    if (!ingredients.contains(ingredient)) {
       throw new IllegalArgumentException(INGREDIENT_NOT_FOUND_ERROR);
     }
+    ingredients.remove(ingredient);
+  }
 
-    ingredients.remove(ingredient.getName());
+  /**
+   * Sorts the ingredients in the recipe by amount, in ascending order.
+   */
+  private void sortIngredients() {
+    ingredients.sort(Comparator.comparing(Ingredient::getName));
   }
 
   /**
@@ -271,7 +279,7 @@ public class Recipe {
    */
   @Override
   public String toString() {
-    String ingredientsString = ingredients.values().stream()
+    String ingredientsString = ingredients.stream()
         .map(Ingredient::toString)
         .reduce("", (acc, ingredient) -> acc + ingredient + "\n");
 
