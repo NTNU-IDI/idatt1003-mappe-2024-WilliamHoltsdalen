@@ -225,6 +225,10 @@ public class SettingsMenuService {
   /**
    * Gets a new date from the user and returns it as a {@code LocalDate} object.
    *
+   * <p>
+   * The method prints a message to the console asking the user to enter a new date in the format
+   * yyyy-mm-dd. It then reads the user's input.
+   *
    * @return the new date as a {@code LocalDate} object
    */
   public LocalDate caseGetNewDate() {
