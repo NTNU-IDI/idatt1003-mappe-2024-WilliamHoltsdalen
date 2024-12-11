@@ -54,9 +54,9 @@ class GroceryBatchTest {
         "Test creating a grocery batch object with valid parameters, and that all accessor "
             + "methods return the correct values")
     void testCreateGroceryBatch() {
-      double amount = 1.0;
-      double pricePerUnit = 10.0;
-      LocalDate expirationDate = LocalDate.of(2022, 1, 1);
+      final double amount = 1.0;
+      final double pricePerUnit = 10.0;
+      final LocalDate expirationDate = LocalDate.of(2022, 1, 1);
 
       GroceryBatch groceryBatch = new GroceryBatch(amount, pricePerUnit, expirationDate);
 
@@ -71,12 +71,12 @@ class GroceryBatchTest {
     @Test
     @DisplayName("Test updating the amount of a grocery batch object")
     void testUpdateAmount() {
-      double amount = 1.0;
-      double pricePerUnit = 10.0;
-      LocalDate expirationDate = LocalDate.of(2022, 1, 1);
+      final double amount = 1.0;
+      final double pricePerUnit = 10.0;
+      final LocalDate expirationDate = LocalDate.of(2022, 1, 1);
 
       GroceryBatch groceryBatch = new GroceryBatch(amount, pricePerUnit, expirationDate);
-      groceryBatch.setAmount(0.5);
+      groceryBatch.updateAmount(0.5);
 
       assertEquals(0.5, groceryBatch.getAmount());
     }
@@ -97,8 +97,8 @@ class GroceryBatchTest {
     @DisplayName("Test that an exception is thrown when creating a grocery batch object with amount "
         + "equal to zero or a negative number")
     void testCreateBatchWithInvalidAmountThrows() {
-      double pricePerUnit = 10.0;
-      LocalDate expirationDate = LocalDate.of(2022, 1, 1);
+      final double pricePerUnit = 10.0;
+      final LocalDate expirationDate = LocalDate.of(2022, 1, 1);
 
       assertThrows(IllegalArgumentException.class, () -> new GroceryBatch(0, pricePerUnit,
           expirationDate));
@@ -114,9 +114,9 @@ class GroceryBatchTest {
     @DisplayName("Test that an exception is thrown when creating a grocery batch object with price "
         + "per unit equal to a negative number")
     void testCreateBatchWithInvalidPricePerUnitThrows() {
-      double amount = 1.0;
-      double pricePerUnit = -10.0;
-      LocalDate expirationDate = LocalDate.of(2022, 1, 1);
+      final double amount = 1.0;
+      final double pricePerUnit = -10.0;
+      final LocalDate expirationDate = LocalDate.of(2022, 1, 1);
 
       assertThrows(IllegalArgumentException.class, () -> new GroceryBatch(amount, pricePerUnit,
           expirationDate));
@@ -130,9 +130,9 @@ class GroceryBatchTest {
     @DisplayName("Test that an exception is thrown when creating a grocery batch object with expiration "
         + "date equal to null")
     void testCreateBatchWithInvalidExpirationDateThrows() {
-      double amount = 1.0;
-      double pricePerUnit = 10.0;
-      LocalDate expirationDate = null;
+      final double amount = 1.0;
+      final double pricePerUnit = 10.0;
+      final LocalDate expirationDate = null;
 
       assertThrows(IllegalArgumentException.class, () -> new GroceryBatch(amount, pricePerUnit,
           expirationDate));
@@ -146,14 +146,14 @@ class GroceryBatchTest {
     @DisplayName("Test that an exception is thrown when updating the amount of a grocery batch object "
         + "with amount equal to zero or a negative number")
     void testUpdateAmountWithInvalidAmountThrows() {
-      double amount = 1.0;
-      double pricePerUnit = 10.0;
-      LocalDate expirationDate = LocalDate.of(2022, 1, 1);
+      final double amount = 1.0;
+      final double pricePerUnit = 10.0;
+      final LocalDate expirationDate = LocalDate.of(2022, 1, 1);
 
-      GroceryBatch groceryBatch = new GroceryBatch(amount, pricePerUnit, expirationDate);
+      final GroceryBatch groceryBatch = new GroceryBatch(amount, pricePerUnit, expirationDate);
 
-      assertThrows(IllegalArgumentException.class, () -> groceryBatch.setAmount(0));
-      assertThrows(IllegalArgumentException.class, () -> groceryBatch.setAmount(-1));
+      assertThrows(IllegalArgumentException.class, () -> groceryBatch.updateAmount(0));
+      assertThrows(IllegalArgumentException.class, () -> groceryBatch.updateAmount(-1));
     }
 
     /**
@@ -164,13 +164,13 @@ class GroceryBatchTest {
     @DisplayName("Test that an exception is thrown when updating the amount of a grocery batch object "
         + "with amount greater than the current amount of the grocery batch object")
     void testUpdateAmountWithInsufficientAmountThrows() {
-      double amount = 1.0;
-      double pricePerUnit = 10.0;
-      LocalDate expirationDate = LocalDate.of(2022, 1, 1);
+      final double amount = 1.0;
+      final double pricePerUnit = 10.0;
+      final LocalDate expirationDate = LocalDate.of(2022, 1, 1);
 
-      GroceryBatch groceryBatch = new GroceryBatch(amount, pricePerUnit, expirationDate);
+      final GroceryBatch groceryBatch = new GroceryBatch(amount, pricePerUnit, expirationDate);
 
-      assertThrows(IllegalArgumentException.class, () -> groceryBatch.setAmount(3));
+      assertThrows(IllegalArgumentException.class, () -> groceryBatch.updateAmount(3));
     }
   }
 }
