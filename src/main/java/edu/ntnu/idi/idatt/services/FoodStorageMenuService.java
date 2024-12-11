@@ -230,7 +230,7 @@ public class FoodStorageMenuService {
       return;
     }
     System.out.println("Grocery:\n");
-    System.out.println(grocery);
+    System.out.println(grocery.toReadableString());
   }
 
   /**
@@ -251,7 +251,7 @@ public class FoodStorageMenuService {
     }
     System.out.printf("%nGroceries in category: %s%n%n", category);
     for (Grocery grocery : groceries) {
-      System.out.println(grocery);
+      System.out.println(grocery.toReadableString());
     }
   }
 
@@ -273,7 +273,7 @@ public class FoodStorageMenuService {
     }
     System.out.printf("%nGroceries expiring on: %s%n%n", expDate);
     for (Grocery grocery : groceries) {
-      System.out.println(grocery);
+      System.out.println(grocery.toReadableString());
     }
   }
 
@@ -293,7 +293,7 @@ public class FoodStorageMenuService {
 
     System.out.println("All groceries in the food storage:\n");
     for (Grocery grocery : groceries) {
-      System.out.println(grocery);
+      System.out.println(grocery.toReadableString());
     }
   }
 
@@ -343,7 +343,7 @@ public class FoodStorageMenuService {
     }
     System.out.println("Groceries expiring before " + expDate + ":\n");
     for (Grocery grocery : groceries) {
-      System.out.println(grocery);
+      System.out.println(grocery.toReadableString());
     }
   }
 

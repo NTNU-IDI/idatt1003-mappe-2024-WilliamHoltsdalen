@@ -70,13 +70,13 @@ class IngredientTest {
     }
 
     /**
-     * Test that the method {@code toString} returns the correct string representation.
+     * Test that the method {@code toReadableString} returns the correct string representation.
      */
     @Test
-    @DisplayName("Test that the method toString returns the correct string representation.")
-    void testToString() {
+    @DisplayName("Test that the method toReadableString returns the correct string representation.")
+    void testToReadableString() {
       Ingredient ingredient = new Ingredient("Milk", "Dairy", "liters", 1.0);
-      assertEquals("Milk (Dairy): 1.00 liters", ingredient.toString());
+      assertEquals("Milk (Dairy): 1.00 liters", ingredient.toReadableString());
     }
   }
 

@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -148,7 +147,8 @@ class RecipeTest {
     void testAddIngredient() {
       Recipe recipe = new Recipe("Steak with Potatoes", "A delicious dish that has "
           + "Steak and Potatoes.", "These are instructions", 3);
-      Ingredient ingredient = new Ingredient("Potatoes", "Vegetables", "pieces", 2);
+      Ingredient ingredient = new Ingredient("Potatoes", "Vegetables", "pieces",
+          2);
 
       recipe.addIngredient(ingredient);
 
@@ -165,7 +165,8 @@ class RecipeTest {
     void testAddIngredientExistingIngredient() {
       Recipe recipe = new Recipe("Steak with Potatoes", "A delicious dish that has "
           + "Steak and Potatoes.", "These are instructions", 3);
-      Ingredient ingredient = new Ingredient("Potatoes", "Vegetables", "pieces", 2);
+      Ingredient ingredient = new Ingredient("Potatoes", "Vegetables", "pieces",
+          2);
 
       recipe.addIngredient(ingredient);
       recipe.addIngredient(ingredient);
@@ -190,13 +191,13 @@ class RecipeTest {
     }
 
     /**
-     * Test that the method {@code toString} returns the correct string representation of the
+     * Test that the method {@code toReadableString} returns the correct string representation of the
      * recipe.
      */
     @Test
-    @DisplayName("Test that the method toString returns the correct string representation of the "
-        + "recipe.")
-    void testToString() {
+    @DisplayName("Test that the method toReadableString returns the correct string representation "
+        + "of the recipe.")
+    void testToReadableString() {
       Recipe recipe = new Recipe("Steak with Potatoes", "A delicious dish that has "
           + "Steak and Potatoes.", "These are instructions", 3);
       Ingredient ingredient = new Ingredient("Potatoes", "Vegetables", "pieces", 2);
@@ -214,17 +215,17 @@ class RecipeTest {
           Ingredients:
           Potatoes (Vegetables): 2.00 pieces
           
-          """, recipe.toString());
+          """, recipe.toReadableString());
     }
 
     /**
-     * Test that the method {@code toString} returns the correct string representation of the recipe
+     * Test that the method {@code toReadableString} returns the correct string representation of the recipe
      * when the ingredients are empty.
      */
     @Test
-    @DisplayName("Test that the method toString returns the correct string representation of the "
-        + "recipe when the ingredients are empty.")
-    void testToStringEmptyIngredients() {
+    @DisplayName("Test that the method toReadableString returns the correct string representation "
+        + "of the recipe when the ingredients are empty.")
+    void testToReadableStringEmptyIngredients() {
       Recipe recipe = new Recipe("Steak with Potatoes", "A delicious dish that has "
           + "Steak and Potatoes.", "These are instructions", 3);
       assertEquals("""
@@ -237,7 +238,7 @@ class RecipeTest {
           
           Ingredients:
           
-          """, recipe.toString());
+          """, recipe.toReadableString());
     }
   }
 
@@ -260,9 +261,11 @@ class RecipeTest {
         + "Check for thrown IllegalArgumentException in the cases specified.")
     void nullOrEmptyName() {
       assertThrows(IllegalArgumentException.class, () -> new Recipe(
-          null, "A delicious dish that has Steak and Potatoes.", "These are instructions", 3));
+          null, "A delicious dish that has Steak and Potatoes.",
+          "These are instructions", 3));
       assertThrows(IllegalArgumentException.class, () -> new Recipe(
-          "", "A delicious dish that has Steak and Potatoes.", "These are instructions", 3));
+          "", "A delicious dish that has Steak and Potatoes.",
+          "These are instructions", 3));
     }
 
     /**

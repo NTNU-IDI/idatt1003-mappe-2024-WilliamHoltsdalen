@@ -238,14 +238,12 @@ public class Grocery implements FoodItem {
   }
 
   /**
-   * Overrides the default {@code toString} method, and returns a reader-friendly string
-   * representation of the grocery item.
+   * Returns a reader-friendly string representation of the grocery item.
    *
    * @return A string representation of the grocery item. Including name, category, amount, unit,
    *        expiration date, and all batches.
    */
-  @Override
-  public String toString() {
+  public String toReadableString() {
     StringBuilder str = new StringBuilder(String.format("""
         %s
         ---------------------------------

@@ -81,6 +81,7 @@ class GroceryTest {
     void testAddGroceryBatch() {
       Grocery grocery = new Grocery("Milk", "Dairy", "liters",
           new GroceryBatch(3, 20, LocalDate.now()));
+
       GroceryBatch batch = new GroceryBatch(2, 20, LocalDate.now().plusDays(1));
 
       grocery.addBatch(batch);
@@ -136,18 +137,19 @@ class GroceryTest {
     }
 
     /**
-     * Ensure that the method {@code toString} returns the correct string representation of the
+     * Ensure that the method {@code toReadAbleString} returns the correct string representation of the
      * grocery object.
      */
     @Test
-    @DisplayName("Test that the method toString returns the correct string representation of the "
+    @DisplayName("Test that the method toReadableString returns the correct string representation of the "
         + "grocery object and its batches.")
-    void testToStringReturnsCorrectString() {
+    void testToReadableStringReturnsCorrectString() {
       Grocery grocery = new Grocery("Milk", "Dairy", "liters",
           new GroceryBatch(3, 20, LocalDate.now()));
       grocery.addBatch(new GroceryBatch(2, 20, LocalDate.now().plusDays(1)));
 
-      assertEquals("""
+      assertEquals(String.format(
+          """
           Milk
           ---------------------------------
           Category: Dairy
@@ -156,13 +158,13 @@ class GroceryTest {
           Batches:
           - Amount 3.00 liters
             Price per unit: 20.00 NOK
-            Expiration date: 2024-12-03
+            Expiration date: %s
           
           - Amount 2.00 liters
             Price per unit: 20.00 NOK
-            Expiration date: 2024-12-04
+            Expiration date: %s
           
-          """, grocery.toString());
+          """, LocalDate.now(), LocalDate.now().plusDays(1)), grocery.toReadableString());
     }
 
   }

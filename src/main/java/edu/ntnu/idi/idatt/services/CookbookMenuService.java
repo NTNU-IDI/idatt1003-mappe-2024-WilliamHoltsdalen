@@ -67,7 +67,7 @@ public class CookbookMenuService {
     try {
       final Recipe recipe = cookbook.getRecipe(name);
       System.out.println("Recipe found:");
-      System.out.println(recipe);
+      System.out.println(recipe.toReadableString());
     } catch (IllegalArgumentException e) {
       System.out.println(e.getMessage());
     }
@@ -98,7 +98,7 @@ public class CookbookMenuService {
       return;
     }
     System.out.println("\nRecipes found:");
-    recipesFound.forEach(System.out::println);
+    recipesFound.forEach(recipe -> System.out.println(recipe.toReadableString()));
   }
 
   /**
@@ -179,7 +179,7 @@ public class CookbookMenuService {
     try {
       final Recipe recipe = cookbook.getRecipe(recipeName);
       System.out.println("Recipe found:");
-      System.out.println(recipe);
+      System.out.println(recipe.toReadableString());
 
       InterfaceUtils.promptRecipeEditMenu();
       final int editChoice = InterfaceUtils.integerInput();
@@ -287,7 +287,7 @@ public class CookbookMenuService {
       System.out.printf("""
           -------------------------------------------
           %s
-          """, recipe);
+          """, recipe.toReadableString());
     }
   }
 }

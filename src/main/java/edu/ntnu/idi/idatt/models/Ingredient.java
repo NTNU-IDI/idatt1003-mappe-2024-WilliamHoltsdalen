@@ -161,13 +161,12 @@ public class Ingredient implements FoodItem {
   }
 
   /**
-   * Overrides the default {@code toString} method, and returns a user-friendly string
-   * representation of the ingredient, in the format: "Name (Category): Amount Unit".
+   * Returns a user-friendly string representation of the ingredient, in the format:
+   * "Name (Category): Amount Unit".
    *
    * @return a string representation of the ingredient. Including name, category, amount, and unit.
    */
-  @Override
-  public String toString() {
+  public String toReadableString() {
     return String.format("%s (%s): %.2f %s", name, category, amount, unit);
   }
 }

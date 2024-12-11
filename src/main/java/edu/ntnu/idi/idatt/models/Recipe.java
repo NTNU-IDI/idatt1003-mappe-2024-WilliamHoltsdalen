@@ -271,16 +271,14 @@ public class Recipe {
   }
 
   /**
-   * Overrides the default {@code toString} method, and returns a user-friendly string
-   * representation of the recipe.
+   * Returns a user-friendly string representation of the recipe.
    *
    * @return a string representation of the recipe. Including name, description, instructions, and
    *         servings. Also includes a list of ingredients, with the details of each ingredient.
    */
-  @Override
-  public String toString() {
+  public String toReadableString() {
     String ingredientsString = ingredients.stream()
-        .map(Ingredient::toString)
+        .map(Ingredient::toReadableString)
         .reduce("", (acc, ingredient) -> acc + ingredient + "\n");
 
     return String.format("""
