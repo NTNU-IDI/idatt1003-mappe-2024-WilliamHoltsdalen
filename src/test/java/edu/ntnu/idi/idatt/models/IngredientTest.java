@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
  * <li>that an ingredient can be created with valid values.
  * <li>that the accessor methods for all fields return the correct values.
  * <li>that the method {@code setAmount} sets the correct amount of the ingredient.
- * <li>that the method {@code toString} returns the correct string representation.
+ * <li>that the method {@code toReadableString} returns the correct string representation.
  * </ul>
  * <li>Negative tests:
  * <ul>

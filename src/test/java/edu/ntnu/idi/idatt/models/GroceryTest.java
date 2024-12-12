@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
  * <li>that the accessor methods for all fields return the correct values.
  * <li>that the method {@code addBatch} adds a batch to the grocery object.
  * <li>that the method {@code consume} updates the amount of the grocery object correctly.
- * <li>that the method {@code toString} returns the correct string representation.
+ * <li>that the method {@code toReadableString} returns the correct string representation.
  * </ul>
  * <li>Negative tests:
  * <ul>

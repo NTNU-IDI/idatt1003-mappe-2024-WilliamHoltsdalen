@@ -14,11 +14,11 @@ public final class ValidationUtils {
   /**
    * Checks if an integer is valid, meaning it is not a negative number.
    *
-   * @param integer the integer to check
+   * @param integerValue the integer to check
    * @return true if the integer is valid, false otherwise
    */
-  public static boolean isValidPositiveInteger(int integer) {
-    return integer >= 0;
+  public static boolean isValidPositiveInteger(int integerValue) {
+    return integerValue >= 0;
   }
 
   /**

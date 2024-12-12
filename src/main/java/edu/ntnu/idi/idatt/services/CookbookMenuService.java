@@ -33,7 +33,7 @@ import java.util.stream.Stream;
  * @since 0.2
  */
 public class CookbookMenuService {
-  Cookbook cookbook;
+  private Cookbook cookbook;
 
   /**
    * Constructs a new cookbook menu service with the provided cookbook.
@@ -48,6 +48,12 @@ public class CookbookMenuService {
     setCookbook(cookbook);
   }
 
+  /**
+   * Sets the cookbook object to use.
+   *
+   * @param cookbook the cookbook object to use
+   * @throws IllegalArgumentException if the provided cookbook is null.
+   */
   private void setCookbook(Cookbook cookbook) {
     if (cookbook == null) {
       throw new IllegalArgumentException("Cookbook cannot be null");

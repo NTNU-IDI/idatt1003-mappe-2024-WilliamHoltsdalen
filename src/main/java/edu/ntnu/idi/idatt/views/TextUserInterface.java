@@ -196,7 +196,7 @@ public class TextUserInterface {
         InterfaceUtils.promptMealSuggestionsMenu();
         final int choice = InterfaceUtils.integerInput();
         switch (choice) {
-          case 1 -> mealSuggestionsService.caseSuggestMealFromExpiringGroceries();
+          case 1 -> mealSuggestionsService.caseSuggestMealsFromExpiringGroceries();
           case 2 -> mealSuggestionsService.caseSuggestMealsFromExistingGroceries();
           case 3 -> mealSuggestionsService.caseSuggestRandomMeal();
           case 0 -> finished = true;
@@ -225,7 +225,7 @@ public class TextUserInterface {
         final int choice = InterfaceUtils.integerInput();
         switch (choice) {
           case 1 -> settingsMenuService.caseAddDemoData();
-          case 2 -> settingsMenuService.caseRemoveDemoData();
+          case 2 -> settingsMenuService.caseRemoveAllData();
           case 3 -> settingsMenuService.caseShowCurrentDate();
           case 4 -> currentDate = settingsMenuService.caseGetNewDate();
           case 0 -> finished = true;

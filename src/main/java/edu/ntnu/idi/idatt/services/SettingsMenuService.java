@@ -32,9 +32,13 @@ import java.time.LocalDate;
  *
  */
 public class SettingsMenuService {
-  final FoodStorage foodStorage;
-  final Cookbook cookbook;
-  LocalDate currentDate;
+  private static final String FOODSTORAGE_NULL_ERROR = "Food storage cannot be null";
+  private static final String COOKBOOK_NULL_ERROR = "Cookbook cannot be null";
+  private static final String CURRENTDATE_NULL_ERROR = "Current date cannot be null";
+
+  private FoodStorage foodStorage;
+  private Cookbook cookbook;
+  private LocalDate currentDate;
 
   /**
    * Constructs a new settings menu service with the provided food storage, cookbook, and current
@@ -48,19 +52,59 @@ public class SettingsMenuService {
   public SettingsMenuService(FoodStorage foodStorage, Cookbook cookbook, LocalDate currentDate)
       throws IllegalArgumentException {
     if (foodStorage == null) {
-      throw new IllegalArgumentException("Food storage cannot be null");
+      throw new IllegalArgumentException(FOODSTORAGE_NULL_ERROR);
     }
     if (cookbook == null) {
-      throw new IllegalArgumentException("Cookbook cannot be null");
+      throw new IllegalArgumentException(COOKBOOK_NULL_ERROR);
     }
     if (currentDate == null) {
-      throw new IllegalArgumentException("Current date cannot be null");
+      throw new IllegalArgumentException(CURRENTDATE_NULL_ERROR);
     }
 
+    setFoodStorage(foodStorage);
+    setCookbook(cookbook);
+    setCurrentDate(currentDate);
+  }
+
+  /**
+   * Sets the food storage object to use.
+   *
+   * @param foodStorage the food storage object to use
+   * @throws IllegalArgumentException if the provided food storage is null.
+   */
+  private void setFoodStorage(FoodStorage foodStorage) throws IllegalArgumentException {
+    if (foodStorage == null) {
+      throw new IllegalArgumentException(FOODSTORAGE_NULL_ERROR);
+    }
     this.foodStorage = foodStorage;
+  }
+
+  /**
+   * Sets the cookbook object to use.
+   *
+   * @param cookbook the cookbook object to use
+   * @throws IllegalArgumentException if the provided cookbook is null.
+   */
+  private void setCookbook(Cookbook cookbook) throws IllegalArgumentException {
+    if (cookbook == null) {
+      throw new IllegalArgumentException(COOKBOOK_NULL_ERROR);
+    }
     this.cookbook = cookbook;
+  }
+
+  /**
+   * Sets the current date to use.
+   *
+   * @param currentDate the current date to use
+   * @throws IllegalArgumentException if the provided current date is null.
+   */
+  private void setCurrentDate(LocalDate currentDate) throws IllegalArgumentException {
+    if (currentDate == null) {
+      throw new IllegalArgumentException(CURRENTDATE_NULL_ERROR);
+    }
     this.currentDate = currentDate;
   }
+
 
   /**
    * Adds some grocery items to the food storage system. This method is primarily used for testing
@@ -208,7 +252,7 @@ public class SettingsMenuService {
   /**
    * Removes all grocery items and recipes from the food storage and cookbook.
    */
-  public void caseRemoveDemoData() {
+  public void caseRemoveAllData() {
     foodStorage.removeAllGroceries();
     System.out.println("All grocery objects removed from the food storage.");
     cookbook.removeAllRecipes();

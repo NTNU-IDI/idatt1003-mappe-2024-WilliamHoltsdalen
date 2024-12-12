@@ -235,7 +235,7 @@ public class Grocery implements FoodItem {
   /**
    * Sorts the batches of the grocery item by expiration date, in ascending order.
    */
-  public void sortBatches() {
+  private void sortBatches() {
     batches.sort(Comparator.comparing(GroceryBatch::getExpirationDate));
   }
 

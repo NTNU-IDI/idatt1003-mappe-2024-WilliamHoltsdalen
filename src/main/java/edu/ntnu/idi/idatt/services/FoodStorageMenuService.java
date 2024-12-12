@@ -37,9 +37,11 @@ import java.util.List;
  */
 public class FoodStorageMenuService {
   private static final String NAME_NULL_OR_BLANK_ERROR = "Name cannot be null or blank";
+  private static final String FOODSTORAGE_NULL_ERROR = "Food storage cannot be null";
+  private static final String CURRENTDATE_NULL_ERROR = "Current date cannot be null";
 
-  private final FoodStorage foodStorage;
-  private final LocalDate currentDate;
+  private FoodStorage foodStorage;
+  private LocalDate currentDate;
 
   /**
    * Constructs a new food storage menu service with the provided food storage and current date.
@@ -51,13 +53,39 @@ public class FoodStorageMenuService {
   public FoodStorageMenuService(FoodStorage foodStorage, LocalDate currentDate)
       throws IllegalArgumentException {
     if (foodStorage == null) {
-      throw new IllegalArgumentException("Food storage cannot be null");
+      throw new IllegalArgumentException(FOODSTORAGE_NULL_ERROR);
     }
     if (currentDate == null) {
-      throw new IllegalArgumentException("Current date cannot be null");
+      throw new IllegalArgumentException(CURRENTDATE_NULL_ERROR);
     }
 
+    setFoodStorage(foodStorage);
+    setCurrentDate(currentDate);
+  }
+
+  /**
+   * Sets the food storage object to use.
+   *
+   * @param foodStorage the food storage object to use
+   * @throws IllegalArgumentException if the provided food storage is null.
+   */
+  private void setFoodStorage(FoodStorage foodStorage) throws IllegalArgumentException {
+    if (foodStorage == null) {
+      throw new IllegalArgumentException(FOODSTORAGE_NULL_ERROR);
+    }
     this.foodStorage = foodStorage;
+  }
+
+  /**
+   * Sets the current date to use.
+   *
+   * @param currentDate the current date to use
+   * @throws IllegalArgumentException if the provided current date is null.
+   */
+  private void setCurrentDate(LocalDate currentDate) throws IllegalArgumentException {
+    if (currentDate == null) {
+      throw new IllegalArgumentException(CURRENTDATE_NULL_ERROR);
+    }
     this.currentDate = currentDate;
   }
 
@@ -147,7 +175,7 @@ public class FoodStorageMenuService {
    * @throws IllegalArgumentException if the name is null or an empty string, or if the grocery
    *         does not exist in the food storage.
    */
-  public void addGroceryBatch(String name) throws IllegalArgumentException {
+  private void addGroceryBatch(String name) throws IllegalArgumentException {
     if (name == null || name.isBlank()) {
       throw new IllegalArgumentException(NAME_NULL_OR_BLANK_ERROR);
     }

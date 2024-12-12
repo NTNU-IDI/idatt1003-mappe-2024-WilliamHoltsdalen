@@ -25,8 +25,8 @@ import org.junit.jupiter.api.Test;
  * <li>that the method {@code addIngredient} adds the correct amount of an ingredient to the recipe,
  *     if the ingredient already exists.
  * <li>that the method {@code removeIngredient} removes an ingredient from the recipe.
- * <li>that the method {@code toString} returns the correct string representation of the recipe.
- * <li>that the method {@code toString} returns the correct string representation of the recipe when
+ * <li>that the method {@code toReadableString} returns the correct string representation of the recipe.
+ * <li>that the method {@code toReadableString} returns the correct string representation of the recipe when
  *     the ingredients are empty.
  * </ul>
  * <li>Negative tests:

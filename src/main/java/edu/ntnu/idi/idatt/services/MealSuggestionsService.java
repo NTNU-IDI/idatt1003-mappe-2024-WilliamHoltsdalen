@@ -34,9 +34,12 @@ import java.util.stream.Collectors;
  * @since 1.0
  */
 public class MealSuggestionsService {
-  FoodStorage foodStorage;
-  Cookbook cookbook;
-  Random random = new Random();
+  private static final String FOODSTORAGE_NULL_ERROR = "Food storage cannot be null";
+  private static final String COOKBOOK_NULL_ERROR = "Cookbook cannot be null";
+
+  private FoodStorage foodStorage;
+  private Cookbook cookbook;
+  private final Random random;
 
   /**
    * Constructs a new meal suggestions service with the provided food storage and cookbook.
@@ -47,14 +50,43 @@ public class MealSuggestionsService {
    */
   public MealSuggestionsService(FoodStorage foodStorage, Cookbook cookbook)
       throws IllegalArgumentException {
+
     if (foodStorage == null) {
-      throw new IllegalArgumentException("Food storage cannot be null");
+      throw new IllegalArgumentException(FOODSTORAGE_NULL_ERROR);
     }
     if (cookbook == null) {
-      throw new IllegalArgumentException("Cookbook cannot be null");
+      throw new IllegalArgumentException(COOKBOOK_NULL_ERROR);
     }
 
+    this.random = new Random();
+
+    setFoodStorage(foodStorage);
+    setCookbook(cookbook);
+  }
+
+  /**
+   * Sets the food storage object to use.
+   *
+   * @param foodStorage the food storage object to use
+   * @throws IllegalArgumentException if the provided food storage is null.
+   */
+  private void setFoodStorage(FoodStorage foodStorage) throws IllegalArgumentException {
+    if (foodStorage == null) {
+      throw new IllegalArgumentException(FOODSTORAGE_NULL_ERROR);
+    }
     this.foodStorage = foodStorage;
+  }
+
+  /**
+   * Sets the cookbook object to use.
+   *
+   * @param cookbook the cookbook object to use
+   * @throws IllegalArgumentException if the provided cookbook is null.
+   */
+  private void setCookbook(Cookbook cookbook) throws IllegalArgumentException {
+    if (cookbook == null) {
+      throw new IllegalArgumentException(COOKBOOK_NULL_ERROR);
+    }
     this.cookbook = cookbook;
   }
 
@@ -67,7 +99,7 @@ public class MealSuggestionsService {
    * meals to the console. If no groceries expire before the given date, the method prints a
    * message indicating that no meals can be suggested.
    */
-  public void caseSuggestMealFromExpiringGroceries() {
+  public void caseSuggestMealsFromExpiringGroceries() {
     System.out.println("The meal suggestions based on expiration date work as follows:");
     System.out.println("You enter a date, and recipes you can make, with groceries in the food"
         + "storage that expire *before* that date, are suggested.");
