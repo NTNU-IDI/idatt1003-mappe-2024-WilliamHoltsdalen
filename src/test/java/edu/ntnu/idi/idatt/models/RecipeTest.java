@@ -77,7 +77,7 @@ class RecipeTest {
       Recipe recipe = new Recipe("Steak with Potatoes", "A delicious dish that has "
           + "Steak and Potatoes.", "These are instructions", 3);
 
-      assertEquals("Steak with Potatoes", recipe.getName());
+      assertEquals("Steak with potatoes", recipe.getName());
       assertEquals("A delicious dish that has Steak and Potatoes.", recipe.getDescription());
       assertEquals("These are instructions", recipe.getInstructions());
       assertEquals(3, recipe.getServings());
@@ -92,9 +92,9 @@ class RecipeTest {
       Recipe recipe = new Recipe("Steak with Potatoes", "A delicious dish that has "
           + "Steak and Potatoes.", "These are instructions", 3);
 
-      recipe.setName("Chicken with Rice");
+      recipe.setName("Chicken with rice");
 
-      assertEquals("Chicken with Rice", recipe.getName());
+      assertEquals("Chicken with rice", recipe.getName());
     }
 
     /**
@@ -198,14 +198,14 @@ class RecipeTest {
     @DisplayName("Test that the method toReadableString returns the correct string representation "
         + "of the recipe.")
     void testToReadableString() {
-      Recipe recipe = new Recipe("Steak with Potatoes", "A delicious dish that has "
+      Recipe recipe = new Recipe("Steak with potatoes", "A delicious dish that has "
           + "Steak and Potatoes.", "These are instructions", 3);
       Ingredient ingredient = new Ingredient("Potatoes", "Vegetables", "pieces", 2);
 
       recipe.addIngredient(ingredient);
 
       assertEquals("""
-          Name: Steak with Potatoes
+          Name: Steak with potatoes
           Description: A delicious dish that has Steak and Potatoes.
           Servings: 3
           
@@ -226,10 +226,10 @@ class RecipeTest {
     @DisplayName("Test that the method toReadableString returns the correct string representation "
         + "of the recipe when the ingredients are empty.")
     void testToReadableStringEmptyIngredients() {
-      Recipe recipe = new Recipe("Steak with Potatoes", "A delicious dish that has "
+      Recipe recipe = new Recipe("Steak with potatoes", "A delicious dish that has "
           + "Steak and Potatoes.", "These are instructions", 3);
       assertEquals("""
-          Name: Steak with Potatoes
+          Name: Steak with potatoes
           Description: A delicious dish that has Steak and Potatoes.
           Servings: 3
           
