@@ -193,7 +193,7 @@ public final class InterfaceUtils {
               9.  Calculate total value of all groceries
               10. Remove all expired grocery batches
               0.  Return to main menu
-              --  -- --  --  --  --  --  --  --  --  --  --  --  -- --
+              --  --  --  --  --  --  --  --  --  --  --  --  --  --  --
               Your choice:\s""");
   }
 
@@ -251,7 +251,7 @@ public final class InterfaceUtils {
             2. Suggest meals from groceries in the food storage
             3. Suggest random meal
             0. Return to main menu
-            --  -- --  --  --  --  --  --  --  --  --  --  -- --
+            --  -- --  --  --  --  --  --  --  --  --  --  --  --
             Your choice:\s""");
   }
 
