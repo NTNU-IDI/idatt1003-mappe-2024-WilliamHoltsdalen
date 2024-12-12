@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"edu.ntnu.idi.idatt"},{"l":"edu.ntnu.idi.idatt.models"},{"l":"edu.ntnu.idi.idatt.services"},{"l":"edu.ntnu.idi.idatt.utils"},{"l":"edu.ntnu.idi.idatt.views"}];updateSearchResults();
