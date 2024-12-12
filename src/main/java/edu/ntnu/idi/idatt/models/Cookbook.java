@@ -55,7 +55,7 @@ public class Cookbook {
       throw new IllegalArgumentException(NULL_OR_BLANK_NAME);
     }
     return recipes.stream()
-      .filter(recipe -> recipe.getName().equals(name))
+      .filter(recipe -> recipe.getName().equalsIgnoreCase(name))
       .findFirst()
       .orElseThrow(() -> new IllegalArgumentException(RECIPE_NOT_FOUND_ERROR));
   }

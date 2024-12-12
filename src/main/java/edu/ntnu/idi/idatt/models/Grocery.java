@@ -1,5 +1,6 @@
 package edu.ntnu.idi.idatt.models;
 
+import edu.ntnu.idi.idatt.utils.StringUtils;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -119,7 +120,7 @@ public class Grocery implements FoodItem {
   }
 
   /**
-   * Private method for setting the name of the grocery item.
+   * Private method for setting the name of the grocery item. The name is automatically capitalized.
    *
    * @param name the new name of the grocery item
    * @throws IllegalArgumentException if the name is null or an empty string.
@@ -128,11 +129,12 @@ public class Grocery implements FoodItem {
     if (name == null || name.isBlank()) {
       throw new IllegalArgumentException("Name cannot be null or blank");
     }
-    this.name = name;
+    this.name = StringUtils.capitalize(name);
   }
 
   /**
-   * Private method for setting the category of the grocery item.
+   * Private method for setting the category of the grocery item. The category is automatically
+   * capitalized.
    *
    * @param category the new category of the grocery item
    * @throws IllegalArgumentException if the category is null or an empty string.
@@ -141,7 +143,7 @@ public class Grocery implements FoodItem {
     if (category == null || category.isBlank()) {
       throw new IllegalArgumentException("Category cannot be null or blank");
     }
-    this.category = category;
+    this.category = StringUtils.capitalize(category);
   }
 
   /**
@@ -184,8 +186,8 @@ public class Grocery implements FoodItem {
       throw new IllegalArgumentException("Batch cannot be null");
     }
     batches.add(batch);
-    sortBatches();
     setTotalAmount(this.totalAmount + batch.getAmount());
+    sortBatches();
   }
 
   /**

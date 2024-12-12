@@ -4,6 +4,7 @@ import edu.ntnu.idi.idatt.models.FoodStorage;
 import edu.ntnu.idi.idatt.models.Grocery;
 import edu.ntnu.idi.idatt.models.GroceryBatch;
 import edu.ntnu.idi.idatt.utils.InterfaceUtils;
+import edu.ntnu.idi.idatt.utils.StringUtils;
 import edu.ntnu.idi.idatt.views.TextUserInterface;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -87,7 +88,7 @@ public class FoodStorageMenuService {
       throw new IllegalArgumentException(NAME_NULL_OR_BLANK_ERROR);
     }
     try {
-      return foodStorage.getGroceryByName(name);
+      return foodStorage.getGroceryByName(StringUtils.capitalize(name));
     } catch (IllegalArgumentException e) {
       return null;
     }
@@ -105,7 +106,7 @@ public class FoodStorageMenuService {
    */
   public void caseAddGrocery() {
     System.out.print("Enter name: ");
-    final String name = InterfaceUtils.stringInput();
+    final String name = StringUtils.capitalize(InterfaceUtils.stringInput());
 
     if (checkIfGroceryExists(name)) {
       System.out.println("Grocery already exists. Adding batch instead.");
@@ -151,7 +152,7 @@ public class FoodStorageMenuService {
       throw new IllegalArgumentException(NAME_NULL_OR_BLANK_ERROR);
     }
 
-    final Grocery grocery = getGroceryByName(name);
+    final Grocery grocery = getGroceryByName(StringUtils.capitalize(name));
     if (grocery == null) {
       throw new IllegalArgumentException("Grocery not found");
     }
@@ -185,7 +186,7 @@ public class FoodStorageMenuService {
    */
   public void caseConsumeGrocery() {
     System.out.print("Enter name of grocery to consume: ");
-    final String name = InterfaceUtils.stringInput();
+    final String name = StringUtils.capitalize(InterfaceUtils.stringInput());
 
     final Grocery grocery = getGroceryByName(name);
     if (grocery == null) {
@@ -223,7 +224,7 @@ public class FoodStorageMenuService {
    */
   public void caseFindGroceryByName() {
     System.out.print("Enter name of grocery to find: ");
-    final String name = InterfaceUtils.stringInput();
+    final String name = StringUtils.capitalize(InterfaceUtils.stringInput());
     final Grocery grocery = getGroceryByName(name);
     if (grocery == null) {
       System.out.println("Grocery called '" + name + "' not found.");
@@ -243,7 +244,7 @@ public class FoodStorageMenuService {
    */
   public void caseFindGroceriesByCategory() {
     System.out.print("Enter category of groceries to find: ");
-    final String category = InterfaceUtils.stringInput();
+    final String category = StringUtils.capitalize(InterfaceUtils.stringInput());
     final List<Grocery> groceries = foodStorage.getGroceriesByCategory(category);
     if (groceries.isEmpty()) {
       System.out.println("No groceries found in category: " + category);

@@ -1,5 +1,6 @@
 package edu.ntnu.idi.idatt.models;
 
+import edu.ntnu.idi.idatt.utils.StringUtils;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -89,7 +90,7 @@ public class FoodStorage {
    * If the name is null or an empty string, or if a grocery with the provided name does not exist
    * in the food storage, the method throws an {@code IllegalArgumentException}.
    *
-   * @param name the name of the grocery object
+   * @param name the name of the grocery object, case insensitive
    * @return the grocery object with the specified name
    * @throws IllegalArgumentException if the name is null or an empty string, or if the grocery
    *         object does not exist in the food storage.
@@ -98,10 +99,10 @@ public class FoodStorage {
     if (name == null || name.isBlank()) {
       throw new IllegalArgumentException(INVALID_NAME_ERROR);
     }
-    if (!groceries.containsKey(name)) {
+    if (!groceries.containsKey(StringUtils.capitalize(name))) {
       throw new IllegalArgumentException(NO_GROCERY_FOUND_ERROR);
     }
-    return groceries.get(name);
+    return groceries.get(StringUtils.capitalize(name));
   }
 
   /**
@@ -191,10 +192,10 @@ public class FoodStorage {
     if (grocery == null) {
       throw new IllegalArgumentException(NULL_GROCERY_ERROR);
     }
-    if (groceries.containsKey(grocery.getName())) {
+    if (groceries.containsKey(StringUtils.capitalize(grocery.getName()))) {
       throw new IllegalArgumentException(GROCERY_EXISTS_ERROR);
     }
-    groceries.put(grocery.getName(), grocery);
+    groceries.put(StringUtils.capitalize(grocery.getName()), grocery);
   }
 
   /**
@@ -212,7 +213,7 @@ public class FoodStorage {
     if (grocery == null) {
       throw new IllegalArgumentException(NULL_GROCERY_ERROR);
     }
-    if (!groceries.containsKey(grocery.getName())) {
+    if (!groceries.containsKey(StringUtils.capitalize(grocery.getName()))) {
       throw new IllegalArgumentException(NO_GROCERY_FOUND_ERROR);
     }
     groceries.remove(grocery.getName());

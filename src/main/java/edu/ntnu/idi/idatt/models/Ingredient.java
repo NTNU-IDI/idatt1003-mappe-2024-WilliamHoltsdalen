@@ -1,5 +1,7 @@
 package edu.ntnu.idi.idatt.models;
 
+import edu.ntnu.idi.idatt.utils.StringUtils;
+
 /**
  * A class representing an ingredient.
  *
@@ -113,7 +115,7 @@ public class Ingredient implements FoodItem {
     if (name == null || name.isBlank()) {
       throw new IllegalArgumentException(NULL_OR_BLANK_NAME_ERROR);
     }
-    this.name = name;
+    this.name = StringUtils.capitalize(name);
   }
 
   /**
@@ -126,7 +128,7 @@ public class Ingredient implements FoodItem {
     if (category == null || category.isBlank()) {
       throw new IllegalArgumentException(NULL_OR_BLANK_CATEGORY_ERROR);
     }
-    this.category = category;
+    this.category = StringUtils.capitalize(category);
   }
 
   /**

@@ -229,16 +229,15 @@ public class MealSuggestionsService {
               return matchingGrocery != null
                   && matchingGrocery.getTotalAmount() >= ingredient.getAmount();
             })
-    ).collect(Collectors.toMap(recipe -> recipe, recipe -> groceriesList.stream()
-        .filter(grocery -> recipe.getIngredients().stream()
-          .anyMatch(ingredient -> ingredient.getName().equals(grocery.getName())
-            && grocery.getTotalAmount() >= ingredient.getAmount())
-        )
-        .sorted(Comparator.comparing(Grocery::getName))
-        .sorted(Comparator.comparing(grocery -> grocery.getBatches().getFirst()
-            .getExpirationDate()))
-        .toList()
-      ));
+          ).collect(Collectors.toMap(recipe -> recipe, recipe -> groceriesList.stream()
+            .filter(grocery -> recipe.getIngredients().stream()
+                .anyMatch(ingredient -> ingredient.getName().equals(grocery.getName())
+                    && grocery.getTotalAmount() >= ingredient.getAmount()))
+            .sorted(Comparator.comparing(Grocery::getName))
+            .sorted(Comparator.comparing(grocery -> grocery.getBatches().getFirst()
+                .getExpirationDate()))
+            .toList()
+          ));
 
     recipeToGroceriesMap.entrySet().removeIf(entry -> entry.getValue().isEmpty());
     return recipeToGroceriesMap;

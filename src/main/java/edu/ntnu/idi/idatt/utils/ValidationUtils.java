@@ -6,7 +6,7 @@ package edu.ntnu.idi.idatt.utils;
  * @author WilliamHoltsdalen
  * @since V1.3
  */
-public class ValidationUtils {
+public final class ValidationUtils {
 
   /** Private constructor to prevent instantiation, as this is a utility class. */
   private ValidationUtils() {}

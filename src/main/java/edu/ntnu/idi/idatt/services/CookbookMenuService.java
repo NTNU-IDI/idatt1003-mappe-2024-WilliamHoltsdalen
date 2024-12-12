@@ -4,10 +4,12 @@ import edu.ntnu.idi.idatt.models.Cookbook;
 import edu.ntnu.idi.idatt.models.Ingredient;
 import edu.ntnu.idi.idatt.models.Recipe;
 import edu.ntnu.idi.idatt.utils.InterfaceUtils;
+import edu.ntnu.idi.idatt.utils.StringUtils;
 import edu.ntnu.idi.idatt.views.TextUserInterface;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * A service class allowing for a user interface, like {@link TextUserInterface}, to interact with
@@ -63,7 +65,7 @@ public class CookbookMenuService {
    */
   public void caseFindRecipeByName() {
     System.out.println("Enter the name of the recipe you want to find: ");
-    final String name = InterfaceUtils.stringInput();
+    final String name = StringUtils.capitalize(InterfaceUtils.stringInput());
     try {
       final Recipe recipe = cookbook.getRecipe(name);
       System.out.println("Recipe found:");
@@ -84,8 +86,9 @@ public class CookbookMenuService {
   public void caseSearchRecipesByIngredients() {
     System.out.println("Enter the ingredients you want to search for (comma-separated): ");
     final String ingredients = InterfaceUtils.stringInput();
-    final List<String> ingredientList = List.of(ingredients.replace(" ", "")
-        .split(","));
+    final List<String> ingredientList = Stream.of(ingredients.replace(" ", "")
+        .split(",")).map(StringUtils::capitalize).toList();
+
     final List<Recipe> recipesFound = cookbook.getRecipes().stream()
         .filter(recipe -> recipe.getIngredients().stream()
             .map(Ingredient::getName)
@@ -115,8 +118,9 @@ public class CookbookMenuService {
   public void caseAddNewRecipe() {
     try {
       System.out.println("Enter the name of the recipe: ");
-      final String name = InterfaceUtils.stringInput();
-      if (cookbook.getRecipes().stream().anyMatch(recipe -> recipe.getName().equals(name))) {
+      final String name = StringUtils.capitalize(InterfaceUtils.stringInput());
+      if (cookbook.getRecipes().stream().anyMatch(recipe -> recipe.getName()
+          .equalsIgnoreCase(name))) {
         throw new IllegalArgumentException("Recipe already exists in cookbook.");
       }
 
@@ -148,9 +152,9 @@ public class CookbookMenuService {
             ingredientUnit, ingredientAmount);
         recipe.addIngredient(ingredient);
 
-        System.out.println("Do you want to add another ingredient? (yes/no)");
+        System.out.println("Do you want to add another ingredient? If so, enter 'yes'.");
         final String answer = InterfaceUtils.stringInput();
-        if (answer.equals("no")) {
+        if (!answer.equalsIgnoreCase("yes")) {
           finished = true;
         }
       }
@@ -175,7 +179,7 @@ public class CookbookMenuService {
    */
   public void caseEditRecipe() {
     System.out.println("Enter the name of the recipe you want to edit: ");
-    final String recipeName = InterfaceUtils.stringInput();
+    final String recipeName = StringUtils.capitalize(InterfaceUtils.stringInput());
     try {
       final Recipe recipe = cookbook.getRecipe(recipeName);
       System.out.println("Recipe found:");
@@ -260,7 +264,7 @@ public class CookbookMenuService {
    */
   public void caseRemoveRecipe() {
     System.out.println("Enter the name of the recipe you want to remove: ");
-    final String name = InterfaceUtils.stringInput();
+    final String name = StringUtils.capitalize(InterfaceUtils.stringInput());
     try {
       cookbook.removeRecipe(cookbook.getRecipe(name));
     } catch (IllegalArgumentException e) {

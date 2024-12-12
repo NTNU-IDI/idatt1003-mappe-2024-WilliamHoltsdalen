@@ -1,5 +1,6 @@
 package edu.ntnu.idi.idatt.models;
 
+import edu.ntnu.idi.idatt.utils.StringUtils;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -128,8 +129,8 @@ public class Recipe {
     if (name == null || name.isBlank()) {
       throw new IllegalArgumentException(NULL_OR_BLANK_NAME);
     }
-    return ingredients.stream().filter(ingredient -> ingredient.getName().equals(name)).findFirst()
-        .orElseThrow(() -> new IllegalArgumentException(INGREDIENT_NOT_FOUND_ERROR));
+    return ingredients.stream().filter(ingredient -> ingredient.getName().equalsIgnoreCase(name))
+        .findFirst().orElseThrow(() -> new IllegalArgumentException(INGREDIENT_NOT_FOUND_ERROR));
   }
 
   /**
@@ -156,7 +157,7 @@ public class Recipe {
     if (name == null || name.isBlank()) {
       throw new IllegalArgumentException(NULL_OR_BLANK_NAME);
     }
-    this.name = name;
+    this.name = StringUtils.capitalize(name);
   }
 
   /**
